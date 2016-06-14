@@ -1,7 +1,9 @@
 package androarmy.poolio;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +21,8 @@ public class SignIn extends AppCompatActivity {
    // public final String SIGNIN_URL="http://192.168.1.101/poolio/signin.php";//Siddharth's pc
     public final String SIGNIN_URL="http://192.168.1.10:8080/poolio/signin.php";//Sumit's pc
     EditText input_mob,input_pass;
-    String mob,pass;
+    String mob="12345",pass;
+    SharedPreferences mSharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +43,7 @@ public class SignIn extends AppCompatActivity {
         goToSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignIn.this, SignUp.class);
+                Intent intent = new Intent(SignIn.this, OTP.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.next_slide_in,R.anim.next_slide_out);
             }
@@ -58,7 +61,12 @@ public class SignIn extends AppCompatActivity {
 
     void onSignInButtonClick()
     {
-       mob= input_mob.getText().toString().trim();
+        mSharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+
+        mob= input_mob.getText().toString().trim();
+        editor.putString("mobile",mob);
+        editor.commit();
         pass=input_pass.getText().toString().trim();
         if("".equalsIgnoreCase(mob) || "".equalsIgnoreCase(pass)){
             Toast.makeText(getApplicationContext(),"One or more fields are empty!",Toast.LENGTH_SHORT).show();

@@ -55,6 +55,41 @@
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="30dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/calend"/>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp">
+                <EditText android:id="@+id/date"
+                          android:layout_width="110dp"
+                          android:layout_height="wrap_content"
+                          android:inputType="date"
+                          android:hint="Date" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp">
+                <EditText android:id="@+id/time"
+                          android:layout_width="110dp"
+                          android:layout_height="wrap_content"
+                          android:inputType="time"
+                          android:hint="Time" />
+            </android.support.design.widget.TextInputLayout>
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,9 +113,6 @@
                     android:prompt="@string/Select_Type"
                     android:spinnerMode="dropdown"></Spinner>
             </android.support.design.widget.TextInputLayout>
-
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -89,35 +121,29 @@
             android:layout_marginTop="25dp"
             android:layout_marginLeft="30dp"
             android:orientation="horizontal">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/calend"/>
             <android.support.design.widget.TextInputLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp">
-                <EditText android:id="@+id/date"
-                          android:layout_width="110dp"
-                          android:layout_height="wrap_content"
-                          android:inputType="textCapWords"
-                          android:hint="Date" />
+                android:layout_width="140dp"
+                android:layout_height="wrap_content">
+                <AutoCompleteTextView android:id="@+id/vname"
+                                      android:layout_width="match_parent"
+                                      android:layout_height="wrap_content"
+                                      android:inputType="textCapWords"
+                                      android:hint="Vehicle Name" />
             </android.support.design.widget.TextInputLayout>
-
             <android.support.design.widget.TextInputLayout
-                android:layout_width="wrap_content"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp">
-                <EditText android:id="@+id/time"
-                          android:layout_width="110dp"
-                          android:layout_height="wrap_content"
-                          android:inputType="textCapWords"
-                          android:hint="Time" />
+                android:paddingLeft="15dp">
+                <AutoCompleteTextView android:id="@+id/vnumber"
+                                      android:layout_width="match_parent"
+                                      android:layout_height="wrap_content"
+                                      android:inputType="textCapWords"
+                                      android:hint="Vehicle Number" />
             </android.support.design.widget.TextInputLayout>
-
 
         </LinearLayout>
+
+
 
 
         <LinearLayout
@@ -138,7 +164,7 @@
                 <EditText android:id="@+id/passengers"
                           android:layout_width="130dp"
                           android:layout_height="wrap_content"
-                          android:inputType="textCapWords"
+                          android:inputType="number"
                           android:hint="Available Seats" />
 
             </android.support.design.widget.TextInputLayout>
@@ -167,21 +193,28 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
-                android:orientation="horizontal"
-                >
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Free Ride"
-                android:id="@+id/radio_free"
-                />
+                android:orientation="horizontal">
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioGrp"
+                    android:orientation="horizontal">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Free Ride"
+
+                    android:id="@+id/radio_free"/>
                 <RadioButton
                     android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Chargeable"
+                    android:checked="true"
                     android:id="@+id/radio_charge"
+
                     android:enabled="true"/>
+                </RadioGroup>
             </LinearLayout>
 
         </LinearLayout>
@@ -205,7 +238,7 @@
                 <AutoCompleteTextView android:id="@+id/money"
                                       android:layout_width="250dp"
                                       android:layout_height="wrap_content"
-                                      android:inputType="textCapWords"
+                                      android:inputType="number"
                                       android:hint="Money in Rs" />
             </android.support.design.widget.TextInputLayout>
 
@@ -214,7 +247,7 @@
         </LinearLayout>
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_find"
+            android:id="@+id/btn_offer"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
