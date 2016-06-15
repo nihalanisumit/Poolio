@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="androarmy.poolio" >
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -45,14 +45,15 @@
         </activity>
         <activity android:name=".find_a_ride" >
         </activity>
-        <activity android:name=".WelcomeSlider"
-            android:theme="@style/AppTheme.NoActionBar">
-
+        <activity
+            android:name=".WelcomeSlider"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-
-
+        <activity
+            android:name=".Confirmation"
+            android:label="@string/title_activity_confirmation"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
-
-
 
 </manifest>
