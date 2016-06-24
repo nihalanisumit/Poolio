@@ -89,47 +89,48 @@ public class Home extends AppCompatActivity
         Fragment fragment = null;
         Class fragmentClass = null;
 
-        if (id == R.id.nav_find) {
-            fragmentClass= TabFragment.class;
-            toolbar.setTitle("Find a ride");
+        switch (id){
+            case R.id.nav_find:
+                fragmentClass= TabFragment.class;
+                toolbar.setTitle("Find a ride");
+                break;
+            case R.id.nav_offer:
+                Toast.makeText(getApplicationContext(),"Offer a ride",Toast.LENGTH_SHORT).show();
+                toolbar.setTitle("Offer a ride");
+                break;
+            case R.id.nav_profile:
+                Toast.makeText(getApplicationContext(),"Profile",Toast.LENGTH_SHORT).show();
+                toolbar.setTitle("Profile");
+                break;
 
-        }
-        else if (id == R.id.nav_offer) {
-            Toast.makeText(getApplicationContext(),"Offer a ride",Toast.LENGTH_SHORT).show();
-            toolbar.setTitle("Offer a ride");
 
+            case R.id.nav_share:
+                Toast.makeText(getApplicationContext(),"Share",Toast.LENGTH_SHORT).show();
+                toolbar.setTitle("Share");
+                break;
+            case R.id.nav_contact:
+                Toast.makeText(getApplicationContext(),"contact us",Toast.LENGTH_SHORT).show();
+                toolbar.setTitle("Contact Us");
+                break;
+            case R.id.nav_about:
+                Toast.makeText(getApplicationContext(),"about us",Toast.LENGTH_SHORT).show();
+                toolbar.setTitle("About Us");
+                break;
         }
-        else if (id == R.id.nav_profile) {
-            Toast.makeText(getApplicationContext(),"Profile",Toast.LENGTH_SHORT).show();
-            toolbar.setTitle("Profile");
 
-        }
-        else if (id == R.id.nav_share) {
-            Toast.makeText(getApplicationContext(),"Share",Toast.LENGTH_SHORT).show();
-            toolbar.setTitle("Share");
-
-        }
-        else if (id == R.id.nav_contact) {
-            Toast.makeText(getApplicationContext(),"contact us",Toast.LENGTH_SHORT).show();
-            toolbar.setTitle("Contact Us");
-
-        }
-        else if (id == R.id.nav_about) {
-            Toast.makeText(getApplicationContext(),"about us",Toast.LENGTH_SHORT).show();
-            toolbar.setTitle("About Us");
-
-        }
         try {
-            assert fragmentClass != null;
+
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
+        }if (fragment!=null){
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.containerView, fragment).commit();
+
         }
-
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.containerView, fragment).commit();
-
+        item.setChecked(true);
+        setTitle(item.getTitle());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
