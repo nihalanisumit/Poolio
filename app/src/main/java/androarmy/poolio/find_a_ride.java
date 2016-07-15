@@ -1,26 +1,34 @@
 package androarmy.poolio;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Spinner;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class find_a_ride extends Fragment {
     String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","Backgate","Potheri Station","Guduvancheri"};//need to make it dynamic
-    List<String> vehicleType = new ArrayList<String>(); //No need for dynamic i suppose
-    Spinner spinner;
     AutoCompleteTextView actv,actv2;
+    EditText dateET, timeET;
+    Button b;
+    String pickup, drop, time, date;
+    public final String FIND_URL="http://192.168.1.14:8080/poolio/find.php";//Sumit's pc
 
 
     @Nullable
@@ -28,12 +36,10 @@ public class find_a_ride extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.activity_find_a_ride, container, false);
 
-        spinner = (Spinner)v.findViewById(R.id.spin);
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,locations);
 
         actv= (AutoCompleteTextView)v.findViewById(R.id.pickup);
-        actv.setThreshold(0);
+        actv.setThreshold(1);
         actv.setAdapter(adapter);
         actv.setTextColor(Color.RED);
         actv2= (AutoCompleteTextView)v.findViewById(R.id.drop);
@@ -41,23 +47,65 @@ public class find_a_ride extends Fragment {
         actv2.setAdapter(adapter);
         actv2.setTextColor(Color.RED);
 
-        vehicleType.add("VEHICLE TYPE");
-        vehicleType.add("Bike non-gear");
-        vehicleType.add("Bike");
-        vehicleType.add("Car");
-        vehicleType.add("Auto");
-        vehicleType.add("Cab");
-        vehicleType.add("ANY");
+        dateET = (EditText)v.findViewById(R.id.date);
+        timeET = (EditText)v.findViewById(R.id.time);
+        b=(Button) v.findViewById(R.id.btn_find);
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_element, vehicleType);
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
-
-
-
-
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickup = actv.getText().toString();
+                drop= actv2.getText().toString();
+                date= dateET.getText().toString();
+                time= timeET.getText().toString();
+                findRide(pickup);
+            }
+        });
         return v;
     }
+
+    void findRide(String pickup)
+    {
+
+        fetchRides(pickup);
+
+    }
+
+    private void fetchRides(final String pickup){
+        class fetchRideClass extends AsyncTask<String,Void,String> {
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(getContext(),"Finding Your Rides","Please wait while we connect to server",true,true);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                //Toast.makeText(getContext(),s,Toast.LENGTH_LONG).show();
+                //showRides(s);
+                Intent i = new Intent(getActivity(),available_rides.class);
+                i.putExtra("json",s);
+                startActivity(i);
+
+
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String,String> data = new HashMap<>();
+                data.put("pickup",params[0]);
+
+                RegisterUserClass ruc = new RegisterUserClass();
+                String result = ruc.sendPostRequest(FIND_URL,data);
+                return result;
+            }
+        }
+        fetchRideClass frc = new fetchRideClass();
+        frc.execute(pickup);
+    }
+
+
 }
