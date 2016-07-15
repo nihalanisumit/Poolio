@@ -13,6 +13,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.math.BigInteger;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 public class SignIn extends AppCompatActivity {
@@ -25,6 +29,7 @@ public class SignIn extends AppCompatActivity {
     EditText input_mob,input_pass;
     String mob="12345",pass;
     SharedPreferences mSharedPreferences;
+    private String password = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,11 +75,12 @@ public class SignIn extends AppCompatActivity {
         editor.putString("mobile",mob);
         editor.commit();
         pass=input_pass.getText().toString().trim();
+        md5(pass);
         if("".equalsIgnoreCase(mob) || "".equalsIgnoreCase(pass)){
             Toast.makeText(getApplicationContext(),"One or more fields are empty!",Toast.LENGTH_SHORT).show();
             return;
         }
-        userLogin(mob, pass);
+        userLogin(mob, password);
     }
     private void userLogin(final String mobile, final String password){
         class UserLoginClass extends AsyncTask<String,Void,String> {
@@ -121,4 +127,24 @@ public class SignIn extends AppCompatActivity {
         UserLoginClass ulc = new UserLoginClass();
         ulc.execute(mobile,password);
     }
+
+    public String md5(String s){
+        MessageDigest digest ;
+        try {
+            digest = MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes(Charset.forName("US-ASCII")),0,s.length());
+            byte[] magnitude = digest.digest();
+            BigInteger bi  = new BigInteger(1,magnitude);
+            String hash = String.format("%0" + (magnitude.length << 1) + "X" , bi);
+            password = hash;
+            return hash;
+        }
+        catch (NoSuchAlgorithmException e){
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
+
 }

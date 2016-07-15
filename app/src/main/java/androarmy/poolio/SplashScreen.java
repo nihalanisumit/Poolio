@@ -14,6 +14,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.math.BigInteger;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 
@@ -24,6 +28,7 @@ public class SplashScreen extends Activity {
     public String NO_VAL="empty";
      public final String SIGNIN_URL="http://192.168.1.6/poolio/signin.php";//Siddharth's pc
     //public final String SIGNIN_URL="http://192.168.1.10:8080/poolio/signin.php";//Sumit's pc
+    private String password = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +79,7 @@ public class SplashScreen extends Activity {
             SharedPreferences session = getSharedPreferences("session", MODE_PRIVATE);
             String mob = session.getString("mobile", NO_VAL);
             String pass = session.getString("password", NO_VAL);
+            md5(pass);
             if (mob.equalsIgnoreCase(NO_VAL) || pass.equalsIgnoreCase(NO_VAL) || mob.equalsIgnoreCase("") || pass.equalsIgnoreCase("")) {
                 Intent myIntent = new Intent(SplashScreen.this, WelcomeSlider.class);
                 SplashScreen.this.finish();
@@ -81,7 +87,7 @@ public class SplashScreen extends Activity {
                 overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
             }
             else {
-                      userLogin(mob,pass);
+                      userLogin(mob,password);
              }
         }
         private void userLogin(final String mobile, final String password){
@@ -121,6 +127,24 @@ public class SplashScreen extends Activity {
             UserLoginClass ulc = new UserLoginClass();
             ulc.execute(mobile,password);
         }
+    }
+
+    public String md5(String s){
+        MessageDigest digest ;
+        try {
+            digest = MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes(Charset.forName("US-ASCII")),0,s.length());
+            byte[] magnitude = digest.digest();
+            BigInteger bi  = new BigInteger(1,magnitude);
+            String hash = String.format("%0" + (magnitude.length << 1) + "X" , bi);
+            password = hash;
+            return hash;
+        }
+        catch (NoSuchAlgorithmException e){
+            e.printStackTrace();
+        }
+
+        return "";
     }
 }
 
