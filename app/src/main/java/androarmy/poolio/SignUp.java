@@ -2,7 +2,6 @@ package androarmy.poolio;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.math.BigInteger;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 public class SignUp extends AppCompatActivity {
@@ -21,7 +24,7 @@ public class SignUp extends AppCompatActivity {
     Button signup;
     EditText fnameet,lnameet,emailet,passwordet;
     //public final String REGISTER_URL="http://192.168.1.101/poolio/register.php"; //Siddharth's pc
-    public final String REGISTER_URL="http://192.168.1.14:8080/poolio/register.php";// Sumit's pc
+    public final String REGISTER_URL="http://192.168.1.10:8080/poolio/register.php";// Sumit's pc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,7 @@ public class SignUp extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Please enter password!",Toast.LENGTH_SHORT).show();
             return;
         }
+        md5(password.toString());
         EditText pass_verify = (EditText)findViewById(R.id.input_password_verify);
         if(pass_verify.getText().toString().trim().equalsIgnoreCase(password)) {
 
@@ -122,6 +126,23 @@ public class SignUp extends AppCompatActivity {
              RegisterUser ru = new RegisterUser();
              ru.execute(fname,lname,password,email,mobile);
          }
+
+     public String md5(String s){
+         MessageDigest digest ;
+         try {
+            digest = MessageDigest.getInstance("MD5");
+             digest.update(s.getBytes(Charset.forName("US-ASCII")),0,s.length());
+             byte[] magnitude = digest.digest();
+             BigInteger bi  = new BigInteger(1,magnitude);
+             String hash = String.format("%0" + (magnitude.length << 1) + "X" , bi);
+             return hash;
+        }
+         catch (NoSuchAlgorithmException e){
+             e.printStackTrace();
+         }
+
+         return "";
+     }
     }
 
 
