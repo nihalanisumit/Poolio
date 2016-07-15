@@ -20,7 +20,7 @@ public class OTP extends AppCompatActivity {
         button_sendOTP = (Button) findViewById(R.id.btn_sendotp);
         phonenumber = (EditText) findViewById(R.id.input_number);
 
-
+//hello
         button_sendOTP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
