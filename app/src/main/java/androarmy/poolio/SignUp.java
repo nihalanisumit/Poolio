@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 public class SignUp extends AppCompatActivity {
     TextView goToSignUp;
-    String fname,lname,mobile,password,email,gender;
+    String fname,lname,mobile,password,email,gender,password_encrypt;
     Button signup;
     EditText fnameet,lnameet,emailet,passwordet;
     Switch genderSwitch;
@@ -79,7 +79,8 @@ public class SignUp extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Please enter password!",Toast.LENGTH_SHORT).show();
             return;
         }
-        md5(password.toString());
+        password_encrypt= md5(password.toString());
+
         EditText pass_verify = (EditText)findViewById(R.id.input_password_verify);
         if(pass_verify.getText().toString().trim().equalsIgnoreCase(password)) {
 
@@ -93,7 +94,7 @@ public class SignUp extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"one or more fields are empty.",Toast.LENGTH_SHORT).show();
                 return;
             }
-            register(fname,lname,password,email,mobile,gender);
+            register(fname,lname,password_encrypt,email,mobile,gender);
         }
         else {
             Toast.makeText(getApplicationContext(), "Passwords do not match!", Toast.LENGTH_SHORT).show();
