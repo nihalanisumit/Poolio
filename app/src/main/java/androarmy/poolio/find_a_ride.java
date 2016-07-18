@@ -1,5 +1,6 @@
 package androarmy.poolio;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,13 +14,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class find_a_ride extends Fragment {
@@ -29,6 +33,8 @@ public class find_a_ride extends Fragment {
     Button b;
     String pickup, drop, time, date;
     public final String FIND_URL="http://192.168.1.14:8080/poolio/find.php";//Sumit's pc
+    private ImageView dateIv;
+    private int mYear, mMonth, mDay, mHour, mMinute;
 
 
     @Nullable
@@ -50,6 +56,7 @@ public class find_a_ride extends Fragment {
         dateET = (EditText)v.findViewById(R.id.date);
         timeET = (EditText)v.findViewById(R.id.time);
         b=(Button) v.findViewById(R.id.btn_find);
+        dateIv = (ImageView) v.findViewById(R.id.dateIv);
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +67,31 @@ public class find_a_ride extends Fragment {
                 time= timeET.getText().toString();
                 findRide(pickup);
             }
+        });
+
+        dateIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext() , new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                dateET.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+
+
+            }
+
         });
         return v;
     }
