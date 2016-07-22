@@ -35,7 +35,7 @@ public class offer_a_ride extends Fragment {
     //public final String REGISTER_URL="http://192.168.1.101/poolio/register.php"; //Siddharth's pc
     public final String OFFER_URL="http://192.168.1.14:8080/poolio/offer.php";// Sumit's pc
 
-    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","Backgate","Potheri Station","Guduvancheri"};//need to make it dynamic
+    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","SRM Backgate","Potheri Station","Green Pearl","Safa Guduvanchery", "Akshaya Guduvanchery"};
     List<String> vehicleType = new ArrayList<String>(); //No need for dynamic i suppose
     public static Spinner spinner;
     AutoCompleteTextView actv,actv2;

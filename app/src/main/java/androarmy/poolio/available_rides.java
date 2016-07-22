@@ -28,6 +28,7 @@ public class available_rides extends AppCompatActivity {
 
         Intent intent = getIntent();
         String json= intent.getStringExtra("json");
+        //Toast.makeText(getApplicationContext(),json,Toast.LENGTH_LONG).show();
         showRides(json);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
@@ -51,6 +52,7 @@ public class available_rides extends AppCompatActivity {
         List<Data> data  = new ArrayList<>();
         for (int i = 0 ; i<id.length ; i++){
             if (id[i]!=null) {
+                //Log.e("**CHECKING**",source[0]+" "+ destination[0]+vehicle_name[0]);
                 data.add(new Data(id[i], mobile[i], source[i], destination[i], type[i], date[i], time[i], vehicle_name[i], vehicle_number[i], seats[i]));
             }
 
@@ -64,8 +66,12 @@ public class available_rides extends AppCompatActivity {
         try {
             JSONObject jsonObject = new JSONObject(json);
             JSONArray result = jsonObject.getJSONArray("result");
+            definearray(result.length());
             for (int i = 0 ; i<result.length() ; i++) {
                 JSONObject c = result.getJSONObject(i);
+
+
+
 
 
                 id[i]= c.getString("id");
@@ -79,12 +85,27 @@ public class available_rides extends AppCompatActivity {
                 vehicle_number [i] = c.getString("vehicle_number");
                 seats [i]= c.getString("seats");
 
-                Log.d("ID:::",id[i]);
+                //Toast.makeText(getApplicationContext(),id[i]+mobile[i],Toast.LENGTH_SHORT).show();
             }
 
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    void definearray(int len)
+    {
+        id= new String[len];
+        mobile= new String[len];
+        source= new String[len];
+        destination= new String[len];
+        type= new String[len];
+        date= new String[len];
+        time= new String[len];
+        vehicle_name= new String[len];
+        vehicle_number= new String[len];
+        seats= new String[len];
+
     }
 }

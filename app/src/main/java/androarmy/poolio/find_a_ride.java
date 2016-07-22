@@ -27,7 +27,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 public class find_a_ride extends Fragment {
-    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","Backgate","Potheri Station","Guduvancheri"};//need to make it dynamic
+    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","SRM Backgate","Potheri Station","Green Pearl","Safa Guduvanchery", "Akshaya Guduvanchery"};//need to make it dynamic
     AutoCompleteTextView actv,actv2;
     EditText dateET, timeET;
     Button b;
@@ -117,7 +117,6 @@ public class find_a_ride extends Fragment {
                 super.onPostExecute(s);
                 loading.dismiss();
                 //Toast.makeText(getContext(),s,Toast.LENGTH_LONG).show();
-                //showRides(s);
                 Intent i = new Intent(getActivity(),available_rides.class);
                 i.putExtra("json",s);
                 startActivity(i);

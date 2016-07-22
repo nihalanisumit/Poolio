@@ -26,8 +26,8 @@ public class SplashScreen extends Activity {
     Animation fadeIn;
     private ImageView logo;
     public String NO_VAL="empty";
-     public final String SIGNIN_URL="http://192.168.1.6/poolio/signin.php";//Siddharth's pc
-    //public final String SIGNIN_URL="http://192.168.1.10:8080/poolio/signin.php";//Sumit's pc
+     //public final String SIGNIN_URL="http://192.168.1.6/poolio/signin.php";//Siddharth's pc
+     public final String SIGNIN_URL="http://192.168.1.14:8080/poolio/signin.php";//Sumit's pc
     private String password = null;
 
     @Override

@@ -98,21 +98,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Type"
-                    android:textSize="18dp"/>
+                    android:textSize="18dp"
+                    android:id="@+id/type_tv"/>
 
                 <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Vehicle name"
                 android:layout_marginLeft="20dp"
-                android:textSize="18dp"/>
+                android:textSize="18dp"
+                android:id="@+id/vehiclename_tv"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18dp"
                     android:layout_marginLeft="20dp"
-                    android:text="Vehincle No"/>
+                    android:text="Vehincle No"
+                    android:id="@+id/vehicleno_tv"/>
 
             </LinearLayout>
             <LinearLayout
@@ -129,7 +132,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="15-07-2016"
-                    android:textSize="18dp"/>
+                    android:textSize="18dp"
+                    android:id="@+id/date_tv"/>
 
 
                 <TextView
@@ -138,14 +142,14 @@
                     android:textSize="18dp"
                     android:layout_marginLeft="20dp"
                     android:text="21:28"
-                    />
+                    android:id="@+id/time_tv"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18dp"
                     android:layout_marginLeft="20dp"
                     android:text="Seats: 1"
-                    />
+                    android:id="@+id/seats_tv"/>
 
             </LinearLayout>
             <LinearLayout
@@ -160,12 +164,22 @@
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Call"/>
+                        android:text="Call"
+                        android:id="@+id/button"/>
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Book"
                         android:layout_alignParentRight="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="mobile"
+                        android:id="@+id/mobile"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/button"
+                        android:layout_toEndOf="@+id/button"/>
                 </RelativeLayout>
 
 
