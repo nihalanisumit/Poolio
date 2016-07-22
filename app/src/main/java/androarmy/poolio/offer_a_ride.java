@@ -1,6 +1,8 @@
 package androarmy.poolio;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,12 +18,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 
@@ -35,7 +40,7 @@ public class offer_a_ride extends Fragment {
     //public final String REGISTER_URL="http://192.168.1.101/poolio/register.php"; //Siddharth's pc
     public final String OFFER_URL="http://192.168.1.14:8080/poolio/offer.php";// Sumit's pc
 
-    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","SRM Backgate","Potheri Station","Green Pearl","Safa Guduvanchery", "Akshaya Guduvanchery"};
+    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","Backgate","Potheri Station","Guduvancheri"};//need to make it dynamic
     List<String> vehicleType = new ArrayList<String>(); //No need for dynamic i suppose
     public static Spinner spinner;
     AutoCompleteTextView actv,actv2;
@@ -49,6 +54,9 @@ public class offer_a_ride extends Fragment {
     static int dayCheck;
     LinearLayout chargeLayout;
     static boolean timeCheck;// if timeCheck is false -> don't go to next screen
+    ImageView Calender ;
+    private int mYear, mMonth, mDay, mHour, mMinute;
+
 
 
     @Nullable
@@ -90,6 +98,7 @@ public class offer_a_ride extends Fragment {
         vnumberET=(EditText)v.findViewById(R.id.vnumber);
         availableET=(EditText)v.findViewById(R.id.passengers);
         amountET=(EditText)v.findViewById(R.id.money);
+        Calender = (ImageView)v.findViewById(R.id.calender);
         chargeLayout = (LinearLayout)v.findViewById(R.id.layer_charge);
         chargeableRG=(RadioGroup)v.findViewById(R.id.radioGrp);
         chargeableRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -109,35 +118,77 @@ public class offer_a_ride extends Fragment {
                 }
             }
         });
+        Calender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext() , new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+
+                        dateET.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                    }
+                }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
 
 
-        final Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        dayCheck = day;
-        timeCheck = false;
-        if(day < 10 && (month+1) > 10)
-            date = "0"+day+"/"+(month+1)+"/"+year;
-        else if(day > 10 && (month+1) < 10)
-            date = day+"/0"+(month+1)+"/"+year;
-        else if(day < 10 && (month+1) < 10)
-            date = "0"+day+"/0"+(month+1)+"/"+year;
-        else
-            date = day+"/"+(month+1)+"/"+year;
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
-        if(minute < 10 && hour > 10)
-            time = hour+":0"+minute;
-        else if(minute > 10 && hour < 10)
-            time = "0"+hour+":"+minute;
-        else if(minute < 10 && hour < 10)
-            time = "0"+hour+":0"+minute;
-        else
-            time = hour+":"+minute;
+//        final Calendar c = Calendar.getInstance();
+//        int year = c.get(Calendar.YEAR);
+//        int month = c.get(Calendar.MONTH);
+//        int day = c.get(Calendar.DAY_OF_MONTH);
+//        dayCheck = day;
+//        timeCheck = false;
+//        if(day < 10 && (month+1) > 10)
+//            date = "0"+day+"/"+(month+1)+"/"+year;
+//        else if(day > 10 && (month+1) < 10)
+//            date = day+"/0"+(month+1)+"/"+year;
+//        else if(day < 10 && (month+1) < 10)
+//            date = "0"+day+"/0"+(month+1)+"/"+year;
+//        else
+//            date = day+"/"+(month+1)+"/"+year;
+//        int hour = c.get(Calendar.HOUR_OF_DAY);
+//        int minute = c.get(Calendar.MINUTE);
+//        if(minute < 10 && hour > 10)
+//            time = hour+":0"+minute;
+//        else if(minute > 10 && hour < 10)
+//            time = "0"+hour+":"+minute;
+//        else if(minute < 10 && hour < 10)
+//            time = "0"+hour+":0"+minute;
+//        else
+//            time = hour+":"+minute;
 
-        timeET.setText(time);
-        dateET.setText(date);
+        timeET.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                mHour = c.get(Calendar.HOUR_OF_DAY);
+                mMinute = c.get(Calendar.MINUTE);
+
+                // Launch Time Picker Dialog
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+
+                                timeET.setText(hourOfDay + ":" + minute);
+                            }
+                        }, mHour, mMinute, false);
+                timePickerDialog.show();
+
+            }
+        });
+//        dateET.setText(date);
 
 
 
@@ -151,6 +202,8 @@ public class offer_a_ride extends Fragment {
 
             }
         });
+
+
 
         return v;
 
@@ -175,7 +228,7 @@ public class offer_a_ride extends Fragment {
         }
 
         //Toast.makeText(getContext(),"Mobile :"+mobile+"\n Source:"+source+"  Destination:"+destination+"\ntype:"+type
-              //  +"\nSeats:"+availableSeats+"\n Amount:"+amount,Toast.LENGTH_LONG).show();
+        //  +"\nSeats:"+availableSeats+"\n Amount:"+amount,Toast.LENGTH_LONG).show();
 
         offer(mobile,source,destination,type,date,time,vname,vnumber,availableSeats,chargeable,amount);
     }
