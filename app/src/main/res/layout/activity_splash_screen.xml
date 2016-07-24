@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background_app"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="androarmy.poolio.SplashScreen">
@@ -11,6 +12,6 @@
         android:layout_height="match_parent"
         android:id="@+id/logo"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/poolio_logo"
+        android:src="@drawable/logo_poolio"
         android:scaleType="centerCrop"/>
 </RelativeLayout>
