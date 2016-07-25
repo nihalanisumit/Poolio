@@ -1,12 +1,15 @@
 package androarmy.poolio;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,6 +42,8 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
     public void onBindViewHolder(View_Holder holder, int position) {
 
 //        holder.id.setText(list.get(position).getId());
+        holder.name.setText(list.get(position).getFirst_name()+" "+ list.get(position).getLast_name());
+        holder.gender.setText(list.get(position).getGender());
         holder.mobile.setText(list.get(position).getMobile());
         holder.source.setText(list.get(position).getSource());
         holder.destination.setText(list.get(position).getDestination());
@@ -48,13 +53,6 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         holder.vehicle_name.setText(list.get(position).getVehicle_name());
         holder.vehicle_number.setText(list.get(position).getVehicle_number());
         holder.seats.setText(list.get(position).getSeats());
-
-
-
-
-
-
-
 
 
 
@@ -76,10 +74,15 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
     }
     public void setClickListener(ItemClickListener itemClickListener) {
         this.clickListener = itemClickListener;
+
+
+
     }
     public  class View_Holder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView id;
+        public TextView name;
+        public TextView gender;
         public TextView mobile;
         public TextView source;
         public TextView destination;
@@ -95,6 +98,8 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         public View_Holder(View view) {
             super(view);
             cv=(CardView) view.findViewById(R.id.cv);
+            name=(TextView)view.findViewById(R.id.name_tv);
+            gender=(TextView)view.findViewById(R.id.gender_tv);
             mobile=(TextView)view.findViewById(R.id.mobile);
             source=(TextView)view.findViewById(R.id.source_tv);
             destination=(TextView)view.findViewById(R.id.destination_tv);
@@ -110,7 +115,10 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
 
         @Override
         public void onClick(View v) {
-            clickListener.onClick(v ,getAdapterPosition() );
+            clickListener.onClick(v, getAdapterPosition());
+
+
+
 
         }
     }

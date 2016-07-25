@@ -6,6 +6,9 @@ package androarmy.poolio;
 public class Data {
 
     public String id;
+    public String first_name;
+    public String last_name;
+    public String gender;
     public String mobile;
     public String source;
     public String destination;
@@ -17,10 +20,13 @@ public class Data {
     public String seats;
 
 
-    Data(String id , String mobile , String source , String destination , String type , String date , String time ,
+    Data(String id ,String first_name, String last_name,String gender, String mobile , String source , String destination , String type , String date , String time ,
          String vehicle_name , String vehicle_number , String seats
          ){
         this.id = id;
+        this.first_name=first_name;
+        this.last_name=last_name;
+        this.gender=gender;
         this.mobile = mobile;
         this.source = source;
         this.destination = destination;
@@ -33,8 +39,17 @@ public class Data {
 
     }
 
-    public String getId(){
+    public String getid(){
         return  id;
+    }
+    public String getFirst_name(){
+        return  first_name;
+    }
+    public String getLast_name(){
+        return  last_name;
+    }
+    public String getGender(){
+        return  gender;
     }
     public String getMobile(){
         return  mobile;

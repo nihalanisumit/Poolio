@@ -30,23 +30,26 @@
             android:name=".EnterOTP"
             android:theme="@style/AppFullScreenTheme" >
         </activity>
-        <activity android:name=".Main2Activity"
-                  android:theme="@style/AppFullScreenTheme">
+        <activity
+            android:name=".Main2Activity"
+            android:theme="@style/AppFullScreenTheme" >
         </activity>
         <activity
             android:name=".SignUp"
             android:theme="@style/AppFullScreenTheme" >
         </activity>
-        <activity android:name=".SignIn"
-                  android:theme="@style/AppFullScreenTheme">
+        <activity
+            android:name=".SignIn"
+            android:theme="@style/AppFullScreenTheme" >
         </activity>
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppFullScreenTheme" >
         </activity>
-        <activity android:name=".find_a_ride"
-                  android:theme="@style/AppFullScreenTheme">
+        <activity
+            android:name=".find_a_ride"
+            android:theme="@style/AppFullScreenTheme" >
         </activity>
         <activity
             android:name=".WelcomeSlider"
@@ -57,8 +60,14 @@
             android:label="@string/title_activity_confirmation"
             android:theme="@style/AppFullScreenTheme" >
         </activity>
-        <activity android:name=".available_rides"
-                  android:theme="@style/AppFullScreenTheme">
+        <activity
+            android:name=".available_rides"
+            android:theme="@style/AppFullScreenTheme" >
+        </activity>
+        <activity
+            android:name=".details_ride"
+            android:label="@string/title_activity_details_ride"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 

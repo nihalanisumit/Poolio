@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class available_rides extends AppCompatActivity {
-    String [] id,mobile, source, destination, type, date, time, vehicle_name,vehicle_number, seats;
+    String [] id,mobile, source, destination, type, date, time, vehicle_name,vehicle_number, seats, first_name, last_name, gender;
     RecyclerView recyclerView;
 
     @Override
@@ -34,12 +35,34 @@ public class available_rides extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         List<Data> data = fill_with_data();
 
+        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
+
         final Recycler_View_Adapter adapter  = new Recycler_View_Adapter(data , getApplication());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager( new LinearLayoutManager(getApplicationContext()));
         adapter.setClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position) {
+                Log.e("**ONCLICKKKK**","zzz");
+
+                Intent intent1 = new Intent(getApplicationContext(),details_ride.class);
+                //intent1.putExtra("mobile",mobile[position]);
+                startActivity(intent1);
 
             }
 
@@ -53,7 +76,7 @@ public class available_rides extends AppCompatActivity {
         for (int i = 0 ; i<id.length ; i++){
             if (id[i]!=null) {
                 //Log.e("**CHECKING**",source[0]+" "+ destination[0]+vehicle_name[0]);
-                data.add(new Data(id[i], mobile[i], source[i], destination[i], type[i], date[i], time[i], vehicle_name[i], vehicle_number[i], seats[i]));
+                data.add(new Data(id[i],first_name[i],last_name[i],gender[i], mobile[i], source[i], destination[i], type[i], date[i], time[i], vehicle_name[i], vehicle_number[i], seats[i]));
             }
 
         }
@@ -70,11 +93,10 @@ public class available_rides extends AppCompatActivity {
             for (int i = 0 ; i<result.length() ; i++) {
                 JSONObject c = result.getJSONObject(i);
 
-
-
-
-
                 id[i]= c.getString("id");
+                first_name[i]= c.getString("first_name");
+                last_name[i]= c.getString("last_name");
+                gender[i]= c.getString("gender");
                 mobile[i] = c.getString("mobile");
                 source [i]= c.getString("source");
                 destination [i] = c.getString("destination");
@@ -106,6 +128,10 @@ public class available_rides extends AppCompatActivity {
         vehicle_name= new String[len];
         vehicle_number= new String[len];
         seats= new String[len];
+        first_name= new String[len];
+        last_name= new String[len];
+        gender= new String[len];
+
 
     }
 }
