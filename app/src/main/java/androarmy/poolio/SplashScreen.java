@@ -79,7 +79,7 @@ public class SplashScreen extends Activity {
             SharedPreferences session = getSharedPreferences("session", MODE_PRIVATE);
             String mob = session.getString("mobile", NO_VAL);
             String pass = session.getString("password", NO_VAL);
-            md5(pass);
+
             if (mob.equalsIgnoreCase(NO_VAL) || pass.equalsIgnoreCase(NO_VAL) || mob.equalsIgnoreCase("") || pass.equalsIgnoreCase("")) {
                 Intent myIntent = new Intent(SplashScreen.this, WelcomeSlider.class);
                 SplashScreen.this.finish();
@@ -87,7 +87,7 @@ public class SplashScreen extends Activity {
                 overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
             }
             else {
-                      userLogin(mob,password);
+                      userLogin(mob,md5(pass));
              }
         }
         private void userLogin(final String mobile, final String password){
@@ -110,6 +110,8 @@ public class SplashScreen extends Activity {
                         overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
                     }else{
                         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(),SignIn.class);
+                        startActivity(intent);
                     }
 
                 }
