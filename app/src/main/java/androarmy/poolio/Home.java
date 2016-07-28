@@ -115,9 +115,9 @@ public class Home extends AppCompatActivity
                 fragmentClass= TabFragment.class;
                 toolbar.setTitle("Find a ride");
                 break;
-            case R.id.nav_offer:
-                Toast.makeText(getApplicationContext(),"Offer a ride",Toast.LENGTH_SHORT).show();
-                toolbar.setTitle("Offer a ride");
+            case R.id.nav_myrides:
+                fragmentClass= myRides.class;
+                toolbar.setTitle("My Rides");
                 break;
             case R.id.nav_profile:
                 Toast.makeText(getApplicationContext(),"Profile",Toast.LENGTH_SHORT).show();

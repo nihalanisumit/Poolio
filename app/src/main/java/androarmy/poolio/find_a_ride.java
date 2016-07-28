@@ -2,6 +2,7 @@ package androarmy.poolio;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -33,7 +35,7 @@ public class find_a_ride extends Fragment {
     Button b;
     String pickup, drop, time, date;
     public final String FIND_URL="http://192.168.1.14:8080/poolio/find.php";//Sumit's pc
-    private ImageView dateIv;
+    private ImageView dateIv, timeIV;
     private int mYear, mMonth, mDay, mHour, mMinute;
 
 
@@ -57,6 +59,7 @@ public class find_a_ride extends Fragment {
         timeET = (EditText)v.findViewById(R.id.time);
         b=(Button) v.findViewById(R.id.btn_find);
         dateIv = (ImageView) v.findViewById(R.id.dateIv);
+        timeIV = (ImageView) v.findViewById(R.id.img_time);
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +86,7 @@ public class find_a_ride extends Fragment {
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
 
-                                dateET.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                dateET.setText(year + "-" + (monthOfYear + 1)+"-"+dayOfMonth);
 
                             }
                         }, mYear, mMonth, mDay);
@@ -92,6 +95,28 @@ public class find_a_ride extends Fragment {
 
             }
 
+        });
+        timeIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                mHour = c.get(Calendar.HOUR_OF_DAY);
+                mMinute = c.get(Calendar.MINUTE);
+
+                // Launch Time Picker Dialog
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+
+                                timeET.setText(hourOfDay + ":" + minute);
+                            }
+                        }, mHour, mMinute, false);
+                timePickerDialog.show();
+
+            }
         });
         return v;
     }

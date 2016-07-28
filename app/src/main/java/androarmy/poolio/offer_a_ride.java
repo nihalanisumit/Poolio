@@ -11,7 +11,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +21,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -54,7 +51,7 @@ public class offer_a_ride extends Fragment {
     static int dayCheck;
     LinearLayout chargeLayout;
     static boolean timeCheck;// if timeCheck is false -> don't go to next screen
-    ImageView Calender ;
+    ImageView Calenderiv;
     private int mYear, mMonth, mDay, mHour, mMinute;
 
 
@@ -98,7 +95,7 @@ public class offer_a_ride extends Fragment {
         vnumberET=(EditText)v.findViewById(R.id.vnumber);
         availableET=(EditText)v.findViewById(R.id.passengers);
         amountET=(EditText)v.findViewById(R.id.money);
-        Calender = (ImageView)v.findViewById(R.id.calender);
+        Calenderiv = (ImageView)v.findViewById(R.id.calender);
         chargeLayout = (LinearLayout)v.findViewById(R.id.layer_charge);
         chargeableRG=(RadioGroup)v.findViewById(R.id.radioGrp);
         chargeableRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -118,25 +115,45 @@ public class offer_a_ride extends Fragment {
                 }
             }
         });
-        Calender.setOnClickListener(new View.OnClickListener() {
+        Calenderiv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar c = Calendar.getInstance();
+
+                // Launch Time Picker Dialog
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+
+                                timeET.setText(hourOfDay + ":" + minute);
+                            }
+                        }, mHour, mMinute, false);
+                timePickerDialog.show();
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext() , new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
 
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
 
-                        dateET.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        dateET.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
 
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();
+
+                mHour = c.get(Calendar.HOUR_OF_DAY);
+                mMinute = c.get(Calendar.MINUTE);
+
+
+
+
             }
         });
 
@@ -217,7 +234,7 @@ public class offer_a_ride extends Fragment {
         destination=destinationET.getText().toString().trim();
         type = spinner.getSelectedItem().toString();
         date = dateET.getText().toString();
-        time=timeET.getText().toString();
+        time=timeET.getText().toString()+"";
         vname=vnameET.getText().toString();
         vnumber=vnumberET.getText().toString();
         availableSeats=Integer.parseInt(availableET.getText().toString());
