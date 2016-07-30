@@ -105,7 +105,8 @@ public class SplashScreen extends Activity {
 
                 goFurther();
             }
-            else {
+            else if(flag==1) {
+
                  Dialog dialog = new Dialog(SplashScreen.this);
                 dialog.setTitle("UPDATE");
                 dialog.setContentView(R.layout.customdialog);
@@ -139,6 +140,27 @@ public class SplashScreen extends Activity {
                 dialog.show();
 
             }
+            else if(flag==2){
+                Dialog dialog = new Dialog(SplashScreen.this);
+                dialog.setTitle("UPDATE");
+                dialog.setContentView(R.layout.customdialog2);
+                TextView headingtv = (TextView)dialog.findViewById(R.id.heading_tv);
+                TextView descriptiontv = (TextView)dialog.findViewById(R.id.description_tv);
+                headingtv.setText(heading);
+                descriptiontv.setText(description);
+                Button button_close = (Button)dialog.findViewById(R.id.button_exit);
+                button_close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+                dialog.show();
+
+
+            }
+            else
+                goFurther();
         }
 
     }
