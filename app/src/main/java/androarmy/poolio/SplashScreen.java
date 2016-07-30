@@ -5,14 +5,19 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.onesignal.OneSignal;
@@ -55,6 +60,7 @@ public class SplashScreen extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
         StartAnimations();
+        getCondition(CONDITION_URL);
         myCountdownTimer = new MyCountdownTimer(3000, 1000);
         myCountdownTimer.start();
 
@@ -87,71 +93,93 @@ public class SplashScreen extends Activity {
         @Override
         public void onTick(long millisUntilFinished)
         {
-            getCondition(CONDITION_URL);
+
 
         }
         @Override
 
         public void onFinish() {
+
             myCountdownTimer.cancel();
             if (flag == 0) {
 
-                SharedPreferences session = getSharedPreferences("session", MODE_PRIVATE);
-                String mob = session.getString("mobile", NO_VAL);
-                String pass = session.getString("password", NO_VAL);
-
-                if (mob.equalsIgnoreCase(NO_VAL) || pass.equalsIgnoreCase(NO_VAL) || mob.equalsIgnoreCase("") || pass.equalsIgnoreCase("")) {
-                    Intent myIntent = new Intent(SplashScreen.this, WelcomeSlider.class);
-                    SplashScreen.this.finish();
-                    startActivity(myIntent);
-                    overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
-                } else {
-                    userLogin(mob, md5(pass));
-                }
+                goFurther();
             }
             else {
+                 Dialog dialog = new Dialog(SplashScreen.this);
+                dialog.setTitle("UPDATE");
+                dialog.setContentView(R.layout.customdialog);
+                TextView headingtv = (TextView)dialog.findViewById(R.id.heading_tv);
+                TextView descriptiontv = (TextView)dialog.findViewById(R.id.description_tv);
+                headingtv.setText(heading);
+                descriptiontv.setText(description);
+                Button button_continue =(Button)dialog.findViewById(R.id.button_continue);
+                Button button_download =(Button)dialog.findViewById(R.id.button_download);
+                button_continue.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        goFurther();
+                    }
+                });
+                button_download.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String url = "https://play.google.com/store/apps/details?id=androarmy.torque&hl=en";
 
-            }
-        }
-        private void userLogin(final String mobile, final String password){
-            class UserLoginClass extends AsyncTask<String,Void,String> {
-                ProgressDialog loading;
-                @Override
-                protected void onPreExecute() {
-                    super.onPreExecute();
-                    loading = ProgressDialog.show(SplashScreen.this,"Signing in","Please wait while we connect to server",true,true);
-                }
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);
+                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
 
-                @Override
-                protected void onPostExecute(String s) {
-                    super.onPostExecute(s);
-                    loading.dismiss();
-                    if("success".equalsIgnoreCase(s)){
+                        //pass the url to intent data
+                        intent.setData(Uri.parse(url));
 
-                        Intent intent = new Intent(SplashScreen.this,Home.class);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
-                    }else{
-                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(),SignIn.class);
                         startActivity(intent);
                     }
+                });
+                dialog.show();
 
-                }
-
-                @Override
-                protected String doInBackground(String... params) {
-                    HashMap<String,String> data = new HashMap<>();
-                    data.put("mobile",params[0]);
-                    data.put("password",params[1]);
-                    RegisterUserClass ruc = new RegisterUserClass();
-                    String result = ruc.sendPostRequest(SIGNIN_URL,data);
-                    return result;
-                }
             }
-            UserLoginClass ulc = new UserLoginClass();
-            ulc.execute(mobile,password);
         }
+
+    }
+    private void userLogin(final String mobile, final String password){
+        class UserLoginClass extends AsyncTask<String,Void,String> {
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(SplashScreen.this,"Signing in","Please wait while we connect to server",true,true);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                if("success".equalsIgnoreCase(s)){
+
+                    Intent intent = new Intent(SplashScreen.this,Home.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
+                }else{
+                    Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(),SignIn.class);
+                    startActivity(intent);
+                }
+
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String,String> data = new HashMap<>();
+                data.put("mobile",params[0]);
+                data.put("password",params[1]);
+                RegisterUserClass ruc = new RegisterUserClass();
+                String result = ruc.sendPostRequest(SIGNIN_URL,data);
+                return result;
+            }
+        }
+        UserLoginClass ulc = new UserLoginClass();
+        ulc.execute(mobile,password);
     }
 
 
@@ -238,6 +266,21 @@ public class SplashScreen extends Activity {
         gj.execute(url);
     }
 
+    void goFurther(){
+        SharedPreferences session = getSharedPreferences("session", MODE_PRIVATE);
+        String mob = session.getString("mobile", NO_VAL);
+        String pass = session.getString("password", NO_VAL);
+
+        if (mob.equalsIgnoreCase(NO_VAL) || pass.equalsIgnoreCase(NO_VAL) || mob.equalsIgnoreCase("") || pass.equalsIgnoreCase("")) {
+            Intent myIntent = new Intent(SplashScreen.this, WelcomeSlider.class);
+            SplashScreen.this.finish();
+            startActivity(myIntent);
+            overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
+        } else {
+            userLogin(mob, pass);
+        }
+    }
+
 
     public String md5(String s){
         MessageDigest digest ;
@@ -256,5 +299,8 @@ public class SplashScreen extends Activity {
 
         return "";
     }
+
+
+
 }
 

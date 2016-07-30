@@ -4,22 +4,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 public class Home extends AppCompatActivity
@@ -77,7 +72,7 @@ public class Home extends AppCompatActivity
                     }).setNegativeButton("no", null).show();
         }
         overridePendingTransition(R.anim.previous_slide_in, R.anim.previous_slide_out);
-        }
+    }
 
 
     @Override
@@ -137,6 +132,9 @@ public class Home extends AppCompatActivity
                 Toast.makeText(getApplicationContext(),"about us",Toast.LENGTH_SHORT).show();
                 toolbar.setTitle("About Us");
                 break;
+            case R.id.sign_out:
+                signout();
+                break;
         }
 
         try {
@@ -155,6 +153,13 @@ public class Home extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void signout(){
+        SharedPreferences session= getSharedPreferences("session",MODE_PRIVATE);
+        session.edit().clear().commit();
+        Intent in= new Intent(this,MainActivity.class);
+        startActivity(in);
+        overridePendingTransition(R.anim.previous_slide_in, R.anim.previous_slide_out);
     }
 
 }

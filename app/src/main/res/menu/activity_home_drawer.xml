@@ -18,6 +18,7 @@
             android:title="My profile"
             android:checked="false"/>
 
+
     </group>
 
     <item android:title="Communicate">
@@ -37,7 +38,14 @@
                 android:icon="@android:drawable/ic_dialog_info"
                 android:title="About us"
                 android:checked="false"/>
+
         </menu>
     </item>
+    <item
+        android:id="@+id/sign_out"
+        android:icon="@drawable/signout"
+        android:title="Sign-out"
+        android:checked="false"
+        />
 
 </menu>

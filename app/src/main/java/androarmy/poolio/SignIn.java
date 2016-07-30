@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,8 +23,8 @@ public class SignIn extends AppCompatActivity {
     TextView goToSignUp;
     Button btn_signin, skipbtn;
     //public final String SIGNIN_URL="http://192.168.1.6/poolio/signin.php";//Siddharth's pc
-  // public final String SIGNIN_URL="http://192.168.1.14:8080/poolio/signin.php";//Sumit's pc
-   // public final String SIGNIN_URL="http://192.168.1.101/poolio/signin.php";//Siddharth's pc
+    // public final String SIGNIN_URL="http://192.168.1.14:8080/poolio/signin.php";//Sumit's pc
+    // public final String SIGNIN_URL="http://192.168.1.101/poolio/signin.php";//Siddharth's pc
     public final String SIGNIN_URL="http://192.168.1.14:8080/poolio/signin.php";//Sumit's pc
     EditText input_mob,input_pass;
     String mob="12345",pass;
@@ -52,7 +52,7 @@ public class SignIn extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SignIn.this, OTP.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.next_slide_in,R.anim.next_slide_out);
+                overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
             }
         });
 

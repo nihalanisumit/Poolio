@@ -3,8 +3,8 @@ package androarmy.poolio;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -102,69 +102,69 @@ public class SignUp extends AppCompatActivity {
         }
     }
     public void register(String fname,String lname, final String password,String email, final String mobile,final String gender){
-         class RegisterUser extends AsyncTask<String, Void, String>{
-           ProgressDialog loading;
-             RegisterUserClass ruc=new RegisterUserClass();
+        class RegisterUser extends AsyncTask<String, Void, String>{
+            ProgressDialog loading;
+            RegisterUserClass ruc=new RegisterUserClass();
 
-                  protected void onPreExecute() {
-                      super.onPreExecute();
-                      loading = ProgressDialog.show(SignUp.this, "Signing Up","Please wait while we connect to server", true, true);
-                  }
-             protected void onPostExecute(String s){
-                    super.onPostExecute(s);
-                    loading.dismiss();
-                 if("".equals(s))
-                 {
-                     s="Server error, Please try again after some time!";
-                 }
-                 else if("successfully registered".equalsIgnoreCase(s)){
-                     Intent myIntent = new Intent(SignUp.this, Home.class);
-                     myIntent.putExtra("mobile",mobile);
-                     myIntent.putExtra("pass",password);
-                     startActivity(myIntent);
-                     overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
-                 }
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(SignUp.this, "Signing Up","Please wait while we connect to server", true, true);
+            }
+            protected void onPostExecute(String s){
+                super.onPostExecute(s);
+                loading.dismiss();
+                if("".equals(s))
+                {
+                    s="Server error, Please try again after some time!";
+                }
+                else if("successfully registered".equalsIgnoreCase(s)){
+                    Intent myIntent = new Intent(SignUp.this, Home.class);
+                    myIntent.putExtra("mobile",mobile);
+                    myIntent.putExtra("pass",password);
+                    startActivity(myIntent);
+                    overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
+                }
 
-                 Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
-
-
-             }
+                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
 
 
-             @Override
-             protected String doInBackground(String... params) {
-                 HashMap<String, String> data = new HashMap<String,String>();
-                 data.put("fname",params[0]);
-                 data.put("lname",params[1]);
-                 data.put("password",params[2]);
-                 data.put("email",params[3]);
-                 data.put("mobile",params[4]);
-                 data.put("gender",params[5]);
-                 String result = ruc.sendPostRequest(REGISTER_URL,data);
-                 Log.i("@doinBackground:",result);
-                 return  result;
+            }
 
-             }}
-             RegisterUser ru = new RegisterUser();
-             ru.execute(fname,lname,password,email,mobile,gender);
-         }
 
-     public String md5(String s){
-         MessageDigest digest ;
-         try {
-            digest = MessageDigest.getInstance("MD5");
-             digest.update(s.getBytes(Charset.forName("US-ASCII")),0,s.length());
-             byte[] magnitude = digest.digest();
-             BigInteger bi  = new BigInteger(1,magnitude);
-             String hash = String.format("%0" + (magnitude.length << 1) + "X" , bi);
-             return hash;
-        }
-         catch (NoSuchAlgorithmException e){
-             e.printStackTrace();
-         }
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("fname",params[0]);
+                data.put("lname",params[1]);
+                data.put("password",params[2]);
+                data.put("email",params[3]);
+                data.put("mobile",params[4]);
+                data.put("gender",params[5]);
+                String result = ruc.sendPostRequest(REGISTER_URL,data);
+                Log.i("@doinBackground:",result);
+                return  result;
 
-         return "";
-     }
+            }}
+        RegisterUser ru = new RegisterUser();
+        ru.execute(fname,lname,password,email,mobile,gender);
     }
+
+    public String md5(String s){
+        MessageDigest digest ;
+        try {
+            digest = MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes(Charset.forName("US-ASCII")),0,s.length());
+            byte[] magnitude = digest.digest();
+            BigInteger bi  = new BigInteger(1,magnitude);
+            String hash = String.format("%0" + (magnitude.length << 1) + "X" , bi);
+            return hash;
+        }
+        catch (NoSuchAlgorithmException e){
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+}
 
 
