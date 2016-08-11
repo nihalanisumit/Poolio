@@ -76,7 +76,7 @@ public class available_rides extends AppCompatActivity {
         for (int i = 0 ; i<id.length ; i++){
             if (id[i]!=null) {
                 //Log.e("**CHECKING**",source[0]+" "+ destination[0]+vehicle_name[0]);
-                data.add(new Data(id[i],first_name[i],last_name[i],gender[i], mobile[i], source[i], destination[i], type[i], date[i], time[i], vehicle_name[i], vehicle_number[i], seats[i]));
+                data.add(new Data(id[i],first_name[i] ,  source[i], destination[i]));
             }
 
         }
