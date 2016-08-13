@@ -56,31 +56,7 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         OneSignal.startInit(this).init();
-        OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
-            @Override
-            public void idsAvailable( String userId, String registrationId) {
-                Log.d("debug", "User:" + userId);
-                userid = userId ;
-                if (registrationId != null)
-                    Log.d("debug", "registrationId:" + registrationId);
-            }
-        });
-        try {
-            OneSignal.postNotification(new JSONObject("{'contents': {'en':'Test Message'}, 'include_player_ids': ['" + userid + "']}"),
-                    new OneSignal.PostNotificationResponseHandler() {
-                        @Override
-                        public void onSuccess(JSONObject response) {
-                            Log.i("OneSignalExample", "postNotification Success: " + response.toString());
-                        }
 
-                        @Override
-                        public void onFailure(JSONObject response) {
-                            Log.e("OneSignalExample", "postNotification Failure: " + response.toString());
-                        }
-                    });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);

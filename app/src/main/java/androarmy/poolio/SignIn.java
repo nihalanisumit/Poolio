@@ -7,11 +7,17 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.onesignal.OneSignal;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -26,8 +32,9 @@ public class SignIn extends AppCompatActivity {
     // public final String SIGNIN_URL="http://192.168.1.14:8080/poolio/signin.php";//Sumit's pc
     // public final String SIGNIN_URL="http://192.168.1.101/poolio/signin.php";//Siddharth's pc
     public final String SIGNIN_URL="http://192.168.1.14:8080/poolio/signin.php";//Sumit's pc
+    public final String DEVICE_URL="http://192.168.1.14:8080/poolio/deviceregister.php";// Sumit's pc
     EditText input_mob,input_pass;
-    String mob="12345",pass;
+    String mob="12345",pass,device_id;
     SharedPreferences mSharedPreferences;
     private String password = null;
     @Override
@@ -35,10 +42,34 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         goToSignUp = (TextView)findViewById(R.id.link_signup);
-
         skipbtn=(Button)findViewById(R.id.skip_but);
         input_mob=(EditText)findViewById(R.id.input_number);
         input_pass=(EditText)findViewById(R.id.input_password);
+        OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
+            @Override
+            public void idsAvailable( String userId, String registrationId) {
+                Log.d("******ID******", "User:" + userId);
+                device_id = userId ;
+                if (registrationId != null)
+                    Log.d("debug", "registrationId:" + registrationId);
+            }
+        });
+        try {
+            OneSignal.postNotification(new JSONObject("{'contents': {'en':'Test Message'}, 'include_player_ids': ['" + device_id + "']}"),
+                    new OneSignal.PostNotificationResponseHandler() {
+                        @Override
+                        public void onSuccess(JSONObject response) {
+                            Log.i("OneSignalExample", "postNotification Success: " + response.toString());
+                        }
+
+                        @Override
+                        public void onFailure(JSONObject response) {
+                            Log.e("OneSignalExample", "postNotification Failure: " + response.toString());
+                        }
+                    });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         skipbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +112,7 @@ public class SignIn extends AppCompatActivity {
             return;
         }
         userLogin(mob, password);
+        saveDeviceID(mob,device_id);
     }
     private void userLogin(final String mobile, final String password){
         class UserLoginClass extends AsyncTask<String,Void,String> {
@@ -128,6 +160,51 @@ public class SignIn extends AppCompatActivity {
         ulc.execute(mobile,password);
     }
 
+    private void saveDeviceID(final String mobile, final String device_id){
+        class saveDeviceIdClass extends AsyncTask<String, Void, String>{
+            
+            //ProgressDialog loading;
+            RegisterUserClass ruc=new RegisterUserClass();
+
+            protected void onPreExecute() {
+                super.onPreExecute();
+                
+                //loading = ProgressDialog.show(getApplicationContext(), "Wait","Please wait while we connect to server", true, true);
+            }
+            protected void onPostExecute(String s){
+                super.onPostExecute(s);
+               // loading.dismiss();
+                if("".equals(s))
+                {
+                    s="Server error, Please try again after some time!";
+                }
+                else if("device is successfully registered".equalsIgnoreCase(s)){
+                    SharedPreferences sp = getSharedPreferences("device_id",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("device_id",device_id);
+
+                }
+
+                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+
+
+            }
+
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("mobile",params[0]);
+                data.put("device_id",params[1]);
+                String result = ruc.sendPostRequest(DEVICE_URL,data);
+               // Log.i("@doinBackground:",result);
+                return  result;
+
+            }}
+        saveDeviceIdClass abc = new saveDeviceIdClass();
+        abc.execute(mobile,device_id);
+
+    }
     public String md5(String s){
         MessageDigest digest ;
         try {
