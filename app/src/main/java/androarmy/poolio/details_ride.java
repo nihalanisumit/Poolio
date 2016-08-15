@@ -18,10 +18,10 @@ public class details_ride extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Intent in = getIntent();
-        String mobile = in.getStringExtra("mobile");
+//        Intent in = getIntent();
+//        String mobile = in.getStringExtra("mobile");
 
-        Toast.makeText(getApplicationContext(),mobile,Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(),mobile,Toast.LENGTH_LONG).show();
     }
 
 }
