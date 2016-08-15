@@ -32,33 +32,22 @@ public class available_rides extends AppCompatActivity {
         //Toast.makeText(getApplicationContext(),json,Toast.LENGTH_LONG).show();
         showRides(json);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         List<Data> data = fill_with_data();
 
-        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                return false;
-            }
 
-            @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-            }
-        });
 
         final Recycler_View_Adapter adapter  = new Recycler_View_Adapter(data , getApplication());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager( new LinearLayoutManager(getApplicationContext()));
+
         adapter.setClickListener(new ItemClickListener() {
+
             @Override
             public void onClick(View view, int position) {
-                Log.e("**ONCLICKKKK**","zzz");
+                Log.d("odjj","hdjd");
+
 
                 Intent intent1 = new Intent(getApplicationContext(),details_ride.class);
                 //intent1.putExtra("mobile",mobile[position]);
@@ -106,10 +95,8 @@ public class available_rides extends AppCompatActivity {
                 vehicle_name [i] = c.getString("vehicle_name");
                 vehicle_number [i] = c.getString("vehicle_number");
                 seats [i]= c.getString("seats");
-
                 //Toast.makeText(getApplicationContext(),id[i]+mobile[i],Toast.LENGTH_SHORT).show();
             }
-
 
         } catch (JSONException e) {
             e.printStackTrace();

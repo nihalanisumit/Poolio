@@ -43,16 +43,16 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
 
 //        holder.id.setText(list.get(position).getId());
         holder.name.setText(list.get(position).getFirst_name()+" "+ list.get(position).getLast_name());
-        holder.gender.setText(list.get(position).getGender());
-        holder.mobile.setText(list.get(position).getMobile());
+//        holder.gender.setText(list.get(position).getGender());
+//        holder.mobile.setText(list.get(position).getMobile());
         holder.source.setText(list.get(position).getSource());
         holder.destination.setText(list.get(position).getDestination());
-        holder.type.setText(list.get(position).getType());
-        holder.date.setText(list.get(position).getDate());
-        holder.time.setText(list.get(position).getTime());
-        holder.vehicle_name.setText(list.get(position).getVehicle_name());
-        holder.vehicle_number.setText(list.get(position).getVehicle_number());
-        holder.seats.setText(list.get(position).getSeats());
+//        holder.type.setText(list.get(position).getType());
+//        holder.date.setText(list.get(position).getDate());
+//        holder.time.setText(list.get(position).getTime());
+//        holder.vehicle_name.setText(list.get(position).getVehicle_name());
+//        holder.vehicle_number.setText(list.get(position).getVehicle_number());
+//        holder.seats.setText(list.get(position).getSeats());
 
 
 
@@ -97,20 +97,21 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
 
         public View_Holder(View view) {
             super(view);
+            view.setOnClickListener(this);
+
             cv=(CardView) view.findViewById(R.id.cv);
             name=(TextView)view.findViewById(R.id.name_tv);
-            gender=(TextView)view.findViewById(R.id.gender_tv);
-            mobile=(TextView)view.findViewById(R.id.mobile);
+//            gender=(TextView)view.findViewById(R.id.gender_tv);
+//            mobile=(TextView)view.findViewById(R.id.mobile);
             source=(TextView)view.findViewById(R.id.source_tv);
             destination=(TextView)view.findViewById(R.id.destination_tv);
-            type=(TextView)view.findViewById(R.id.type_tv);
-            date=(TextView)view.findViewById(R.id.date_tv);
-            time=(TextView)view.findViewById(R.id.time_tv);
-            vehicle_name=(TextView)view.findViewById(R.id.vehiclename_tv);
-            vehicle_number=(TextView)view.findViewById(R.id.vehicleno_tv);
-            seats=(TextView)view.findViewById(R.id.seats_tv);
+//            type=(TextView)view.findViewById(R.id.type_tv);
+//            date=(TextView)view.findViewById(R.id.date_tv);
+//            time=(TextView)view.findViewById(R.id.time_tv);
+//            vehicle_name=(TextView)view.findViewById(R.id.vehiclename_tv);
+//            vehicle_number=(TextView)view.findViewById(R.id.vehicleno_tv);
+//            seats=(TextView)view.findViewById(R.id.seats_tv);
 
-            view.setOnClickListener(this);
         }
 
         @Override
