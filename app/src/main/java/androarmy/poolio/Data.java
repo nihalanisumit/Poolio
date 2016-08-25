@@ -20,9 +20,8 @@ public class Data {
     public String seats;
 
 
-    Data(String id ,String first_name, String source , String destination
-
-         ){
+    Data(String id ,String first_name,String last_name,String mobile,String gender, String source , String destination,String type,
+         String date,String time,String vehicle_name,String vehicle_number,String seats){
         this.id = id;
         this.first_name=first_name;
         this.last_name=last_name;
@@ -38,6 +37,7 @@ public class Data {
         this.seats = seats;
 
     }
+
 
     public String getid(){
         return  id;

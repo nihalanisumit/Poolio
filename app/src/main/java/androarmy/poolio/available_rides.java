@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -27,18 +28,12 @@ public class available_rides extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_available_rides);
-
         Intent intent = getIntent();
         String json= intent.getStringExtra("json");
         //Toast.makeText(getApplicationContext(),json,Toast.LENGTH_LONG).show();
         showRides(json);
-
         List<Data> data = fill_with_data();
-
-
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-
-
         final Recycler_View_Adapter adapter  = new Recycler_View_Adapter(data , getApplication());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager( new LinearLayoutManager(getApplicationContext()));
@@ -68,7 +63,7 @@ public class available_rides extends AppCompatActivity {
         for (int i = 0 ; i<id.length ; i++){
             if (id[i]!=null) {
                 //Log.e("**CHECKING**",source[0]+" "+ destination[0]+vehicle_name[0]);
-                data.add(new Data(id[i],first_name[i] ,  source[i], destination[i]));
+                data.add(new Data(id[i],first_name[i] ,last_name[i],mobile[i],gender[i],source[i], destination[i],type[i],date[i],time[i],vehicle_name[i],vehicle_number[i],seats[i]));
             }
 
         }
