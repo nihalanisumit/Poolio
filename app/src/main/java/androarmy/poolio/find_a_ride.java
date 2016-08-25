@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -161,6 +162,13 @@ public class find_a_ride extends Fragment {
                 Intent i = new Intent(getActivity(),available_rides.class);
                 i.putExtra("json",s);
                 startActivity(i);
+
+
+
+
+
+
+
 
 
             }

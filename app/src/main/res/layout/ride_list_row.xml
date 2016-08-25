@@ -11,7 +11,7 @@
         >
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:background="?android:attr/selectableItemBackground"
@@ -51,7 +51,8 @@
                 android:orientation="horizontal"
                 android:layout_below="@+id/name_tv"
                 android:layout_marginLeft="70dp"
-                android:layout_marginTop="07dp">
+                android:layout_marginTop="07dp"
+                android:id="@+id/linearLayout">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,7 +82,7 @@
                 android:id="@+id/vehiclelayer"
                 android:layout_below="@+id/img_user"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="2dp">
 
 
 
@@ -110,7 +111,7 @@
 
             </LinearLayout>
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/vehiclelayer"
                 android:orientation="horizontal"
@@ -135,13 +136,7 @@
                     android:layout_marginLeft="20dp"
                     android:text="21:28"
                     android:id="@+id/time_tv"/>
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:textSize="18dp"-->
-                    <!--android:layout_marginLeft="20dp"-->
-                    <!--android:text="Seats: 1"-->
-                    <!--android:id="@+id/seats_tv"/>-->
+
 
             </LinearLayout>
             <LinearLayout
@@ -149,7 +144,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_below="@+id/timestamplayer"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:id="@+id/linearLayout2">
                 <!--<RelativeLayout-->
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="match_parent">-->
@@ -176,6 +172,16 @@
 
 
             </LinearLayout>
+
+            <Button
+                style="?android:attr/buttonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="book"
+                android:id="@+id/button"
+                android:layout_alignBottom="@+id/linearLayout2"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
 

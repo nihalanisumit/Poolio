@@ -61,8 +61,7 @@
             android:theme="@style/AppFullScreenTheme" >
         </activity>
         <activity
-            android:name=".available_rides"
-            android:theme="@style/AppFullScreenTheme" >
+            android:name=".available_rides">
         </activity>
         <activity
             android:name=".details_ride"
