@@ -28,7 +28,7 @@ public class SignUp extends AppCompatActivity {
     Switch genderSwitch;
 
     //public final String REGISTER_URL="http://192.168.1.6/poolio/register.php"; //Siddharth's pc
-    public final String REGISTER_URL="http://192.168.1.14:8080/poolio/register.php";// Sumit's pc
+    public final String REGISTER_URL="http://192.168.1.13/poolio/register.php";// Sumit's pc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +37,10 @@ public class SignUp extends AppCompatActivity {
         goToSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!InternetConnectionClass.isConnected(getApplicationContext())){
+                    Toast.makeText(SignUp.this, "Please connect to the internet!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 Intent intent = new Intent(SignUp.this, SignIn.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
@@ -72,6 +76,11 @@ public class SignUp extends AppCompatActivity {
 
 
     public void signUp(){
+        if(!InternetConnectionClass.isConnected(getApplicationContext())){
+            Toast.makeText(SignUp.this, "Please connect to the internet!", Toast.LENGTH_LONG).show();
+            return;
+
+        }
         Intent in = getIntent();
         password=passwordet.getText().toString().trim();
         gender=genderSwitch.getText().toString().trim();
@@ -94,6 +103,11 @@ public class SignUp extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"one or more fields are empty.",Toast.LENGTH_SHORT).show();
                 return;
             }
+            if(!InternetConnectionClass.isConnected(getApplicationContext())){
+                Toast.makeText(SignUp.this, "Please connect to the internet!", Toast.LENGTH_LONG).show();
+                return;
+            }
+            Log.i("Values",fname+" "+lname+" "+password_encrypt+" "+email+" "+mobile+" "+gender);
             register(fname,lname,password_encrypt,email,mobile,gender);
         }
         else {

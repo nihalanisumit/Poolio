@@ -34,7 +34,7 @@ public class find_a_ride extends Fragment {
     EditText dateET, timeET;
     Button b;
     String pickup, drop, time, date;
-    public final String FIND_URL="http://192.168.1.14:8080/poolio/find.php";//Sumit's pc
+    public final String FIND_URL="http://192.168.1.13/poolio/find.php";//Sumit's pc
     private ImageView dateIv, timeIV;
     private int mYear, mMonth, mDay, mHour, mMinute;
 
@@ -64,6 +64,10 @@ public class find_a_ride extends Fragment {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!InternetConnectionClass.isConnected(getActivity())){
+                    Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 pickup = actv.getText().toString();
                 drop= actv2.getText().toString();
                 date= dateET.getText().toString();
@@ -75,6 +79,10 @@ public class find_a_ride extends Fragment {
         dateIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!InternetConnectionClass.isConnected(getActivity())){
+                    Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 final Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
@@ -99,6 +107,10 @@ public class find_a_ride extends Fragment {
         timeIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!InternetConnectionClass.isConnected(getActivity())){
+                    Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 final Calendar c = Calendar.getInstance();
                 mHour = c.get(Calendar.HOUR_OF_DAY);
                 mMinute = c.get(Calendar.MINUTE);
@@ -123,6 +135,10 @@ public class find_a_ride extends Fragment {
 
     void findRide(String pickup)
     {
+        if(!InternetConnectionClass.isConnected(getActivity())){
+            Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         fetchRides(pickup);
 

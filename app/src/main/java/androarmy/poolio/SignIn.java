@@ -28,11 +28,8 @@ import java.util.HashMap;
 public class SignIn extends AppCompatActivity {
     TextView goToSignUp;
     Button btn_signin, skipbtn;
-    //public final String SIGNIN_URL="http://192.168.1.6/poolio/signin.php";//Siddharth's pc
-    // public final String SIGNIN_URL="http://192.168.1.14:8080/poolio/signin.php";//Sumit's pc
-    // public final String SIGNIN_URL="http://192.168.1.101/poolio/signin.php";//Siddharth's pc
-    public final String SIGNIN_URL="http://192.168.1.14:8080/poolio/signin.php";//Sumit's pc
-    public final String DEVICE_URL="http://192.168.1.14:8080/poolio/deviceregister.php";// Sumit's pc
+    public final String SIGNIN_URL="http://192.168.1.13/poolio/signin.php";//Sumit's pc
+    public final String DEVICE_URL="http://192.168.1.13/poolio/deviceregister.php";// Sumit's pc
     EditText input_mob,input_pass;
     String mob="12345",pass,device_id;
     SharedPreferences mSharedPreferences;

@@ -35,7 +35,7 @@ import java.util.List;
 public class offer_a_ride extends Fragment {
 
     //public final String REGISTER_URL="http://192.168.1.101/poolio/register.php"; //Siddharth's pc
-    public final String OFFER_URL="http://192.168.1.14:8080/poolio/offer.php";// Sumit's pc
+    public final String OFFER_URL="http://192.168.1.13/poolio/offer.php";// Sumit's pc
 
     String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","Backgate","Potheri Station","Guduvancheri"};//need to make it dynamic
     List<String> vehicleType = new ArrayList<String>(); //No need for dynamic i suppose
@@ -61,7 +61,9 @@ public class offer_a_ride extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v =  inflater.inflate(R.layout.activity_offer_a_ride, container, false);
-
+        if(!InternetConnectionClass.isConnected(getActivity())){
+            Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
+        }
         spinner = (Spinner)v.findViewById(R.id.spin);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,locations);
@@ -98,26 +100,30 @@ public class offer_a_ride extends Fragment {
         Calenderiv = (ImageView)v.findViewById(R.id.calender);
         chargeLayout = (LinearLayout)v.findViewById(R.id.layer_charge);
         chargeableRG=(RadioGroup)v.findViewById(R.id.radioGrp);
-        chargeableRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId==R.id.radio_free)
-                {
-                    chargeLayout.setVisibility(View.GONE);
-                    Toast.makeText(getContext(),"Thanks for being so Generous",Toast.LENGTH_SHORT).show();
-                    amount=0;
-                    chargeable=0;
-                }
-                else
-                {
-                    chargeLayout.setVisibility(View.VISIBLE);
-                    chargeable=1;
-                }
-            }
-        });
+//        chargeableRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                if(checkedId==R.id.radio_free)
+//                {
+//                    chargeLayout.setVisibility(View.GONE);
+//                    Toast.makeText(getContext(),"Thanks for being so Generous",Toast.LENGTH_SHORT).show();
+//                    amount=0;
+//                    chargeable=0;
+//                }
+//                else
+//                {
+//                    chargeLayout.setVisibility(View.VISIBLE);
+//                    chargeable=1;
+//                }
+//            }
+//        });
         Calenderiv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!InternetConnectionClass.isConnected(getActivity())){
+                    Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 final Calendar c = Calendar.getInstance();
 
                 // Launch Time Picker Dialog
@@ -186,6 +192,10 @@ public class offer_a_ride extends Fragment {
         timeET.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!InternetConnectionClass.isConnected(getActivity())){
+                    Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 final Calendar c = Calendar.getInstance();
                 mHour = c.get(Calendar.HOUR_OF_DAY);
                 mMinute = c.get(Calendar.MINUTE);
@@ -227,7 +237,10 @@ public class offer_a_ride extends Fragment {
     }
 
     void offerRides()
-    {
+    {      if(!InternetConnectionClass.isConnected(getActivity())){
+        Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
+        return;
+    }
         pref = getActivity().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         mobile = pref.getString("mobile", null);
         source=sourceET.getText().toString().trim();
@@ -239,14 +252,17 @@ public class offer_a_ride extends Fragment {
         vnumber=vnumberET.getText().toString();
         availableSeats=Integer.parseInt(availableET.getText().toString());
         //int chargeable will be set automatically depending on radio button selected
-        if(chargeableRG.getCheckedRadioButtonId()==R.id.radio_charge)
-        {
-            amount=Integer.parseInt(amountET.getText().toString());
-        }
+//        if(chargeableRG.getCheckedRadioButtonId()==R.id.radio_charge)
+//        {
+//            amount=Integer.parseInt(amountET.getText().toString());
+//        }
 
         //Toast.makeText(getContext(),"Mobile :"+mobile+"\n Source:"+source+"  Destination:"+destination+"\ntype:"+type
         //  +"\nSeats:"+availableSeats+"\n Amount:"+amount,Toast.LENGTH_LONG).show();
-
+        if(!InternetConnectionClass.isConnected(getActivity())){
+            Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
+            return;
+        }
         offer(mobile,source,destination,type,date,time,vname,vnumber,availableSeats,chargeable,amount);
     }
 

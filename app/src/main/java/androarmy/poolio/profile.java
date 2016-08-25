@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 
 public class profile extends android.support.v4.app.Fragment {
-    public final String PROFILE_URL ="http://192.168.1.14:8080/poolio/profile.php";//Sumit's pc
+    public final String PROFILE_URL ="http://192.168.1.13/poolio/profile.php";//Sumit's pc
     SharedPreferences mSharedPreferences;
     String mobile,first_name,last_name,gender,email,vehicle_name,vehicle_number,driving_license;
     EditText mobileET,nameET,genderET,emailET,vehicle_nameET,vehicle_numberET,driving_licenseET;
@@ -31,13 +31,13 @@ public class profile extends android.support.v4.app.Fragment {
         mSharedPreferences = getActivity().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         mobile = mSharedPreferences.getString("mobile", "null");
         //Toast.makeText(getContext(),mobile,Toast.LENGTH_LONG).show();
-        mobileET = (EditText) getView().findViewById(R.id.mobile);
-        nameET = (EditText) getView().findViewById(R.id.name);
-        genderET = (EditText) getView().findViewById(R.id.gender);
-        emailET = (EditText) getView().findViewById(R.id.email);
-        vehicle_nameET = (EditText) getView().findViewById(R.id.vehicle_name);
-        vehicle_numberET = (EditText) getView().findViewById(R.id.vehicle_number);
-        driving_licenseET = (EditText) getView().findViewById(R.id.driving_license);
+//        mobileET = (EditText) getView().findViewById(R.id.mobile);
+//        nameET = (EditText) getView().findViewById(R.id.name);
+//        genderET = (EditText) getView().findViewById(R.id.gender);
+//        emailET = (EditText) getView().findViewById(R.id.email);
+//        vehicle_nameET = (EditText) getView().findViewById(R.id.vehicle_name);
+//        vehicle_numberET = (EditText) getView().findViewById(R.id.vehicle_number);
+//        driving_licenseET = (EditText) getView().findViewById(R.id.driving_license);
 
         fetchMyRides(mobile);
 
@@ -70,13 +70,13 @@ public class profile extends android.support.v4.app.Fragment {
                     vehicle_number=c.getString("vehicle_number");
                     driving_license=c.getString("driving_license");
 
-                    mobileET.setText(mobile);
-                    nameET.setText(first_name+" "+last_name);
-                    genderET.setText(gender);
-                    emailET.setText(email);
-                    vehicle_numberET.setText(vehicle_number);
-                    vehicle_nameET.setText(vehicle_name);
-                    driving_licenseET.setText(driving_license);
+//                    mobileET.setText(mobile);
+//                    nameET.setText(first_name+" "+last_name);
+//                    genderET.setText(gender);
+//                    emailET.setText(email);
+//                    vehicle_numberET.setText(vehicle_number);
+//                    vehicle_nameET.setText(vehicle_name);
+//                    driving_licenseET.setText(driving_license);
 
 
                 } catch (JSONException e) {

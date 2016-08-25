@@ -42,7 +42,9 @@ public class Home extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
+        if(!InternetConnectionClass.isConnected(getApplicationContext())){
+            Toast.makeText(Home.this, "Please connect to the internet!", Toast.LENGTH_LONG).show();
+        }
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         //navigationView.getMenu().performIdentifierAction(R.id.flContent, 0);
@@ -104,7 +106,10 @@ public class Home extends AppCompatActivity
         int id = item.getItemId();
         Fragment fragment = null;
         Class fragmentClass = null;
-
+        if(!InternetConnectionClass.isConnected(getApplicationContext())){
+            Toast.makeText(Home.this, "Please connect to the internet!", Toast.LENGTH_LONG).show();
+            return false;
+        }
         switch (id){
             case R.id.nav_find:
                 fragmentClass= TabFragment.class;

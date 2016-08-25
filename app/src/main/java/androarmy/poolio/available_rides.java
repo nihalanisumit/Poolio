@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -42,20 +43,22 @@ public class available_rides extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager( new LinearLayoutManager(getApplicationContext()));
 
-        adapter.setClickListener(new ItemClickListener() {
-
-            @Override
-            public void onClick(View view, int position) {
-                Log.d("odjj","hdjd");
 
 
-                Intent intent1 = new Intent(getApplicationContext(),details_ride.class);
-                //intent1.putExtra("mobile",mobile[position]);
-                startActivity(intent1);
-
-            }
-
-        });
+//        adapter.setClickListener(new ItemClickListener() {
+//
+//            @Override
+//            public void onClick(View view, int position) {
+//                Log.d("odjj","hdjd");
+//
+//
+//                Intent intent1 = new Intent(getApplicationContext(),details_ride.class);
+//                //intent1.putExtra("mobile",mobile[position]);
+//                startActivity(intent1);
+//
+//            }
+//
+//        });
 
 
     }

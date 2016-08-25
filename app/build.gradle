@@ -37,5 +37,6 @@ dependencies {
     compile 'com.google.android.gms:play-services-gcm:9.0.2'
     compile 'com.google.android.gms:play-services-analytics:9.0.2'
     compile 'com.google.android.gms:play-services-location:9.0.2'
+    compile 'com.msg91.sendotp.library:library:2.7'
 
 }

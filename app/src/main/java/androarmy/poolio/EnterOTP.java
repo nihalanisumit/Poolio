@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class EnterOTP extends AppCompatActivity {
     Button buttn_next;
@@ -20,6 +21,10 @@ public class EnterOTP extends AppCompatActivity {
         buttn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!InternetConnectionClass.isConnected(getApplicationContext())){
+                    Toast.makeText(EnterOTP.this, "Please connect to the internet!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 onNextClick();
 
             }

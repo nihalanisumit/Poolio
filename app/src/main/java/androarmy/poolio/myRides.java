@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 
 public class myRides extends android.support.v4.app.Fragment {
-    public final String FIND_URL="http://192.168.1.14:8080/poolio/myrides.php";//Sumit's pc
+    public final String FIND_URL="http://192.168.1.13/poolio/myrides.php";//Sumit's pc
     SharedPreferences mSharedPreferences;
     String mobile;
     String [] id,source, destination, type, date, time, vehicle_name,vehicle_number, seats;
@@ -34,7 +34,9 @@ public class myRides extends android.support.v4.app.Fragment {
         mSharedPreferences = getActivity().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         mobile = mSharedPreferences.getString("mobile", "null");
         //Toast.makeText(getContext(),mobile,Toast.LENGTH_LONG).show();
-
+        if(!InternetConnectionClass.isConnected(getActivity())){
+            Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
+        }
         fetchMyRides(mobile);
 
         return inflater.inflate(R.layout.fragment_my_rides, container, false);

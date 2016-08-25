@@ -22,10 +22,13 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
     List<Data> list = Collections.emptyList();
     Context context;
     private ItemClickListener clickListener;
+    public View view;
 
-    public Recycler_View_Adapter(List<Data> list, Context context) {
+    public Recycler_View_Adapter(final List<Data> list, Context context) {
         this.list = list;
         this.context = context;
+
+
     }
 
 
@@ -53,8 +56,6 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
 //        holder.vehicle_name.setText(list.get(position).getVehicle_name());
 //        holder.vehicle_number.setText(list.get(position).getVehicle_number());
 //        holder.seats.setText(list.get(position).getSeats());
-
-
 
 
     }

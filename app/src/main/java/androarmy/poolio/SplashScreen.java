@@ -45,8 +45,8 @@ public class SplashScreen extends Activity {
     private ImageView logo;
     public String NO_VAL="empty";
      //public final String SIGNIN_URL="http://192.168.1.6/poolio/signin.php";//Siddharth's pc
-     public final String SIGNIN_URL="http://192.168.1.14:8080/poolio/signin.php";//Sumit's pc
-    public final String CONDITION_URL="http://192.168.1.14:8080/poolio/conditions.php";//Sumit's pc
+     public final String SIGNIN_URL="http://192.168.1.13/poolio/signin.php";//Sumit's pc
+    public final String CONDITION_URL="http://192.168.1.13/poolio/conditions.php";//Sumit's pc
     private String password = null;
     int flag;
     String heading, description;
@@ -55,10 +55,12 @@ public class SplashScreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(!InternetConnectionClass.isConnected(getApplicationContext())){
+            Toast.makeText(SplashScreen.this, "Please connect to internet!", Toast.LENGTH_LONG).show();
+            finish();
+        }
         OneSignal.startInit(this).init();
-
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+               getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
         StartAnimations();
