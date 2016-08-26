@@ -5,7 +5,7 @@ package androarmy.poolio;
  */
 public class Data {
 
-    public String id;
+    public String id; //rideid
     public String first_name;
     public String last_name;
     public String gender;
@@ -38,6 +38,13 @@ public class Data {
 
     }
 
+    public Data(String id, String source, String destination, String date, String time) {
+        this.id = id;
+        this.source = source;
+        this.destination = destination;
+        this.date = date;
+        this.time = time;
+    }
 
     public String getid(){
         return  id;

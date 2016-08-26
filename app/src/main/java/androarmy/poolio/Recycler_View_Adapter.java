@@ -29,10 +29,10 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
     public View view;
 //    String mobile_number,vehicleType,vehicleName,vehicleNo,gender,seats;
 
-    public Recycler_View_Adapter(final List<Data> list, Context context) {
+    public Recycler_View_Adapter(final List<Data> list, Context context)
+    {
         this.list = list;
         this.context = context;
-
 
     }
 
