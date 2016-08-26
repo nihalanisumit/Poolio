@@ -30,7 +30,7 @@ public class myRides extends android.support.v4.app.Fragment {
     public final String FIND_URL="http://192.168.1.13/poolio/myrides.php";//Sumit's pc
     SharedPreferences mSharedPreferences;
     String mobile;
-    String [] id,source, destination, type, date, time, vehicle_name,vehicle_number, seats;
+    String [] id,source, destination, type, date, time, vehicle_name,vehicle_number, seats,timestamp;
     RecyclerView recyclerView;
 
     @Override
@@ -54,7 +54,7 @@ public class myRides extends android.support.v4.app.Fragment {
         for (int i = 0 ; i<id.length ; i++){
             if (id[i]!=null) {
                 //Log.e("**CHECKING**",source[0]+" "+ destination[0]);
-                data.add(new Data(id[i],source[i], destination[i],date[i],time[i]));
+                data.add(new Data(id[i],source[i], destination[i],date[i],time[i],timestamp[i]));
             }
 
         }
@@ -91,6 +91,7 @@ public class myRides extends android.support.v4.app.Fragment {
                         vehicle_name [i] = c.getString("vehicle_name");
                         vehicle_number [i] = c.getString("vehicle_number");
                         seats [i]= c.getString("seats");
+                        timestamp[i]=c.getString("offer_time");
 
                     }
 
@@ -131,6 +132,7 @@ public class myRides extends android.support.v4.app.Fragment {
         vehicle_name= new String[len];
         vehicle_number= new String[len];
         seats= new String[len];
+        timestamp=new String[len];
     }
 
 

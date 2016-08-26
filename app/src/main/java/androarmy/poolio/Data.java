@@ -18,10 +18,15 @@ public class Data {
     public String vehicle_name;
     public String vehicle_number;
     public String seats;
+    public String timestamp;
+    public String device_id;
 
 
-    Data(String id ,String first_name,String last_name,String mobile,String gender, String source , String destination,String type,
-         String date,String time,String vehicle_name,String vehicle_number,String seats){
+
+
+
+    Data(String id , String first_name, String last_name, String mobile, String gender, String source , String destination, String type,
+         String date, String time, String vehicle_name, String vehicle_number, String seats,String device_id){
         this.id = id;
         this.first_name=first_name;
         this.last_name=last_name;
@@ -35,15 +40,17 @@ public class Data {
         this.vehicle_name = vehicle_name;
         this.vehicle_number = vehicle_number;
         this.seats = seats;
+        this.device_id=device_id;
 
     }
 
-    public Data(String id, String source, String destination, String date, String time) {
+    public Data(String id, String source, String destination, String date, String time,String timestamp) {
         this.id = id;
         this.source = source;
         this.destination = destination;
         this.date = date;
         this.time = time;
+        this.timestamp=timestamp;
     }
 
     public String getid(){
@@ -85,6 +92,12 @@ public class Data {
     }
     public String getSeats(){
         return seats;
+    }
+    public String getDevice_id(){
+        return device_id;
+    }
+    public String getTimestamp() {
+        return timestamp;
     }
 
 

@@ -63,6 +63,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         holder.vehicleType=list.get(position).getType();
         holder.mobile_number=list.get(position).getMobile();
         holder.vehicleNo=list.get(position).getVehicle_number();
+        holder.device_id=list.get(position).getDevice_id();
 // problem       mobile_number=list.get(position).getMobile();
 //        vehicleName=list.get(position).getVehicle_name();
 //        vehicleType=list.get(position).getType();
@@ -107,7 +108,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         public TextView time;
         public CardView cv;
         public Button openDialog;
-        public String vehicleName,vehicleNo,vehicleType,mobile_number;
+        public String vehicleName,vehicleNo,vehicleType,mobile_number,device_id;
 
 
         public View_Holder(final View view) {
@@ -145,6 +146,12 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
                     tv_vehicleColor.setText("TBA");
                     tv_vehicleName.setText(vehicleName);
                     Button book=(Button)dialog.findViewById(R.id.book_button);
+                    book.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(view.getContext(),device_id,Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     Button cancel=(Button)dialog.findViewById(R.id.cancel_button);
                     cancel.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -155,6 +162,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
                     dialog.show();
                 }
             });
+
 //            type=(TextView)view.findViewById(R.id.type_tv);
 //            date=(TextView)view.findViewById(R.id.date_tv);
 //            time=(TextView)view.findViewById(R.id.time_tv);
