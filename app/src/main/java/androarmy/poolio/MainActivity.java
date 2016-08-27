@@ -80,18 +80,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
     }
-    public void dialogShow(View v){
-        final Dialog dialog=new Dialog(MainActivity.this);
-        dialog.setContentView(R.layout.find_dialog);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        Button book=(Button)dialog.findViewById(R.id.book_button);
-        Button cancel=(Button)dialog.findViewById(R.id.cancel_button);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
-        dialog.show();
-    }
+
 }

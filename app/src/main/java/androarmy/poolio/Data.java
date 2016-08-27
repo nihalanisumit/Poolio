@@ -5,7 +5,7 @@ package androarmy.poolio;
  */
 public class Data {
 
-    public String id;
+    public String id; //rideid
     public String first_name;
     public String last_name;
     public String gender;
@@ -18,11 +18,17 @@ public class Data {
     public String vehicle_name;
     public String vehicle_number;
     public String seats;
+    public String timestamp;
+    public String device_id;
+    public String status;
 
 
-    Data(String id ,String first_name, String source , String destination
 
-         ){
+
+
+    Data(String id , String first_name, String last_name, String mobile, String gender, String source , String destination, String type,
+         String date, String time, String vehicle_name, String vehicle_number, String seats,String device_id)//constructor for findrides
+    {
         this.id = id;
         this.first_name=first_name;
         this.last_name=last_name;
@@ -36,7 +42,19 @@ public class Data {
         this.vehicle_name = vehicle_name;
         this.vehicle_number = vehicle_number;
         this.seats = seats;
+        this.device_id=device_id;
 
+    }
+
+    public Data(String id, String source, String destination, String date, String time,String timestamp,String status) //constructor for myrides
+    {
+        this.id = id;
+        this.source = source;
+        this.destination = destination;
+        this.date = date;
+        this.time = time;
+        this.timestamp=timestamp;
+        this.status=status;
     }
 
     public String getid(){
@@ -78,6 +96,15 @@ public class Data {
     }
     public String getSeats(){
         return seats;
+    }
+    public String getDevice_id(){
+        return device_id;
+    }
+    public String getTimestamp() {
+        return timestamp;
+    }
+    public String getStatus() {
+        return status;
     }
 
 

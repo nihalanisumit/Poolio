@@ -1,14 +1,14 @@
 package androarmy.poolio;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +18,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class myRides extends android.support.v4.app.Fragment {
+
     public final String FIND_URL="http://192.168.1.13/poolio/myrides.php";//Sumit's pc
     SharedPreferences mSharedPreferences;
     String mobile;
-    String [] id,source, destination, type, date, time, vehicle_name,vehicle_number, seats;
-
+    String [] id,source, destination, type, date, time, vehicle_name,vehicle_number, seats,timestamp,status;
+    RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,7 +42,22 @@ public class myRides extends android.support.v4.app.Fragment {
         }
         fetchMyRides(mobile);
 
+
         return inflater.inflate(R.layout.fragment_my_rides, container, false);
+    }
+
+    public List<Data>fill_with_data(){
+
+        List<Data> data  = new ArrayList<>();
+        for (int i = 0 ; i<id.length ; i++){
+            if (id[i]!=null) {
+                //Log.e("**CHECKING**",source[0]+" "+ destination[0]);
+                data.add(new Data(id[i],source[i], destination[i],date[i],time[i],timestamp[i],status[i]));
+            }
+
+        }
+        return data;
+
     }
 
     private void fetchMyRides(final String mobile){
@@ -71,6 +89,10 @@ public class myRides extends android.support.v4.app.Fragment {
                         vehicle_name [i] = c.getString("vehicle_name");
                         vehicle_number [i] = c.getString("vehicle_number");
                         seats [i]= c.getString("seats");
+                        timestamp[i]=c.getString("offer_time");
+                        status[i]=c.getString("status");
+                        Log.i("**STATUS**",id[i]+" "+status[i]);
+
 
                     }
 
@@ -78,6 +100,11 @@ public class myRides extends android.support.v4.app.Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                List<Data> data = fill_with_data();
+                recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview);
+                final Recycler_View_Adapter2 adapter  = new Recycler_View_Adapter2(data , getActivity());
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
 
             }
 
@@ -106,10 +133,9 @@ public class myRides extends android.support.v4.app.Fragment {
         vehicle_name= new String[len];
         vehicle_number= new String[len];
         seats= new String[len];
+        timestamp=new String[len];
+        status=new String[len];
     }
-
-
-
 
 
 

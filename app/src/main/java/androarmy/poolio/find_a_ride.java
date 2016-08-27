@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -159,6 +160,7 @@ public class find_a_ride extends Fragment {
                 super.onPostExecute(s);
                 loading.dismiss();
                 //Toast.makeText(getContext(),s,Toast.LENGTH_LONG).show();
+                //Log.i("***JSON***",s);
                 Intent i = new Intent(getActivity(),available_rides.class);
                 i.putExtra("json",s);
                 startActivity(i);
