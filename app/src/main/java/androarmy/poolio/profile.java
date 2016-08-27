@@ -10,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 
@@ -22,7 +24,7 @@ public class profile extends android.support.v4.app.Fragment {
     public final String PROFILE_URL ="http://192.168.1.13/poolio/profile.php";//Sumit's pc
     SharedPreferences mSharedPreferences;
     String mobile,first_name,last_name,gender,email,vehicle_name,vehicle_number,driving_license;
-    EditText mobileET,nameET,genderET,emailET,vehicle_nameET,vehicle_numberET,driving_licenseET;
+    TextView mobileET,nameET,genderET,emailET,vehicle_nameET,vehicle_numberET,driving_licenseET;
 
 
     @Override
@@ -31,12 +33,12 @@ public class profile extends android.support.v4.app.Fragment {
         mSharedPreferences = getActivity().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         mobile = mSharedPreferences.getString("mobile", "null");
         //Toast.makeText(getContext(),mobile,Toast.LENGTH_LONG).show();
-//        mobileET = (EditText) getView().findViewById(R.id.mobile);
-//        nameET = (EditText) getView().findViewById(R.id.name);
-//        genderET = (EditText) getView().findViewById(R.id.gender);
-//        emailET = (EditText) getView().findViewById(R.id.email);
-//        vehicle_nameET = (EditText) getView().findViewById(R.id.vehicle_name);
-//        vehicle_numberET = (EditText) getView().findViewById(R.id.vehicle_number);
+        mobileET = (TextView) getView().findViewById(R.id.mobile);
+        nameET = (TextView) getView().findViewById(R.id.user_profile_name);
+        genderET = (TextView) getView().findViewById(R.id.gender);
+        emailET = (TextView) getView().findViewById(R.id.email);
+        vehicle_nameET = (TextView) getView().findViewById(R.id.v_name);
+        vehicle_numberET = (TextView) getView().findViewById(R.id.v_no);
 //        driving_licenseET = (EditText) getView().findViewById(R.id.driving_license);
 
         fetchMyRides(mobile);
