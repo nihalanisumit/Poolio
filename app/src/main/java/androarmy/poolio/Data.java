@@ -20,13 +20,15 @@ public class Data {
     public String seats;
     public String timestamp;
     public String device_id;
+    public String status;
 
 
 
 
 
     Data(String id , String first_name, String last_name, String mobile, String gender, String source , String destination, String type,
-         String date, String time, String vehicle_name, String vehicle_number, String seats,String device_id){
+         String date, String time, String vehicle_name, String vehicle_number, String seats,String device_id)//constructor for findrides
+    {
         this.id = id;
         this.first_name=first_name;
         this.last_name=last_name;
@@ -44,13 +46,15 @@ public class Data {
 
     }
 
-    public Data(String id, String source, String destination, String date, String time,String timestamp) {
+    public Data(String id, String source, String destination, String date, String time,String timestamp,String status) //constructor for myrides
+    {
         this.id = id;
         this.source = source;
         this.destination = destination;
         this.date = date;
         this.time = time;
         this.timestamp=timestamp;
+        this.status=status;
     }
 
     public String getid(){
@@ -98,6 +102,9 @@ public class Data {
     }
     public String getTimestamp() {
         return timestamp;
+    }
+    public String getStatus() {
+        return status;
     }
 
 
