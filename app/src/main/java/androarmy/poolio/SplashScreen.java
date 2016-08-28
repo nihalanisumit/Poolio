@@ -45,8 +45,8 @@ public class SplashScreen extends Activity {
     private ImageView logo;
     public String NO_VAL="empty";
      //public final String SIGNIN_URL="http://192.168.1.6/poolio/signin.php";//Siddharth's pc
-     public final String SIGNIN_URL="http://192.168.1.15/poolio-2/signin.php";//Sumit's pc
-    public final String CONDITION_URL="http://192.168.1.15/poolio-2/conditions.php";//Sumit's pc
+     public final String SIGNIN_URL="http://192.168.1.13/poolio/signin.php";//Sumit's pc
+    public final String CONDITION_URL="http://192.168.1.13/poolio/conditions.php";//Sumit's pc
     private String password = null;
     int flag;
     String heading, description;

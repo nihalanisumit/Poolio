@@ -36,7 +36,7 @@ public class find_a_ride extends Fragment {
     EditText dateET, timeET;
     Button b;
     String pickup, drop, time, date;
-    public final String FIND_URL="http://192.168.1.15/poolio-2/find.php";//Sumit's pc
+    public final String FIND_URL="http://192.168.1.13/poolio/find.php";//Sumit's pc
     private ImageView dateIv, timeIV;
     private int mYear, mMonth, mDay, mHour, mMinute;
 
@@ -164,15 +164,6 @@ public class find_a_ride extends Fragment {
                 Intent i = new Intent(getActivity(),available_rides.class);
                 i.putExtra("json",s);
                 startActivity(i);
-
-
-
-
-
-
-
-
-
             }
 
             @Override

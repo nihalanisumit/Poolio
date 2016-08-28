@@ -26,10 +26,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 public class SignIn extends AppCompatActivity {
-    TextView goToSignUp;
+    TextView goToSignUp,forgotPass;
     Button btn_signin, skipbtn;
-    public final String SIGNIN_URL="http://192.168.1.15/poolio-2/signin.php";//Sumit's pc
-    public final String DEVICE_URL="http://192.168.1.15/poolio-2/deviceregister.php";// Sumit's pc
+    public final String SIGNIN_URL="http://192.168.1.13/poolio/signin.php";//Sumit's pc
+    public final String DEVICE_URL="http://192.168.1.13/poolio/deviceregister.php";// Sumit's pc
     EditText input_mob,input_pass;
     String mob="12345",pass,device_id;
     SharedPreferences mSharedPreferences;
@@ -39,6 +39,7 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         goToSignUp = (TextView)findViewById(R.id.link_signup);
+        forgotPass=(TextView)findViewById(R.id.forgotPassword);
         skipbtn=(Button)findViewById(R.id.skip_but);
         input_mob=(EditText)findViewById(R.id.input_number);
         input_pass=(EditText)findViewById(R.id.input_password);
@@ -81,6 +82,14 @@ public class SignIn extends AppCompatActivity {
                 Intent intent = new Intent(SignIn.this, OTP.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
+            }
+        });
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(SignIn.this,ForgotPassword.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.next_slide_in,R.anim.next_slide_out);
             }
         });
 

@@ -21,7 +21,7 @@ import java.util.HashMap;
 
 
 public class profile extends android.support.v4.app.Fragment {
-    public final String PROFILE_URL ="http://192.168.1.15/poolio-2/profile.php";//Sumit's pc
+    public final String PROFILE_URL ="http://192.168.1.13/poolio/profile.php";//Sumit's pc
     SharedPreferences mSharedPreferences;
     String mobile,first_name,last_name,gender,email,vehicle_name,vehicle_number,driving_license;
     TextView mobileET,nameET,genderET,emailET,vehicle_nameET,vehicle_numberET,driving_licenseET;
@@ -30,20 +30,21 @@ public class profile extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_profile,container,false);
         mSharedPreferences = getActivity().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         mobile = mSharedPreferences.getString("mobile", "null");
         //Toast.makeText(getContext(),mobile,Toast.LENGTH_LONG).show();
-        mobileET = (TextView) getView().findViewById(R.id.mobile);
-        nameET = (TextView) getView().findViewById(R.id.user_profile_name);
-        genderET = (TextView) getView().findViewById(R.id.gender);
-        emailET = (TextView) getView().findViewById(R.id.email);
-        vehicle_nameET = (TextView) getView().findViewById(R.id.v_name);
-        vehicle_numberET = (TextView) getView().findViewById(R.id.v_no);
-//        driving_licenseET = (EditText) getView().findViewById(R.id.driving_license);
+        mobileET = (TextView) v.findViewById(R.id.mobileTV);
+        nameET = (TextView) v.findViewById(R.id.user_profile_name);
+        genderET = (TextView) v.findViewById(R.id.gender);
+        emailET = (TextView) v.findViewById(R.id.email);
+        vehicle_nameET = (TextView) v.findViewById(R.id.v_name);
+        vehicle_numberET = (TextView) v.findViewById(R.id.v_no);
+        driving_licenseET = (TextView) v.findViewById(R.id.dl);
 
         fetchMyRides(mobile);
 
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return v;
     }
 
     private void fetchMyRides(final String mobile){
@@ -71,19 +72,17 @@ public class profile extends android.support.v4.app.Fragment {
                     vehicle_name=c.getString("vehicle_name");
                     vehicle_number=c.getString("vehicle_number");
                     driving_license=c.getString("driving_license");
-
-//                    mobileET.setText(mobile);
-//                    nameET.setText(first_name+" "+last_name);
-//                    genderET.setText(gender);
-//                    emailET.setText(email);
-//                    vehicle_numberET.setText(vehicle_number);
-//                    vehicle_nameET.setText(vehicle_name);
-//                    driving_licenseET.setText(driving_license);
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                mobileET.setText(mobile);
+                nameET.setText(first_name+" "+last_name);
+                genderET.setText(gender);
+                emailET.setText(email);
+                vehicle_numberET.setText(vehicle_number);
+                vehicle_nameET.setText(vehicle_name);
+                driving_licenseET.setText(driving_license);
+                Log.i("***test***",mobile+" "+first_name+" "+last_name);
 
             }
 
