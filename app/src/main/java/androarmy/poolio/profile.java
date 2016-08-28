@@ -21,7 +21,7 @@ import java.util.HashMap;
 
 
 public class profile extends android.support.v4.app.Fragment {
-    public final String PROFILE_URL ="http://192.168.1.13/poolio/profile.php";//Sumit's pc
+    public final String PROFILE_URL ="http://192.168.1.15/poolio-2/profile.php";//Sumit's pc
     SharedPreferences mSharedPreferences;
     String mobile,first_name,last_name,gender,email,vehicle_name,vehicle_number,driving_license;
     TextView mobileET,nameET,genderET,emailET,vehicle_nameET,vehicle_numberET,driving_licenseET;
