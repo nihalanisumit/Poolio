@@ -22,7 +22,7 @@ import java.util.List;
 
 public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_Adapter2.View_Holder>  {
 
-    public final String STATUS_URL="http://192.168.1.13/poolio/statuschange.php";//jagan's pc
+    public final String STATUS_URL="http://www.poolio.in/pooqwerty123lio/statuschange.php";//jagan's pc
 
     List<Data> list = Collections.emptyList();
     Context context;

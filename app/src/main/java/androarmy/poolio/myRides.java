@@ -25,7 +25,7 @@ import java.util.List;
 
 public class myRides extends android.support.v4.app.Fragment {
 
-    public final String FIND_URL="http://192.168.1.13/poolio/myrides.php";//Sumit's pc
+    public final String FIND_URL="http://www.poolio.in/pooqwerty123lio/myrides.php";//Sumit's pc
     SharedPreferences mSharedPreferences;
     String mobile;
     String [] id,source, destination, type, date, time, vehicle_name,vehicle_number, seats,timestamp,status;

@@ -32,8 +32,8 @@ public class ForgotPassword extends AppCompatActivity implements VerificationLis
     RelativeLayout relativeLayoutOtp,relativeLayoutMobInput,relativeLayoutPassword;
     CountDownTimer countDownTimer;
     private Verification mVerification;
-      private final String MOBVER_URL = "http://192.168.1.13/poolio/mobforgot.php";
-      private final String MOBUPDATE_URL="http://192.168.1.13/poolio/mobupdate.php";
+      private final String MOBVER_URL = "http://www.poolio.in/pooqwerty123lio/mobforgot.php";
+      private final String MOBUPDATE_URL="http://www.poolio.in/pooqwerty123lio/mobupdate.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
