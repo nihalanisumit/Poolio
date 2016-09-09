@@ -76,10 +76,11 @@ public class SignUp extends AppCompatActivity {
 
 
     public void signUp(){
+        String toast_string="";
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         if(!InternetConnectionClass.isConnected(getApplicationContext())){
             Toast.makeText(SignUp.this, "Please connect to the internet!", Toast.LENGTH_LONG).show();
             return;
-
         }
         Intent in = getIntent();
         password=passwordet.getText().toString().trim();
@@ -107,8 +108,23 @@ public class SignUp extends AppCompatActivity {
                 Toast.makeText(SignUp.this, "Please connect to the internet!", Toast.LENGTH_LONG).show();
                 return;
             }
-            Log.i("Values",fname+" "+lname+" "+password_encrypt+" "+email+" "+mobile+" "+gender);
-            register(fname,lname,password_encrypt,email,mobile,gender);
+            //Log.i("Values",fname+" "+lname+" "+password_encrypt+" "+email+" "+mobile+" "+gender);
+            if("".equals(fname) || fname.length()<3||"".equals(lname) || lname.length()<3)
+            {
+                toast_string="Name : minimum 3 characters";
+            }
+            else if (email.matches(emailPattern) && email.length() > 0)
+            {
+                toast_string="Invalid email address";
+            }
+            else
+            {
+                register(fname, lname, password_encrypt, email, mobile, gender);
+            }
+
+
+
+
         }
         else {
             Toast.makeText(getApplicationContext(), "Passwords do not match!", Toast.LENGTH_SHORT).show();
