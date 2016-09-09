@@ -105,17 +105,31 @@ public class SignUp extends AppCompatActivity {
                 return;
             }
             if(!InternetConnectionClass.isConnected(getApplicationContext())){
-                Toast.makeText(SignUp.this, "Please connect to the internet!", Toast.LENGTH_LONG).show();
+                toast_string="Please connect to the internet!";
+                Toast.makeText(SignUp.this,toast_string , Toast.LENGTH_LONG).show();
                 return;
             }
             //Log.i("Values",fname+" "+lname+" "+password_encrypt+" "+email+" "+mobile+" "+gender);
-            if("".equals(fname) || fname.length()<3||"".equals(lname) || lname.length()<3)
+            if("".equals(fname) || fname.length()<3)
             {
-                toast_string="Name : minimum 3 characters";
+                toast_string="first name should be minimum 3 char";
+                Toast.makeText(SignUp.this,toast_string , Toast.LENGTH_SHORT).show();
+            }
+            else if("".equals(lname) || lname.length()<3)
+            {
+                toast_string="Last name should be minimum 3 char";
+                Toast.makeText(SignUp.this,toast_string , Toast.LENGTH_SHORT).show();
+
+            }
+            else if(password.length()<=8)
+            {
+                toast_string="password should be minimum 8 characters";
+                Toast.makeText(SignUp.this,toast_string , Toast.LENGTH_SHORT).show();
             }
             else if (email.matches(emailPattern) && email.length() > 0)
             {
                 toast_string="Invalid email address";
+                Toast.makeText(SignUp.this,toast_string , Toast.LENGTH_SHORT).show();
             }
             else
             {
