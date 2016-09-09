@@ -34,7 +34,7 @@ public class OTP extends AppCompatActivity implements VerificationListener {
     private  String TAG ="OTP state:";
     CountDownTimer countDownTimer;
     String otp="";
-    private final String MOBVER_URL = "http://192.168.1.13/poolio/mobverify.php";
+    private final String MOBVER_URL = "http://www.poolio.in/pooqwerty123lio/mobverify.php";
 
 
     @Override

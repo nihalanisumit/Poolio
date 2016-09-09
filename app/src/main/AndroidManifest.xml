@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="androarmy.poolio" >
+    package="androarmy.poolio">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -9,13 +9,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppFullScreenTheme" >
-        </activity>
-        <activity android:name=".SplashScreen" >
+            android:theme="@style/AppFullScreenTheme"></activity>
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,50 +23,39 @@
         </activity>
         <activity
             android:name=".OTP"
-            android:theme="@style/AppFullScreenTheme" >
-        </activity>
+            android:theme="@style/AppFullScreenTheme"></activity>
         <activity
             android:name=".EnterOTP"
-            android:theme="@style/AppFullScreenTheme" >
-        </activity>
+            android:theme="@style/AppFullScreenTheme"></activity>
         <activity
             android:name=".Main2Activity"
-            android:theme="@style/AppFullScreenTheme" >
-        </activity>
+            android:theme="@style/AppFullScreenTheme"></activity>
         <activity
             android:name=".SignUp"
-            android:theme="@style/AppFullScreenTheme" >
-        </activity>
+            android:theme="@style/AppFullScreenTheme"></activity>
         <activity
             android:name=".SignIn"
-            android:theme="@style/AppFullScreenTheme" >
-        </activity>
+            android:theme="@style/AppFullScreenTheme"></activity>
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppFullScreenTheme" >
-        </activity>
+            android:theme="@style/AppFullScreenTheme"></activity>
         <activity
             android:name=".find_a_ride"
-            android:theme="@style/AppFullScreenTheme" >
-        </activity>
+            android:theme="@style/AppFullScreenTheme"></activity>
         <activity
             android:name=".WelcomeSlider"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".Confirmation"
             android:label="@string/title_activity_confirmation"
-            android:theme="@style/AppFullScreenTheme" >
-        </activity>
-        <activity
-            android:name=".available_rides">
-        </activity>
+            android:theme="@style/AppFullScreenTheme"></activity>
+        <activity android:name=".available_rides"></activity>
         <activity
             android:name=".details_ride"
             android:label="@string/title_activity_details_ride"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ForgotPassword"></activity>
     </application>
 
 </manifest>

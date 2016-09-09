@@ -15,6 +15,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.onesignal.OneSignal;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -150,6 +155,22 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
                         @Override
                         public void onClick(View v) {
                             Toast.makeText(view.getContext(),device_id,Toast.LENGTH_SHORT).show();
+                            try {
+                                OneSignal.postNotification(new JSONObject("{'contents': {'en':'Test Message'}, 'include_player_ids': ['" + device_id + "']}"),
+                                        new OneSignal.PostNotificationResponseHandler() {
+                                            @Override
+                                            public void onSuccess(JSONObject response) {
+                                                Log.i("OneSignalExample", "postNotification Success: " + response.toString());
+                                            }
+
+                                            @Override
+                                            public void onFailure(JSONObject response) {
+                                                Log.e("OneSignalExample", "postNotification Failure: " + response.toString());
+                                            }
+                                        });
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                     Button cancel=(Button)dialog.findViewById(R.id.cancel_button);

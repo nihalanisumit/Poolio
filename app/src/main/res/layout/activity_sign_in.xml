@@ -64,6 +64,16 @@
                   android:gravity="center"
                   android:textSize="16dip"/>
 
+        <TextView
+            android:id="@+id/forgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="forgot your password?"
+            android:gravity="center"
+            android:textSize="16dip"
+            android:layout_gravity="center_horizontal" />
+
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"

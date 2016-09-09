@@ -120,7 +120,7 @@ public class Home extends AppCompatActivity
                 toolbar.setTitle("My Rides");
                 break;
             case R.id.nav_profile:
-                Toast.makeText(getApplicationContext(),"Profile",Toast.LENGTH_SHORT).show();
+                fragmentClass=profile.class;
                 toolbar.setTitle("Profile");
                 break;
 

@@ -28,7 +28,7 @@ public class SignUp extends AppCompatActivity {
     Switch genderSwitch;
 
     //public final String REGISTER_URL="http://192.168.1.6/poolio/register.php"; //Siddharth's pc
-    public final String REGISTER_URL="http://192.168.1.13/poolio/register.php";// Sumit's pc
+    public final String REGISTER_URL="http://www.poolio.in/pooqwerty123lio/register.php";// Sumit's pc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
