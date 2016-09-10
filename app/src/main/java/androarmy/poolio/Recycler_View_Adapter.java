@@ -3,6 +3,7 @@ package androarmy.poolio;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.CardView;
@@ -69,14 +70,6 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         holder.mobile_number=list.get(position).getMobile();
         holder.vehicleNo=list.get(position).getVehicle_number();
         holder.device_id=list.get(position).getDevice_id();
-// problem       mobile_number=list.get(position).getMobile();
-//        vehicleName=list.get(position).getVehicle_name();
-//        vehicleType=list.get(position).getType();
-//        vehicleNo=list.get(position).getVehicle_number(); problem
-
-//        holder.vehicle_name.setText(list.get(position).getVehicle_name());
-//        holder.vehicle_number.setText(list.get(position).getVehicle_number());
-//        holder.seats.setText(list.get(position).getSeats());
 
 
 
@@ -129,6 +122,13 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
             source=(TextView)view.findViewById(R.id.source_tv);
             destination=(TextView)view.findViewById(R.id.destination_tv);
             openDialog=(Button)view.findViewById(R.id.btn_book);
+            SharedPreferences mSharedPreferences = view.getContext().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+            String mob = mSharedPreferences.getString("mobile", "null");
+            if(mob.equals(mobile_number))
+            {
+
+                openDialog.setVisibility(View.GONE);
+            }
             openDialog.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

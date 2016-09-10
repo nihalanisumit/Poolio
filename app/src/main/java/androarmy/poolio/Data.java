@@ -13,12 +13,12 @@ public class Data {
     public String source;
     public String destination;
     public String type;
-    public String date;
-    public String time;
+    public String date;//date when ride will begin
+    public String time;//time when ride will begin
     public String vehicle_name;
     public String vehicle_number;
     public String seats;
-    public String timestamp;
+    public String timestamp;//timestamp when ride was offered by the user
     public String device_id;
     public String status;
 

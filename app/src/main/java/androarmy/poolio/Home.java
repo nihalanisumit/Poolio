@@ -1,8 +1,11 @@
 package androarmy.poolio;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -13,9 +16,17 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -23,6 +34,12 @@ public class Home extends AppCompatActivity
     Toolbar toolbar;
     String password;
     String mobile;
+    String first_name,last_name,gender,email,vehicle_name,vehicle_number,driving_license;
+    SharedPreferences mSharedPreferences;
+    TextView usernameheaderTV;
+    TextView emailheaderTV;
+
+    public final String PROFILE_URL ="http://www.poolio.in/pooqwerty123lio/profile.php";//Sumit's pc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +49,9 @@ public class Home extends AppCompatActivity
         Intent intent=getIntent();
         mobile =intent.getStringExtra("mobile");
         password= intent.getStringExtra("pass");
+        SharedPreferences mSharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+        String mob = mSharedPreferences.getString("mobile", "null");
+        fetchDetails(mob);
         SharedPreferences session = getSharedPreferences("session", MODE_PRIVATE);
         SharedPreferences.Editor editor=session.edit();
         editor.putString("mobile", mobile);
@@ -51,6 +71,15 @@ public class Home extends AppCompatActivity
         //navigationView.getMenu().getItem(0).setChecked(true);
         getSupportFragmentManager().beginTransaction().replace(R.id.containerView, new TabFragment()).commit();//change
         toolbar.setTitle("Rides");
+
+        View header=navigationView.getHeaderView(0);
+/*View view=navigationView.inflateHeaderView(R.layout.nav_header_main);*/
+        usernameheaderTV = (TextView)header.findViewById(R.id.txt_user);
+        emailheaderTV = (TextView)header.findViewById(R.id.txt_email);
+
+
+
+
     }
 
     @Override
@@ -77,27 +106,7 @@ public class Home extends AppCompatActivity
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -165,6 +174,65 @@ public class Home extends AppCompatActivity
         Intent in= new Intent(this,MainActivity.class);
         startActivity(in);
         overridePendingTransition(R.anim.previous_slide_in, R.anim.previous_slide_out);
+    }
+
+
+    private void fetchDetails(final String mobile){
+        class fetchDetailsClass extends AsyncTask<String,Void,String> {
+            //ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+              //  loading = ProgressDialog.show(getApplicationContext(),"Profile","Please wait while we connect to our server",true,true);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                //loading.dismiss();
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONArray result = jsonObject.getJSONArray("result");
+                    JSONObject c = result.getJSONObject(0);
+
+                    first_name=c.getString("first_name");
+                    last_name=c.getString("last_name");
+                    gender=c.getString("gender");
+                    email=c.getString("email");
+                    vehicle_name=c.getString("vehicle_name");
+                    vehicle_number=c.getString("vehicle_number");
+                    driving_license=c.getString("driving_license");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                mSharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = mSharedPreferences.edit();
+                editor.putString("name",first_name+" "+last_name);
+                editor.putString("gender",gender);
+                editor.putString("email",email);
+                editor.putString("vehicle_name",vehicle_name);
+                editor.putString("vehicle_number",vehicle_number);
+                editor.putString("driving_license",driving_license);
+                editor.commit();
+
+                usernameheaderTV.setText(first_name+" "+last_name);
+                emailheaderTV.setText(email);
+
+
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String,String> data = new HashMap<>();
+                data.put("mobile",params[0]);
+
+                RegisterUserClass ruc = new RegisterUserClass();
+                String result = ruc.sendPostRequest(PROFILE_URL,data);
+                return result;
+            }
+        }
+        fetchDetailsClass fdc = new fetchDetailsClass();
+        fdc.execute(mobile);
     }
 
 }

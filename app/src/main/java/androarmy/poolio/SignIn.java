@@ -105,20 +105,16 @@ public class SignIn extends AppCompatActivity {
 
     void onSignInButtonClick()
     {
-        mSharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         mob= input_mob.getText().toString().trim();
-        editor.putString("mobile",mob);
-        editor.commit();
         pass=input_pass.getText().toString().trim();
-        md5(pass);
+        password=md5(pass);
         if("".equalsIgnoreCase(mob) || "".equalsIgnoreCase(pass)){
             Toast.makeText(getApplicationContext(),"One or more fields are empty!",Toast.LENGTH_SHORT).show();
             return;
         }
         userLogin(mob, password);
-        saveDeviceID(mob,device_id);
+
     }
     private void userLogin(final String mobile, final String password){
         class UserLoginClass extends AsyncTask<String,Void,String> {
@@ -134,6 +130,11 @@ public class SignIn extends AppCompatActivity {
                 super.onPostExecute(s);
                 loading.dismiss();
                 if("success".equalsIgnoreCase(s)){
+                    saveDeviceID(mob,device_id);
+                    mSharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = mSharedPreferences.edit();
+                    editor.putString("mobile",mob);
+                    editor.commit();
 
                     Intent intent = new Intent(SignIn.this,Home.class);
                     intent.putExtra("mobile",mobile);
@@ -168,32 +169,29 @@ public class SignIn extends AppCompatActivity {
 
     private void saveDeviceID(final String mobile, final String device_id){
         class saveDeviceIdClass extends AsyncTask<String, Void, String>{
-            
+
             //ProgressDialog loading;
             RegisterUserClass ruc=new RegisterUserClass();
 
             protected void onPreExecute() {
                 super.onPreExecute();
-                
+
                 //loading = ProgressDialog.show(getApplicationContext(), "Wait","Please wait while we connect to server", true, true);
             }
             protected void onPostExecute(String s){
                 super.onPostExecute(s);
-               // loading.dismiss();
+                // loading.dismiss();
                 if("".equals(s))
                 {
                     s="Server error, Please try again after some time!";
                 }
                 else if("device is successfully registered".equalsIgnoreCase(s)){
-                    SharedPreferences sp = getSharedPreferences("device_id",MODE_PRIVATE);
+                    SharedPreferences sp = getSharedPreferences("UserDetails",MODE_PRIVATE);
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString("device_id",device_id);
-
+                    editor.apply();
                 }
-
                 Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
-
-
             }
 
 
@@ -203,7 +201,7 @@ public class SignIn extends AppCompatActivity {
                 data.put("mobile",params[0]);
                 data.put("device_id",params[1]);
                 String result = ruc.sendPostRequest(DEVICE_URL,data);
-               // Log.i("@doinBackground:",result);
+                // Log.i("@doinBackground:",result);
                 return  result;
 
             }}
