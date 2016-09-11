@@ -1,6 +1,5 @@
 package androarmy.poolio;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -137,10 +136,12 @@ public class Home extends AppCompatActivity
             case R.id.nav_share:
                 Toast.makeText(getApplicationContext(),"Share",Toast.LENGTH_SHORT).show();
                 toolbar.setTitle("Share");
+                ShareIt();
                 break;
             case R.id.nav_contact:
-                Toast.makeText(getApplicationContext(),"contact us",Toast.LENGTH_SHORT).show();
+                fragmentClass = ContactUs.class;
                 toolbar.setTitle("Contact Us");
+
                 break;
             case R.id.nav_about:
                 Toast.makeText(getApplicationContext(),"about us",Toast.LENGTH_SHORT).show();
@@ -174,6 +175,13 @@ public class Home extends AppCompatActivity
         Intent in= new Intent(this,MainActivity.class);
         startActivity(in);
         overridePendingTransition(R.anim.previous_slide_in, R.anim.previous_slide_out);
+    }
+    private void ShareIt(){
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "poolio");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "testing share..");
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 
 
