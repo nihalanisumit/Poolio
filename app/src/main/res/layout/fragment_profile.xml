@@ -94,7 +94,8 @@
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:text="Mobile" />
+                android:text="Mobile"
+                android:textColor="#000"/>
 
             <TextView android:id="@+id/email"
                 android:layout_width="fill_parent"
@@ -106,7 +107,8 @@
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:text="E-mail" />
+                android:text="E-mail"
+                android:textColor="#000"/>
 
             <TextView android:id="@+id/v_no"
                 android:layout_width="fill_parent"
@@ -116,7 +118,8 @@
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:text="Vehicle number" />
+                android:text="Vehicle number"
+                android:textColor="#000"/>
 
             <TextView android:id="@+id/v_name"
                 android:layout_width="fill_parent"
@@ -128,7 +131,8 @@
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:text="vehicle name" />
+                android:text="vehicle name"
+                android:textColor="#000"/>
 
             <TextView
                 android:layout_width="fill_parent"
@@ -139,7 +143,8 @@
                 android:elevation="4dp"
                 android:padding="20dp"
                 android:text="DL"
-                android:id="@+id/dl" />
+                android:id="@+id/dl"
+                android:textColor="#000"/>
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>

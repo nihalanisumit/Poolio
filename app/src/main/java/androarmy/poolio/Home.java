@@ -139,7 +139,8 @@ public class Home extends AppCompatActivity
                 ShareIt();
                 break;
             case R.id.nav_contact:
-                fragmentClass = ContactUs.class;
+                Intent i = new Intent(getApplicationContext() , ContactUs.class);
+                startActivity(i);
                 toolbar.setTitle("Contact Us");
 
                 break;
