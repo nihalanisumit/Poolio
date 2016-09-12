@@ -18,6 +18,12 @@
             android:title="My profile"
             android:checked="false"/>
 
+        <item
+            android:id="@+id/nav_messages"
+            android:title="Messages"
+            android:icon="@android:drawable/ic_dialog_email"
+            android:checked="false"/>
+
 
     </group>
 
