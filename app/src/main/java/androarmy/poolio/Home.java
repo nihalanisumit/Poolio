@@ -131,6 +131,11 @@ public class Home extends AppCompatActivity
                 fragmentClass=profile.class;
                 toolbar.setTitle("Profile");
                 break;
+            case R.id.nav_messages:
+                fragmentClass = Messages.class;
+                toolbar.setTitle("Messages");
+                break;
+
 
 
             case R.id.nav_share:

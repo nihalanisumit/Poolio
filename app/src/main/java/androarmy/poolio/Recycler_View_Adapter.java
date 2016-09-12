@@ -123,7 +123,8 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
             destination=(TextView)view.findViewById(R.id.destination_tv);
             openDialog=(Button)view.findViewById(R.id.btn_book);
             SharedPreferences mSharedPreferences = view.getContext().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
-            String mob = mSharedPreferences.getString("mobile", "null");
+           final String mob = mSharedPreferences.getString("mobile", "null");
+            final String username = mSharedPreferences.getString("name" , "null");
             if(mob.equals(mobile_number))
             {
 
@@ -156,7 +157,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
                         public void onClick(View v) {
                             Toast.makeText(view.getContext(),device_id,Toast.LENGTH_SHORT).show();
                             try {
-                                OneSignal.postNotification(new JSONObject("{'contents': {'en':'Test Message'}, 'include_player_ids': ['" + device_id + "']}"),
+                                OneSignal.postNotification(new JSONObject("{'contents': {'en': '"  + username +  " booked u contact him/her on " +mob+"'  }, 'include_player_ids': ['" + device_id + "']}"),
                                         new OneSignal.PostNotificationResponseHandler() {
                                             @Override
                                             public void onSuccess(JSONObject response) {
@@ -167,10 +168,13 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
                                             public void onFailure(JSONObject response) {
                                                 Log.e("OneSignalExample", "postNotification Failure: " + response.toString());
                                             }
+                                            String str =  username+" has booked you , contact him on his/her "+ mob;
                                         });
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                            dialog.cancel();
+
                         }
                     });
                     Button cancel=(Button)dialog.findViewById(R.id.cancel_button);
