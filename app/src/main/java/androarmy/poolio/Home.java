@@ -29,7 +29,7 @@ import java.util.HashMap;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+      SharedPreferences mSharedPreferences;
     Toolbar toolbar;
     String password;
     String mobile;
@@ -56,6 +56,9 @@ public class Home extends AppCompatActivity
         editor.putString("mobile", mobile);
         editor.putString("password", password);
         editor.apply();
+        mSharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+        Toast.makeText(Home.this, mSharedPreferences.getString("device id","0")+"", Toast.LENGTH_SHORT).show();
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -98,6 +101,7 @@ public class Home extends AppCompatActivity
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                             finish();
+
                         }
                     }).setNegativeButton("no", null).show();
         }

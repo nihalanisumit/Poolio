@@ -1,5 +1,12 @@
 package androarmy.poolio;
 
+import android.util.Log;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by kjaganmohan on 17/07/16.
  */
@@ -37,7 +44,24 @@ public class Data {
         this.source = source;
         this.destination = destination;
         this.type = type;
-        this.date = date;
+        final String oldDateFormat="yyyy-MM-dd";
+        final String newDateFormat="EEE, d MMM";
+         String oldDateString=date;
+        String newDateString="";
+        SimpleDateFormat sdf=new SimpleDateFormat(oldDateFormat);
+       try {
+           Date d = sdf.parse(oldDateString);
+           SimpleDateFormat sdf_output=new SimpleDateFormat(newDateFormat);
+           newDateString=sdf_output.format(d);
+       }
+       catch (ParseException e){
+           Log.d("Date conversion error",e.getMessage());
+       }
+        this.date=newDateString;
+        if(newDateString == "" || newDateString == " " || newDateString == null){
+            this.date = date;
+        }
+
         this.time = time;
         this.vehicle_name = vehicle_name;
         this.vehicle_number = vehicle_number;
