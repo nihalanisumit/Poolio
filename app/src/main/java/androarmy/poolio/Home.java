@@ -29,7 +29,7 @@ import java.util.HashMap;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-      SharedPreferences mSharedPreferences;
+
     Toolbar toolbar;
     String password;
     String mobile;
