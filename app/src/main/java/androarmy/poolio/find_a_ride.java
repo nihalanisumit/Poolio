@@ -96,7 +96,8 @@ public class find_a_ride extends Fragment {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                                dateET.setText(year + "-" + (monthOfYear + 1)+"-"+dayOfMonth);
+                               String dateforsql= year + "-" + (monthOfYear + 1)+"-"+dayOfMonth;
+                                dateET.setText(dayOfMonth+ "-" + (monthOfYear + 1)+"-"+year);
 
                             }
                         }, mYear, mMonth, mDay);
@@ -124,8 +125,11 @@ public class find_a_ride extends Fragment {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay,
                                                   int minute) {
-
-                                timeET.setText(hourOfDay + ":" + minute);
+                                String hour=String.valueOf(hourOfDay);
+                                if(hour.length()<2){
+                                 hour="0"+hour;
+                                }
+                                timeET.setText(hour + ":" + minute);
                             }
                         }, mHour, mMinute, false);
                 timePickerDialog.show();

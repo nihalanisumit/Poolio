@@ -31,12 +31,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class offer_a_ride extends Fragment {
 
     //public final String REGISTER_URL="http://192.168.1.101/poolio/register.php"; //Siddharth's pc
     public final String OFFER_URL="http://www.poolio.in/pooqwerty123lio/offer.php";// Sumit's pc
-
+    String dateforsql,timeforsql;
     String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","Backgate","Potheri Station","Guduvancheri"};//need to make it dynamic
     List<String> vehicleType = new ArrayList<String>(); //No need for dynamic i suppose
     public static Spinner spinner;
@@ -52,7 +54,7 @@ public class offer_a_ride extends Fragment {
     LinearLayout chargeLayout;
     static boolean timeCheck;// if timeCheck is false -> don't go to next screen
     ImageView Calenderiv;
-    private int mYear, mMonth, mDay, mHour, mMinute;
+    private int mYear, mMonth, mDay, mHour, mMinute,position;
 
 
 
@@ -100,6 +102,16 @@ public class offer_a_ride extends Fragment {
         Calenderiv = (ImageView)v.findViewById(R.id.calender);
         chargeLayout = (LinearLayout)v.findViewById(R.id.layer_charge);
         chargeableRG=(RadioGroup)v.findViewById(R.id.radioGrp);
+        SharedPreferences offerSp=getActivity().getSharedPreferences("offer",Context.MODE_PRIVATE);
+        sourceET.setText(offerSp.getString("source",""));
+        destinationET.setText(offerSp.getString("destination",""));
+        vnameET.setText(offerSp.getString("vname",""));
+        vnumberET.setText(offerSp.getString("vnumber",""));
+        availableET.setText(offerSp.getString("availableseats",""));
+        String spinnerType=offerSp.getString("type","");
+        if(!"".equalsIgnoreCase(spinnerType))
+        position=dataAdapter.getPosition(spinnerType);
+        spinner.setSelection(position,true);
 //        chargeableRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 //            @Override
 //            public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -134,7 +146,12 @@ public class offer_a_ride extends Fragment {
                             public void onTimeSet(TimePicker view, int hourOfDay,
                                                   int minute) {
 
-                                timeET.setText(hourOfDay + ":" + minute);
+                                timeforsql= hourOfDay + ":" + minute;
+                                String hour=String.valueOf(hourOfDay);
+                                if(hour.length()<2){
+                                    hour="0"+hour;
+                                }
+                                timeET.setText(hour + ":" + minute);
                             }
                         }, mHour, mMinute, false);
                 timePickerDialog.show();
@@ -148,7 +165,9 @@ public class offer_a_ride extends Fragment {
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
 
-                        dateET.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+
+                        dateforsql= year + "-" + (monthOfYear + 1)+"-"+dayOfMonth;
+                        dateET.setText(dayOfMonth+ "-" + (monthOfYear + 1)+"-"+year);
 
                     }
                 }, mYear, mMonth, mDay);
@@ -207,8 +226,12 @@ public class offer_a_ride extends Fragment {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay,
                                                   int minute) {
-
-                                timeET.setText(hourOfDay + ":" + minute);
+                                timeforsql= (hourOfDay + ":" + minute);
+                                String hour=String.valueOf(hourOfDay);
+                                if(hour.length()<2){
+                                    hour="0"+hour;
+                                }
+                                timeET.setText(hour + ":" + minute);
                             }
                         }, mHour, mMinute, false);
                 timePickerDialog.show();
@@ -246,8 +269,12 @@ public class offer_a_ride extends Fragment {
         source=sourceET.getText().toString().trim();
         destination=destinationET.getText().toString().trim();
         type = spinner.getSelectedItem().toString();
-        date = dateET.getText().toString();
-        time=timeET.getText().toString()+"";
+       if("".equalsIgnoreCase(dateforsql) ||"".equalsIgnoreCase(timeforsql)){
+           Toast.makeText(getActivity(), "please enter date or time", Toast.LENGTH_SHORT).show();
+           return;
+       }
+        date = dateforsql;
+        time=timeforsql;
         vname=vnameET.getText().toString();
         vnumber=vnumberET.getText().toString();
         availableSeats=Integer.parseInt(availableET.getText().toString());
@@ -263,6 +290,15 @@ public class offer_a_ride extends Fragment {
             Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
             return;
         }
+        SharedPreferences offerSp=getActivity().getSharedPreferences("offer",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=offerSp.edit();
+        editor.putString("source",source);
+        editor.putString("destination",destination);
+        editor.putString("type",type);
+        editor.putString("vname",vname);
+        editor.putString("vnumber",vnumber);
+        editor.putString("availableseats",availableSeats+"");
+        editor.apply();
         offer(mobile,source,destination,type,date,time,vname,vnumber,availableSeats,chargeable,amount);
     }
 
