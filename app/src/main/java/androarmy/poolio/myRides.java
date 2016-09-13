@@ -43,6 +43,7 @@ public class myRides extends android.support.v4.app.Fragment {
         fetchMyRides(mobile);
 
 
+
         return inflater.inflate(R.layout.fragment_my_rides, container, false);
     }
 

@@ -2,10 +2,10 @@ package androarmy.poolio;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
-
 import java.util.HashMap;
 
 
 public class profile extends android.support.v4.app.Fragment {
+    public final String ADD_PROFILE_URL="http://www.poolio.in/pooqwerty123lio/addprofile.php";//Sumit's pc
 
     SharedPreferences mSharedPreferences;
     String mobile, name, gender, email, vehicle_name, vehicle_number, driving_license;
@@ -36,7 +32,7 @@ public class profile extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_profile, container, false);
+        final View v = inflater.inflate(R.layout.fragment_profile, container, false);
         mSharedPreferences = getActivity().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         mobile = mSharedPreferences.getString("mobile", "null");
         name = mSharedPreferences.getString("name", "name");
@@ -62,33 +58,36 @@ public class profile extends android.support.v4.app.Fragment {
         nameET.setText(name);
         genderET.setText(gender);
         emailET.setText(email);
-        if (vehicle_number.equals("null")) {
+        vehicle_numberET.setText(vehicle_number);
+        vehicle_nameET.setText(vehicle_name);
+        driving_licenseET.setText(driving_license);
+        if (vehicle_number.equalsIgnoreCase("null")) {
             vehicle_numberET.setText("Add your vehicle number");
             vehicle_numberIV.setVisibility(View.VISIBLE);
             vehicle_numberIV.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    addDetails();
+                public void onClick(View view) {
+                    addDetails(v);
                 }
             });
         }
-        if (vehicle_name.equals("null")) {
+        if (vehicle_name.equalsIgnoreCase("null")) {
             vehicle_nameET.setText("Add your vehicle number");
             vehicle_nameIV.setVisibility(View.VISIBLE);
-            vehicle_numberIV.setOnClickListener(new View.OnClickListener() {
+            vehicle_nameIV.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    addDetails();
+                public void onClick(View view) {
+                    addDetails(v);
                 }
             });
         }
-        if (driving_license.equals("null")) {
+        if (driving_license.equalsIgnoreCase("null")) {
             driving_licenseET.setText("Add your license number");
             dlIV.setVisibility(View.VISIBLE);
-            vehicle_numberIV.setOnClickListener(new View.OnClickListener() {
+            dlIV.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    addDetails();
+                public void onClick(View view) {
+                    addDetails(v);
                 }
             });
 
@@ -98,7 +97,7 @@ public class profile extends android.support.v4.app.Fragment {
     }
 
 
-    void addDetails() {
+    void addDetails(View v) {
         mobileET.setEnabled(false);
         emailET.setEnabled(false);
         add_button.setVisibility(View.VISIBLE);
@@ -106,28 +105,29 @@ public class profile extends android.support.v4.app.Fragment {
         vehicle_nameIV.setVisibility(View.GONE);
         dlIV.setVisibility(View.GONE);
         vehicle_nameET.setText("");
-        vehicle_nameET.setHint("Vehicle Name");
+        vehicle_nameET.setHint("Vehicle Name*");
         vehicle_nameET.setEnabled(true);
         vehicle_numberET.setText("");
-        vehicle_numberET.setHint("Vehicle Number");
+        vehicle_numberET.setHint("Vehicle Number*");
         vehicle_numberET.setEnabled(true);
         driving_licenseET.setText("");
-        driving_licenseET.setHint("Driving License Number");
+        driving_licenseET.setHint("Driving License Number*");
         driving_licenseET.setEnabled(true);
 
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addDetailsToDB(mobile);
+                addDetailsToDB(v,mobile);
             }
         });
     }
 
-    void addDetailsToDB(String mobile)
+    void addDetailsToDB(View view,String mobile)
     {
         String v_name = vehicle_nameET.getText().toString();
         String v_number = vehicle_numberET.getText().toString();
         String dl = driving_licenseET.getText().toString();
+//        Toast.makeText(view.getContext(),v_name+" "+v_number+" "+dl+" "+mobile,Toast.LENGTH_SHORT).show();
 
         if(v_name=="" || v_number=="" || dl=="")
         {
@@ -135,7 +135,60 @@ public class profile extends android.support.v4.app.Fragment {
         }
         else
         {
-            Toast.makeText(getContext(),v_name+" "+v_number+" "+dl,Toast.LENGTH_SHORT).show();
+            addProfile(view,mobile,v_name,v_number,dl);
         }
+    }
+
+
+    void addProfile(final View view,String mobile, String v_name, String v_number, String dl)
+    {
+        //Toast.makeText(view.getContext(),"Message saved in db",Toast.LENGTH_SHORT).show();
+        class addProfileClass extends AsyncTask<String, Void, String> {
+            ProgressDialog loading;
+            RegisterUserClass ruc=new RegisterUserClass();
+
+
+            protected void onPreExecute() {
+
+                super.onPreExecute();
+                loading = ProgressDialog.show(view.getContext(), "Adding your details","Please wait while we connect to our server", true, true);
+            }
+            protected void onPostExecute(String s){
+                super.onPostExecute(s);
+                loading.dismiss();
+                if("".equals(s))
+                {
+                    s="Server error, Please try again after some time!";
+                }
+                else if("successfully added".equalsIgnoreCase(s)){
+
+                    Toast.makeText(view.getContext(),"Details successfully added",Toast.LENGTH_SHORT).show();
+                    Intent in = new Intent(view.getContext(),Home.class);
+                    in.putExtra("switch","ride");
+                    startActivity(in);
+                }
+
+                Toast.makeText(view.getContext(),s,Toast.LENGTH_LONG).show();
+
+
+            }
+
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("mobile",params[0]);
+                data.put("vehicle_name",params[1]);
+                data.put("vehicle_number",params[2]);
+                data.put("driving_license",params[3]);
+                String result = ruc.sendPostRequest(ADD_PROFILE_URL,data);
+                //Log.i("@doinBackground:", result);
+                return  result;
+
+            }
+        }
+        addProfileClass apc = new addProfileClass();
+        apc.execute(mobile,v_name, v_number,dl);
+
     }
 }

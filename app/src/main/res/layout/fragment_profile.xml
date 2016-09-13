@@ -122,7 +122,34 @@
                         />
             </android.support.v7.widget.CardView>
 
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:elevation="4dp"
+                android:padding="20dp"
+                android:layout_margin="5dp"
+                android:background="#fff">
+                <EditText android:id="@+id/v_name"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:clickable="true"
+                          android:enabled="false"
+                          android:padding="20dp"
+                          android:text="vehcile name"
+                          android:textColor="#000"
+                          android:background="@null"/>
+                <ImageView
+                    android:id="@+id/vnplus"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end"
+                    android:src="@drawable/plus_icon"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    android:visibility="gone"
+                    />
 
+            </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -152,34 +179,7 @@
 
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:elevation="4dp"
-                android:padding="20dp"
-                android:layout_margin="5dp"
-                android:background="#fff">
-                <EditText android:id="@+id/v_name"
-                          android:layout_width="fill_parent"
-                          android:layout_height="wrap_content"
-                          android:clickable="true"
-                          android:enabled="false"
-                          android:padding="20dp"
-                          android:text="vehcile name"
-                          android:textColor="#000"
-                    android:background="@null"/>
-                <ImageView
-                    android:id="@+id/vnplus"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="end"
-                    android:src="@drawable/plus_icon"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="5dp"
-                    android:visibility="gone"
-                    />
 
-            </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
