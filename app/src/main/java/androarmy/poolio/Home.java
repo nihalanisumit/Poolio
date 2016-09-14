@@ -37,6 +37,8 @@ public class Home extends AppCompatActivity
     SharedPreferences mSharedPreferences;
     TextView usernameheaderTV;
     TextView emailheaderTV;
+    Fragment fragment = null;
+    Class fragmentClass = null;
 
     public final String PROFILE_URL ="http://www.poolio.in/pooqwerty123lio/profile.php";//Sumit's pc
     @Override
@@ -56,6 +58,9 @@ public class Home extends AppCompatActivity
         editor.putString("mobile", mobile);
         editor.putString("password", password);
         editor.apply();
+        mSharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+        Toast.makeText(Home.this, mSharedPreferences.getString("device id","0")+"", Toast.LENGTH_SHORT).show();
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -75,6 +80,29 @@ public class Home extends AppCompatActivity
 /*View view=navigationView.inflateHeaderView(R.layout.nav_header_main);*/
         usernameheaderTV = (TextView)header.findViewById(R.id.txt_user);
         emailheaderTV = (TextView)header.findViewById(R.id.txt_email);
+
+        Intent in = getIntent();//intent coming after adding vehicle number, vehile name and DL from profile.java
+        String text = "a";
+        text="a"+in.getStringExtra("switch");
+        if(!"a".equals(text))
+        {
+            if(text.equalsIgnoreCase("aride"))
+            {
+                fragmentClass=TabFragment.class;
+                try {
+
+                    fragment = (Fragment) fragmentClass.newInstance();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }if (fragment!=null){
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.containerView, fragment).commit();
+
+            }
+            }
+
+        }
 
 
 
@@ -98,6 +126,7 @@ public class Home extends AppCompatActivity
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                             finish();
+
                         }
                     }).setNegativeButton("no", null).show();
         }
@@ -112,8 +141,7 @@ public class Home extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Fragment fragment = null;
-        Class fragmentClass = null;
+
         if(!InternetConnectionClass.isConnected(getApplicationContext())){
             Toast.makeText(Home.this, "Please connect to the internet!", Toast.LENGTH_LONG).show();
             return false;
@@ -121,7 +149,7 @@ public class Home extends AppCompatActivity
         switch (id){
             case R.id.nav_find:
                 fragmentClass= TabFragment.class;
-                toolbar.setTitle("Find a ride");
+                toolbar.setTitle("Find");
                 break;
             case R.id.nav_myrides:
                 fragmentClass= myRides.class;

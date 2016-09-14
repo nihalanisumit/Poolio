@@ -20,7 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_Adapter2.View_Holder>  {
+public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_Adapter2.View_Holder> //MYRIDES
+ {
 
     public final String STATUS_URL="http://www.poolio.in/pooqwerty123lio/statuschange.php";//jagan's pc
 
@@ -59,6 +60,7 @@ public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_A
         holder.date.append(list.get(position).getDate());
         holder.time.append(list.get(position).getTime());
         holder.status = list.get(position).getStatus();
+        holder.timestampTV.setText(list.get(position).getTimestamp());
         holder.checkStatus();
        // Log.i("holder.status:: ",holder.status);
         //holder.timestamp.setText(list.get(position).getTimestamp()); //timestamp need to be fetched and value need to be converted in app format
@@ -88,10 +90,10 @@ public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_A
     }
     public  class View_Holder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public TextView id,source,destination,time,timestamp,date,statusTV;
+        public TextView id,source,destination,time,timestampTV,date,statusTV;
         public CardView cv;
         public Button button_cancel,button_complete;
-        public String status;
+        public String status,timestamp;
 
 
         public View_Holder(final View view) {
@@ -103,7 +105,7 @@ public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_A
             destination=(TextView)view.findViewById(R.id.destination);
             date=(TextView)view.findViewById(R.id.date);
             time=(TextView)view.findViewById(R.id.time);
-            timestamp=(TextView)view.findViewById(R.id.timestamp);
+            timestampTV=(TextView)view.findViewById(R.id.timestamp);
             button_complete = (Button)view.findViewById(R.id.button_complete);
             button_cancel = (Button)view.findViewById(R.id.button_cancel);
             statusTV=(TextView)view.findViewById(R.id.status_tv);

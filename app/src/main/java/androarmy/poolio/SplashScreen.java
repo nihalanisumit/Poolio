@@ -50,11 +50,13 @@ public class SplashScreen extends Activity {
     private String password = null;
     int flag;
     String heading, description;
-    String userid;
+    String mob,pass;
+    Bundle temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        temp=savedInstanceState;
         if(!InternetConnectionClass.isConnected(getApplicationContext())){
             Toast.makeText(SplashScreen.this, "Please connect to internet!", Toast.LENGTH_LONG).show();
             finish();
@@ -64,7 +66,12 @@ public class SplashScreen extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
         StartAnimations();
+        SharedPreferences session = getSharedPreferences("session", MODE_PRIVATE);
+        mob = session.getString("mobile", NO_VAL);
+        pass = session.getString("password", NO_VAL);
+        Log.d("session::",mob+" "+pass);
         getCondition(CONDITION_URL);
+
         myCountdownTimer = new MyCountdownTimer(3000, 1000);
         myCountdownTimer.start();
 
@@ -184,6 +191,8 @@ public class SplashScreen extends Activity {
                 if("success".equalsIgnoreCase(s)){
 
                     Intent intent = new Intent(SplashScreen.this,Home.class);
+                    intent.putExtra("mobile",mobile);
+                    intent.putExtra("pass",pass);
                     startActivity(intent);
                     overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
                 }else{
@@ -293,9 +302,7 @@ public class SplashScreen extends Activity {
     }
 
     void goFurther(){
-        SharedPreferences session = getSharedPreferences("session", MODE_PRIVATE);
-        String mob = session.getString("mobile", NO_VAL);
-        String pass = session.getString("password", NO_VAL);
+
 
         if (mob.equalsIgnoreCase(NO_VAL) || pass.equalsIgnoreCase(NO_VAL) || mob.equalsIgnoreCase("") || pass.equalsIgnoreCase("")) {
             Intent myIntent = new Intent(SplashScreen.this, WelcomeSlider.class);
@@ -324,6 +331,10 @@ public class SplashScreen extends Activity {
         }
 
         return "";
+    }
+    public void onResume(){
+        super.onResume();
+        onCreate(temp);
     }
 
 

@@ -1,8 +1,14 @@
 package androarmy.poolio;
 
-/**
- * Created by kjaganmohan on 17/07/16.
- */
+import android.util.Log;
+import android.widget.Toast;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.StringTokenizer;
+
 public class Data {
 
     public String id; //rideid
@@ -41,7 +47,24 @@ public class Data {
         this.source = source;
         this.destination = destination;
         this.type = type;
-        this.date = date;
+        final String oldDateFormat="yyyy-MM-dd";
+        final String newDateFormat="EEE, d MMM";
+         String oldDateString=date;
+        String newDateString="";
+        SimpleDateFormat sdf=new SimpleDateFormat(oldDateFormat);
+       try {
+           Date d = sdf.parse(oldDateString);
+           SimpleDateFormat sdf_output=new SimpleDateFormat(newDateFormat);
+           newDateString=sdf_output.format(d);
+       }
+       catch (ParseException e){
+           Log.d("Date conversion error",e.getMessage());
+       }
+        this.date=newDateString;
+        if(newDateString == "" || newDateString == " " || newDateString == null){
+            this.date = date;
+        }
+//        this.date=date;
         this.time = time;
         this.vehicle_name = vehicle_name;
         this.vehicle_number = vehicle_number;
@@ -55,9 +78,46 @@ public class Data {
         this.id = id;
         this.source = source;
         this.destination = destination;
-        this.date = date;
+        String oldDateString=date;
+        String newDateString="";
+        final String oldDateFormat="yyyy-MM-dd";
+        final String newDateFormat="EEE, d MMM";
+        SimpleDateFormat sdf=new SimpleDateFormat(oldDateFormat);
+        try {
+            Date d = sdf.parse(oldDateString);
+            SimpleDateFormat sdf_output=new SimpleDateFormat(newDateFormat);
+            newDateString=sdf_output.format(d);
+        }
+        catch (ParseException e){
+            Log.d("Date conversion error",e.getMessage());
+        }
+        this.date=newDateString;
+        if(newDateString == "" || newDateString == " " || newDateString == null){
+            this.date = date;
+        }
         this.time = time;
-        this.timestamp=timestamp;
+        StringTokenizer strToken=new StringTokenizer(timestamp," ");
+        String date1=strToken.nextToken();
+        Log.d("date:",date1);
+        String time1=strToken.nextToken();
+        Log.d("time:",time1);
+        final String oldDateFormat2="yyyy-MM-dd";
+        final String newDateFormat2="EEE, d MMM yyyy";
+        SimpleDateFormat sdf2=new SimpleDateFormat(oldDateFormat2);
+        try {
+            Date d2 = sdf2.parse(date1);
+//            Log.d("date timestamp::",d2.toString());
+            SimpleDateFormat sdf_output=new SimpleDateFormat(newDateFormat2);
+            date1=sdf_output.format(d2);
+        }
+        catch(ParseException e){
+            Log.d("Date conversion error",e.getMessage());
+        }
+        this.timestamp=date1+" "+time1;
+        Log.d("timestamp",timestamp);
+        if(timestamp == "" || timestamp == " " || timestamp == null){
+            this.timestamp = "Cant be displayed";
+        }
         this.status=status;
     }
     public Data(String message , String mobile_book , String timestamp ){

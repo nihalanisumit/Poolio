@@ -1,11 +1,13 @@
 package androarmy.poolio;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,17 +24,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by kjaganmohan on 17/07/16.
  */
 public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_Adapter.View_Holder>  {
+    public final String MESSAGE_URL="http://www.poolio.in/pooqwerty123lio/messages.php";//Sumit's pc
 
     List<Data> list = Collections.emptyList();
     Context context;
     private ItemClickListener clickListener;
     public View view;
+    String message;
 //    String mobile_number,vehicleType,vehicleName,vehicleNo,gender,seats;
 
     public Recycler_View_Adapter(final List<Data> list, Context context)
@@ -125,6 +130,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
             SharedPreferences mSharedPreferences = view.getContext().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
            final String mob = mSharedPreferences.getString("mobile", "null");
             final String username = mSharedPreferences.getString("name" , "null");
+            final String gender = mSharedPreferences.getString("gender" , "null");
             if(mob.equals(mobile_number))
             {
 
@@ -155,9 +161,25 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
                     book.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(view.getContext(),device_id,Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(view.getContext(),device_id,Toast.LENGTH_SHORT).show();
+                            String hh;
+                            if(gender.equalsIgnoreCase("male"))
+                            {
+                                hh="him";
+                            }
+                            else if(gender.equalsIgnoreCase("female"))
+                            {
+                                hh="her";
+                            }
+                            else{
+                                hh="him/her";
+                            }
+
+                            message= username +  " has booked your ride. Contact "+hh+" on" +mob;
+
+                            saveMessage(view,message,mobile_number,username,mob);
                             try {
-                                OneSignal.postNotification(new JSONObject("{'contents': {'en': '"  + username +  " booked u contact him/her on " +mob+"'  }, 'include_player_ids': ['" + device_id + "']}"),
+                                OneSignal.postNotification(new JSONObject("{'contents': {'en': '"  + message+"'  }, 'include_player_ids': ['" + device_id + "']}"),
                                         new OneSignal.PostNotificationResponseHandler() {
                                             @Override
                                             public void onSuccess(JSONObject response) {
@@ -168,7 +190,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
                                             public void onFailure(JSONObject response) {
                                                 Log.e("OneSignalExample", "postNotification Failure: " + response.toString());
                                             }
-                                            String str =  username+" has booked you , contact him on his/her "+ mob;
+
                                         });
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -203,4 +225,54 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         }
     }
 
+    void saveMessage(final View view, String message, String mobile, String name_book,String mobile_book)
+    {
+        //Toast.makeText(view.getContext(),"Message saved in db",Toast.LENGTH_SHORT).show();
+        class saveMessageClass extends AsyncTask<String, Void, String> {
+            ProgressDialog loading;
+            RegisterUserClass ruc=new RegisterUserClass();
+
+
+            protected void onPreExecute() {
+
+                super.onPreExecute();
+                loading = ProgressDialog.show(view.getContext(), "Saving Your Details","Thanks for offering ride", true, true);
+            }
+            protected void onPostExecute(String s){
+                super.onPostExecute(s);
+                loading.dismiss();
+                if("".equals(s))
+                {
+                    s="Server error, Please try again after some time!";
+                }
+                else if("successfully saved".equalsIgnoreCase(s)){
+
+                    Toast.makeText(view.getContext(),"Message Saved",Toast.LENGTH_SHORT).show();
+                }
+
+                Toast.makeText(view.getContext(),s,Toast.LENGTH_LONG).show();
+
+
+            }
+
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("message",params[0]);
+                data.put("mobile",params[1]);
+                data.put("name_book",params[2]);
+                data.put("mobile_book",params[3]);
+                String result = ruc.sendPostRequest(MESSAGE_URL,data);
+                //Log.i("@doinBackground:", result);
+                return  result;
+
+            }
+        }
+         saveMessageClass smc = new saveMessageClass();
+         smc.execute(message,mobile,name_book,mobile_book);
+    }
+
 }
+
+
