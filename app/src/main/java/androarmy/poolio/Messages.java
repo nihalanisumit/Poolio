@@ -3,6 +3,7 @@ package androarmy.poolio;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,12 +25,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import app.AppController;
 
 
 public class Messages extends Fragment {
+    View view;
 
     private String MESSAGE_URL = "http://www.poolio.in/pooqwerty123lio/messagefetch.php";
     SharedPreferences mSharedPreferences;
@@ -39,16 +42,26 @@ public class Messages extends Fragment {
     private TextView message;
     ProgressDialog loading;
     String[] id ,messages , timestamp ,mobile_book; // booked mobile no.
-    String offerMobile;
+    String mobile;
 
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        view=inflater.inflate(R.layout.fragment_messages, container, false);
+        // Inflate the layout for this fragment
+
+        mSharedPreferences = getActivity().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+        mobile = mSharedPreferences.getString("mobile", "null");
+        fetchMessages(mobile);
+        return view;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSharedPreferences = getActivity().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
-        offerMobile = mSharedPreferences.getString("mobile", "null");
-        makeMessageRequest();
+
 
 
 
@@ -67,69 +80,72 @@ public class Messages extends Fragment {
 
     }
 
-    private void makeMessageRequest(){
-        loading = ProgressDialog.show(getContext(),"Fetching Your messages","Please wait while we connect to our server",true,true);
-
-       final  JsonArrayRequest req = new JsonArrayRequest(Request.Method.POST,MESSAGE_URL,offerMobile ,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d(TAG, response.toString());
-
-                        try {
-                            // Parsing json array response
-                            // loop through each json object
-                            jsonResponse = "";
-                            definearray(response.length());
-                            for (int i = 0; i < response.length(); i++) {
-
-                                JSONObject c = (JSONObject) response
-                                        .get(i);
-
-                                messages[i] = c.getString("message");
-                                mobile_book[i] = c.getString("mobile_book");
-                                timestamp[i] = c.getString("timestamp");
-
-                                List<Data> data = fill_with_data();
-                                recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview);
-                                final Recycler_View_Adapter_Message adapter  = new Recycler_View_Adapter_Message(data , getContext());
-                                recyclerView.setAdapter(adapter);
-                                recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
-
-
-
-                            }
-
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-
-                        }
-
-                        loading.dismiss();
-                    }
-                }, new Response.ErrorListener() {
+    private void fetchMessages(final String mobile){
+        class fetchMessageClass extends AsyncTask<String,Void,String> {
+            ProgressDialog loading;
             @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-
-                loading.dismiss();
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(getContext(),"Fetching Your messages","Please wait while we connect to our server",true,true);
             }
-        });
 
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(req);
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                try {
+                    // Parsing json array response
+                    // loop through each json object
+                    jsonResponse = "";
+                    Log.d("***JSON***",s);
+
+                    JSONObject job =  new JSONObject(s);
+                    JSONArray result = job.getJSONArray("result");
+                    definearray(result.length());
+                    for (int i = 0; i < result.length(); i++)
+                    {
+
+                        JSONObject c = result.getJSONObject(i);
+
+                        messages[i] = c.getString("message");
+                        mobile_book[i] = c.getString("mobile_book");
+                        timestamp[i] = c.getString("timestamp");
+                    }
+
+                        List<Data> data = fill_with_data();
+                        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+                        final Recycler_View_Adapter_Message adapter  = new Recycler_View_Adapter_Message(data , getContext());
+                        recyclerView.setAdapter(adapter);
+                        recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
 
 
+
+
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                }
+
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String,String> data = new HashMap<>();
+                data.put("mobile",params[0]);
+
+                RegisterUserClass ruc = new RegisterUserClass();
+                String result = ruc.sendPostRequest(MESSAGE_URL,data);
+                return result;
+            }
+        }
+        fetchMessageClass fmc = new fetchMessageClass();
+        fmc.execute(mobile);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_messages, container, false);
-    }
+
 
 
     @Override
