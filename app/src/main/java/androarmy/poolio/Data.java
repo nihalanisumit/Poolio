@@ -21,6 +21,10 @@ public class Data {
     public String timestamp;//timestamp when ride was offered by the user
     public String device_id;
     public String status;
+    public String message;
+    public String mobile_book;
+
+
 
 
 
@@ -56,6 +60,13 @@ public class Data {
         this.timestamp=timestamp;
         this.status=status;
     }
+    public Data(String message , String mobile_book , String timestamp ){
+
+        this.message = message;
+        this.mobile_book = mobile_book;
+        this.timestamp = timestamp;
+
+    }
 
     public String getid(){
         return  id;
@@ -86,6 +97,12 @@ public class Data {
     }
     public String getTime(){
         return time;
+    }
+    public  String getMessage(){
+        return message;
+    }
+    public String getMobile_book(){
+        return mobile_book;
     }
 
     public String getVehicle_name(){

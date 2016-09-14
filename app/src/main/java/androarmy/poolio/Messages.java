@@ -1,56 +1,127 @@
 package androarmy.poolio;
 
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import app.AppController;
 
 
 public class Messages extends Fragment {
-//    // TODO: Rename parameter arguments, choose names that match
-//    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
-//
-//    // TODO: Rename and change types of parameters
-//    private String mParam1;
-//    private String mParam2;
-//
-//    private OnFragmentInteractionListener mListener;
-//
-//    public Messages() {
-//        // Required empty public constructor
-//    }
-//
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment Messages.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static Messages newInstance(String param1, String param2) {
-//        Messages fragment = new Messages();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
+
+    private String MESSAGE_URL = "http://www.poolio.in/pooqwerty123lio/messagefetch.php";
+    SharedPreferences mSharedPreferences;
+    RecyclerView recyclerView;
+    private String jsonResponse;
+    private static String TAG = Messages.class.getSimpleName();
+    private TextView message;
+    ProgressDialog loading;
+    String[] id ,messages , timestamp ,mobile_book; // booked mobile no.
+    String offerMobile;
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
+        mSharedPreferences = getActivity().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+        offerMobile = mSharedPreferences.getString("mobile", "null");
+        makeMessageRequest();
+
+
+
+    }
+
+    public List<Data> fill_with_data(){
+
+        List<Data> data  = new ArrayList<>();
+        for (int i = 0 ; i<messages.length ; i++){
+            if (messages[i]!=null) {
+                data.add(new Data(messages[i],mobile_book[i],timestamp[i]));
+            }
+
         }
+        return data;
+
+    }
+
+    private void makeMessageRequest(){
+        loading = ProgressDialog.show(getContext(),"Fetching Your messages","Please wait while we connect to our server",true,true);
+
+       final  JsonArrayRequest req = new JsonArrayRequest(Request.Method.POST,MESSAGE_URL,offerMobile ,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d(TAG, response.toString());
+
+                        try {
+                            // Parsing json array response
+                            // loop through each json object
+                            jsonResponse = "";
+                            definearray(response.length());
+                            for (int i = 0; i < response.length(); i++) {
+
+                                JSONObject c = (JSONObject) response
+                                        .get(i);
+
+                                messages[i] = c.getString("message");
+                                mobile_book[i] = c.getString("mobile_book");
+                                timestamp[i] = c.getString("timestamp");
+
+                                List<Data> data = fill_with_data();
+                                recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview);
+                                final Recycler_View_Adapter_Message adapter  = new Recycler_View_Adapter_Message(data , getContext());
+                                recyclerView.setAdapter(adapter);
+                                recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
+
+
+
+                            }
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+
+                        }
+
+                        loading.dismiss();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+
+                loading.dismiss();
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(req);
+
+
     }
 
     @Override
@@ -60,42 +131,26 @@ public class Messages extends Fragment {
         return inflater.inflate(R.layout.fragment_messages, container, false);
     }
 
-//    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
+
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-//        mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    void definearray(int len)
+    {
+        messages= new String[len];
+        mobile_book = new String[len];
+
+        timestamp=new String[len];
     }
+
+
+
 }
