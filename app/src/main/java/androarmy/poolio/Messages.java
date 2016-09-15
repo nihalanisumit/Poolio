@@ -100,7 +100,7 @@ public class Messages extends android.support.v4.app.Fragment {
                         messages[i] = c.getString("message");
                         mobile_book[i] = c.getString("mobile_book");
                         timestamp[i] = c.getString("timestamp");
-                        Log.d("***JSON***",messages[i]+" "+mobile_book[i]+" "+timestamp[i]);
+                        //Log.d("***JSON***",messages[i]+" "+mobile_book[i]+" "+timestamp[i]);
                     }
 
 

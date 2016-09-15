@@ -175,7 +175,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
                                 hh="him/her";
                             }
 
-                            message= username +  " has booked your ride. Contact "+hh+" on" +mob;
+                            message= username +  " has booked your ride from "+source+" to"+destination+". Contact "+hh+" on " +mob;
 
                             saveMessage(view,message,mobile_number,username,mob);
                             try {

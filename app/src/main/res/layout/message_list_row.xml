@@ -41,22 +41,24 @@
         android:layout_below="@+id/firstrow">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:id="@+id/message"
             android:text="Message"
+            android:lines="2"
+            android:maxLines="3"
             android:textSize="13dp"
             android:textColor="#000"/>
         </RelativeLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Call"
-            android:id="@+id/button_complete"
-            android:layout_below="@+id/firstrow"
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/call"
+            android:id="@+id/imageButton"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            />
+            android:layout_alignParentEnd="true"/>
 
     </RelativeLayout>
 

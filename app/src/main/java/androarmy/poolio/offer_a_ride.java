@@ -112,23 +112,7 @@ public class offer_a_ride extends Fragment {
         if(!"".equalsIgnoreCase(spinnerType))
         position=dataAdapter.getPosition(spinnerType);
         spinner.setSelection(position,true);
-//        chargeableRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                if(checkedId==R.id.radio_free)
-//                {
-//                    chargeLayout.setVisibility(View.GONE);
-//                    Toast.makeText(getContext(),"Thanks for being so Generous",Toast.LENGTH_SHORT).show();
-//                    amount=0;
-//                    chargeable=0;
-//                }
-//                else
-//                {
-//                    chargeLayout.setVisibility(View.VISIBLE);
-//                    chargeable=1;
-//                }
-//            }
-//        });
+
         Calenderiv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
