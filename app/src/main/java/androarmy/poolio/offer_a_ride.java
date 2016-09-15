@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -80,7 +81,6 @@ public class offer_a_ride extends Fragment {
         actv2.setTextColor(Color.RED);
 
         vehicleType.add("VEHICLE TYPE");
-        vehicleType.add("Bike non-gear");
         vehicleType.add("Bike");
         vehicleType.add("Car");
         vehicleType.add("Auto");
@@ -112,6 +112,29 @@ public class offer_a_ride extends Fragment {
         if(!"".equalsIgnoreCase(spinnerType))
         position=dataAdapter.getPosition(spinnerType);
         spinner.setSelection(position,true);
+
+       spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+           @Override
+           public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+               if(position==3||position==4)
+               {
+                   vnumberET.setVisibility(View.GONE);
+                   vnameET.setVisibility(View.GONE);
+               }
+               else
+               {
+
+                   vnumberET.setVisibility(View.VISIBLE);
+                   vnameET.setVisibility(View.VISIBLE);
+
+               }
+           }
+
+           @Override
+           public void onNothingSelected(AdapterView<?> parent) {
+
+           }
+       });
 
         Calenderiv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,30 +190,6 @@ public class offer_a_ride extends Fragment {
         });
 
 
-//        final Calendar c = Calendar.getInstance();
-//        int year = c.get(Calendar.YEAR);
-//        int month = c.get(Calendar.MONTH);
-//        int day = c.get(Calendar.DAY_OF_MONTH);
-//        dayCheck = day;
-//        timeCheck = false;
-//        if(day < 10 && (month+1) > 10)
-//            date = "0"+day+"/"+(month+1)+"/"+year;
-//        else if(day > 10 && (month+1) < 10)
-//            date = day+"/0"+(month+1)+"/"+year;
-//        else if(day < 10 && (month+1) < 10)
-//            date = "0"+day+"/0"+(month+1)+"/"+year;
-//        else
-//            date = day+"/"+(month+1)+"/"+year;
-//        int hour = c.get(Calendar.HOUR_OF_DAY);
-//        int minute = c.get(Calendar.MINUTE);
-//        if(minute < 10 && hour > 10)
-//            time = hour+":0"+minute;
-//        else if(minute > 10 && hour < 10)
-//            time = "0"+hour+":"+minute;
-//        else if(minute < 10 && hour < 10)
-//            time = "0"+hour+":0"+minute;
-//        else
-//            time = hour+":"+minute;
 
         timeET.setOnClickListener(new View.OnClickListener() {
             @Override
