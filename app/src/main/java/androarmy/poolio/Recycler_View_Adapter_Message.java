@@ -31,8 +31,10 @@ public class Recycler_View_Adapter_Message extends RecyclerView.Adapter<Recycler
 
 
 
+
+
     @Override
-    public Recycler_View_Adapter_Message.View_Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public View_Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_list_row, parent, false);
         View_Holder holder = new View_Holder(v);
         return holder;
@@ -43,27 +45,28 @@ public class Recycler_View_Adapter_Message extends RecyclerView.Adapter<Recycler
 
         holder.message.setText(list.get(position).getMessage());
         holder.timestamp.setText(list.get(position).getTimestamp());
+        holder.mobile_book=list.get(position).getMobile_book();
 
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+
+        return list.size();
     }
 
     public  class View_Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView message , timestamp;
         CardView cv;
+        String mobile_book;
 
         public View_Holder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv);
-            timestamp=(TextView)view.findViewById(R.id.timestamp);
-            message = (TextView)view.findViewById(R.id.message);
-
-
+            timestamp=(TextView)itemView.findViewById(R.id.timestamp);
+            message = (TextView)itemView.findViewById(R.id.message);
 
         }
 

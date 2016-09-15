@@ -92,7 +92,7 @@ public class myRides extends android.support.v4.app.Fragment {
                         seats [i]= c.getString("seats");
                         timestamp[i]=c.getString("offer_time");
                         status[i]=c.getString("status");
-                        Log.i("**STATUS**",id[i]+" "+status[i]);
+                        //Log.i("**STATUS**",id[i]+" "+status[i]);
 
 
                     }

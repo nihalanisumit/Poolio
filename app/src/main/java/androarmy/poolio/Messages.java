@@ -31,13 +31,12 @@ import java.util.List;
 import app.AppController;
 
 
-public class Messages extends Fragment {
+public class Messages extends android.support.v4.app.Fragment {
     View view;
 
     private String MESSAGE_URL = "http://www.poolio.in/pooqwerty123lio/messagefetch.php";
     SharedPreferences mSharedPreferences;
     RecyclerView recyclerView;
-    private String jsonResponse;
     private static String TAG = Messages.class.getSimpleName();
     private TextView message;
     ProgressDialog loading;
@@ -58,14 +57,7 @@ public class Messages extends Fragment {
         return view;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-
-
-
-    }
 
     public List<Data> fill_with_data(){
 
@@ -94,13 +86,11 @@ public class Messages extends Fragment {
                 super.onPostExecute(s);
                 loading.dismiss();
                 try {
-                    // Parsing json array response
-                    // loop through each json object
-                    jsonResponse = "";
-                    Log.d("***JSON***",s);
 
-                    JSONObject job =  new JSONObject(s);
-                    JSONArray result = job.getJSONArray("result");
+
+
+                    JSONObject jsonObject =  new JSONObject(s);
+                    JSONArray result = jsonObject.getJSONArray("result");
                     definearray(result.length());
                     for (int i = 0; i < result.length(); i++)
                     {
@@ -110,24 +100,19 @@ public class Messages extends Fragment {
                         messages[i] = c.getString("message");
                         mobile_book[i] = c.getString("mobile_book");
                         timestamp[i] = c.getString("timestamp");
+                        Log.d("***JSON***",messages[i]+" "+mobile_book[i]+" "+timestamp[i]);
                     }
-
-                        List<Data> data = fill_with_data();
-                        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
-                        final Recycler_View_Adapter_Message adapter  = new Recycler_View_Adapter_Message(data , getContext());
-                        recyclerView.setAdapter(adapter);
-                        recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
-
-
-
-
-
 
 
                 } catch (JSONException e) {
                     e.printStackTrace();
 
                 }
+                List<Data> data = fill_with_data();
+                recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+                final Recycler_View_Adapter_Message adapter  = new Recycler_View_Adapter_Message(data , getActivity());
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
 
             }
 
@@ -135,7 +120,6 @@ public class Messages extends Fragment {
             protected String doInBackground(String... params) {
                 HashMap<String,String> data = new HashMap<>();
                 data.put("mobile",params[0]);
-
                 RegisterUserClass ruc = new RegisterUserClass();
                 String result = ruc.sendPostRequest(MESSAGE_URL,data);
                 return result;
@@ -163,7 +147,6 @@ public class Messages extends Fragment {
     {
         messages= new String[len];
         mobile_book = new String[len];
-
         timestamp=new String[len];
     }
 
