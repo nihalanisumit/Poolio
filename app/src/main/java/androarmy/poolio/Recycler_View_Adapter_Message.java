@@ -32,7 +32,11 @@ public class Recycler_View_Adapter_Message extends RecyclerView.Adapter<Recycler
         this.context = context;
 
     }
+    @Override
+    public int getItemViewType(int position) {
 
+        return position;
+    }
 
 
 
