@@ -2,8 +2,10 @@ package androarmy.poolio;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -42,6 +44,8 @@ public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_A
         //Inflate the layout, initialize the View Holder
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.myride_list_row, parent, false);
         View_Holder holder = new View_Holder(v);
+
+
         return holder;
 
     }
@@ -53,13 +57,14 @@ public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_A
 //        holder.id.setText(list.get(position).getId());
       //  holder.name.setText(list.get(position).getFirst_name()+" "+ list.get(position).getLast_name());
         holder.id.setText(list.get(position).getid());
-        holder.source.append(list.get(position).getSource());
-        holder.destination.append(list.get(position).getDestination());
-        holder.date.append(list.get(position).getDate());
-        holder.time.append(list.get(position).getTime());
+        holder.source.setText("From: "+list.get(position).getSource());
+        holder.destination.setText("To: "+ list.get(position).getDestination());
+        holder.date.setText("Date: "+list.get(position).getDate());
+        holder.time.setText("Time: "+list.get(position).getTime());
         holder.status = list.get(position).getStatus();
         holder.timestampTV.setText(list.get(position).getTimestamp());
-        holder.checkStatus();
+        holder.checkStatus(holder.status,holder.button_complete,holder.button_cancel, holder.statusTV);
+
        // Log.i("holder.status:: ",holder.status);
         //holder.timestamp.setText(list.get(position).getTimestamp()); //timestamp need to be fetched and value need to be converted in app format
 
@@ -113,21 +118,57 @@ public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_A
                 @Override
                 public void onClick(View v) {
                     //Toast.makeText(view.getContext(),"completed",Toast.LENGTH_LONG).show();
-                    changeStatus("1",id.getText().toString());
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setTitle("Found your travel partner?");
+                    builder.setMessage("Clicking on Complete will remove your offered ride from the find list. \nOnly click COMPLETE if you've found your travel buddy.")
+                            .setPositiveButton("Complete", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int ida) {
+                                    changeStatus("1",id.getText().toString());
+                                    dialog.cancel();
+                                }
+                            })
+                            .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User cancelled the dialog
+                                    dialog.cancel();
+                                }
+
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
                 }
             });
 
             button_cancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Toast.makeText(view.getContext(),"cancelled",Toast.LENGTH_LONG).show();
-                    changeStatus("2",id.getText().toString());
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setTitle("Want to cancel the ride?");
+                    builder.setMessage("Clicking on YES will cancel your booking. \nAre you sure you want to cancel?")
+                            .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int ida) {
+                                    changeStatus("2",id.getText().toString());
+                                    dialog.cancel();
+                                }
+                            })
+                            .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User cancelled the dialog
+                                    dialog.cancel();
+                                }
+
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
                 }
             });
         }
-        public void checkStatus(){
-        Log.i("View_holder:: ",status);
-        statusTV.setText(status);
+
+        public void checkStatus(String status, Button button_complete, Button button_cancel, TextView statusTV){
+       // Log.i("View_holder:: ",status);
+        //statusTV.setText(status);
             if(!"0".equals(status))
             {
                 button_complete.setVisibility(View.GONE);

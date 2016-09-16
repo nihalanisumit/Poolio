@@ -121,7 +121,7 @@
             android:textAlignment="textEnd"
             android:gravity="end"
             android:maxLines="3"
-            android:text="status"
+            android:text=""
             android:id="@+id/status_tv"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
