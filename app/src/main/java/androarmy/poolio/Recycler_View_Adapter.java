@@ -60,7 +60,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
 
     @Override
     public void onBindViewHolder(View_Holder holder, int position) {
-
+          Log.d("onbind","RVA");
 //        holder.id.setText(list.get(position).getId());
         holder.name.setText(list.get(position).getFirst_name()+" "+ list.get(position).getLast_name());
 //        holder.gender.setText(list.get(position).getGender());
@@ -73,13 +73,30 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         holder.vehicleName=list.get(position).getVehicle_name();
         holder.vehicleType=list.get(position).getType();
         holder.mobile_number=list.get(position).getMobile();
+
+        Log.d("in onBindViewHolder",": mobile_number"+holder.mobile_number);
         holder.vehicleNo=list.get(position).getVehicle_number();
         holder.device_id=list.get(position).getDevice_id();
+//        Log.d("onBindViewHolder","method called in RVA_Find");
 
-
+        //button disable code:
+         SharedPreferences mSharedPreferences = holder.v.getContext().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+        final String mob = mSharedPreferences.getString("mobile", "null");
+//        final String username = mSharedPreferences.getString("name" , "null");
+//        final String gender = mSharedPreferences.getString("gender" , "null");
+//        Log.d("book button: ",""+mobile_number+"~"+mob);
+        if(mob.equals(holder.mobile_number))
+        {   Log.d("book button: ","disabled"+mob);
+            Log.d("disabled:",""+holder.mobile_number);
+            holder.openDialog.setVisibility(View.GONE);
+        }
 
     }
+    @Override
+    public int getItemViewType(int position) {
 
+        return position;
+    }
 
 
     @Override
@@ -112,12 +129,13 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         public CardView cv;
         public Button openDialog;
         public String vehicleName,vehicleNo,vehicleType,mobile_number,device_id;
-
+        public View v;
 
         public View_Holder(final View view) {
             super(view);
             view.setOnClickListener(this);
-
+            v=view;
+             Log.d("constructor","RVA");
             cv=(CardView) view.findViewById(R.id.cv);
             name=(TextView)view.findViewById(R.id.name_tv);
 //            gender=(TextView)view.findViewById(R.id.gender_tv);
@@ -128,14 +146,9 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
             destination=(TextView)view.findViewById(R.id.destination_tv);
             openDialog=(Button)view.findViewById(R.id.btn_book);
             SharedPreferences mSharedPreferences = view.getContext().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
-           final String mob = mSharedPreferences.getString("mobile", "null");
+            final String mob = mSharedPreferences.getString("mobile", "null");
             final String username = mSharedPreferences.getString("name" , "null");
             final String gender = mSharedPreferences.getString("gender" , "null");
-            if(mob.equals(mobile_number))
-            {
-
-                openDialog.setVisibility(View.GONE);
-            }
             openDialog.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -175,7 +188,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
                                 hh="him/her";
                             }
 
-                            message= username +  " has booked your ride from "+source+" to"+destination+". Contact "+hh+" on " +mob;
+                            message= username +  " has booked your ride from "+source.getText().toString()+" to "+destination.getText().toString()+". Contact "+hh+" on " +mob;
 
                             saveMessage(view,message,mobile_number,username,mob);
                             try {

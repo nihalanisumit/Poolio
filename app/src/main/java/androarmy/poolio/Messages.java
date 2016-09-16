@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

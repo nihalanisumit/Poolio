@@ -60,6 +60,8 @@ public class SplashScreen extends Activity {
         if(!InternetConnectionClass.isConnected(getApplicationContext())){
             Toast.makeText(SplashScreen.this, "Please connect to internet!", Toast.LENGTH_LONG).show();
             finish();
+            Log.d("Internet ::","not connected");
+            return;
         }
         OneSignal.startInit(this).init();
                getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -76,7 +78,6 @@ public class SplashScreen extends Activity {
         myCountdownTimer.start();
 
         logo = (ImageView)findViewById(R.id.logo);
-
         fadeIn = new AlphaAnimation(0.0f , 1.0f ) ;
         fadeIn.setDuration(2100);
         fadeIn.setFillAfter(true);
@@ -310,6 +311,11 @@ public class SplashScreen extends Activity {
             startActivity(myIntent);
             overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
         } else {
+            if(!InternetConnectionClass.isConnected(getApplicationContext())){
+            Toast.makeText(SplashScreen.this, "Please connect to internet!", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
             userLogin(mob, pass);
         }
     }

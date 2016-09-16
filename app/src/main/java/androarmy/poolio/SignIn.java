@@ -107,7 +107,6 @@ public class SignIn extends AppCompatActivity {
     {
         mSharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-
         mob= input_mob.getText().toString().trim();
         editor.putString("mobile",mob);
         editor.putString("device id",device_id);

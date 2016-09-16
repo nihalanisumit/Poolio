@@ -37,7 +37,11 @@ public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_A
         this.context = context;
 
     }
+     @Override
+     public int getItemViewType(int position) {
 
+         return position;
+     }
 
     @Override
     public View_Holder onCreateViewHolder(ViewGroup parent, int viewType) {
