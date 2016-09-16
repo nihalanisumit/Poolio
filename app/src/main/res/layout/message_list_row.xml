@@ -45,7 +45,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/message"
             android:text="Message"
-            android:lines="2"
             android:maxLines="3"
             android:textSize="13dp"
             android:textColor="#000"/>
