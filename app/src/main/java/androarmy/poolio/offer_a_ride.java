@@ -242,25 +242,27 @@ public class offer_a_ride extends Fragment {
 
     }
 
-    void offerRides()
-    {      if(!InternetConnectionClass.isConnected(getActivity())){
-        Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
-        return;
-    }
+    void offerRides() {
+        if (!InternetConnectionClass.isConnected(getActivity())) {
+            Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
+            return;
+        }
         pref = getActivity().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         mobile = pref.getString("mobile", null);
-        source=sourceET.getText().toString().trim();
-        destination=destinationET.getText().toString().trim();
+        source = sourceET.getText().toString().trim();
+        destination = destinationET.getText().toString().trim();
         type = spinner.getSelectedItem().toString();
-       if("".equalsIgnoreCase(dateforsql) ||"".equalsIgnoreCase(timeforsql)){
-           Toast.makeText(getActivity(), "please enter date or time", Toast.LENGTH_SHORT).show();
-           return;
-       }
+        if ("".equalsIgnoreCase(dateforsql) || "".equalsIgnoreCase(timeforsql)) {
+            Toast.makeText(getActivity(), "please enter date or time", Toast.LENGTH_SHORT).show();
+            return;
+        }
         date = dateforsql;
-        time=timeforsql;
-        vname=vnameET.getText().toString();
-        vnumber=vnumberET.getText().toString();
-        availableSeats=Integer.parseInt(availableET.getText().toString());
+        time = timeforsql;
+        vname = vnameET.getText().toString();
+        vnumber = vnumberET.getText().toString();
+        if(!availableET.getText().toString().equalsIgnoreCase("")) {
+            availableSeats = Integer.parseInt(availableET.getText().toString());
+        }
         //int chargeable will be set automatically depending on radio button selected
 //        if(chargeableRG.getCheckedRadioButtonId()==R.id.radio_charge)
 //        {
@@ -269,20 +271,26 @@ public class offer_a_ride extends Fragment {
 
         //Toast.makeText(getContext(),"Mobile :"+mobile+"\n Source:"+source+"  Destination:"+destination+"\ntype:"+type
         //  +"\nSeats:"+availableSeats+"\n Amount:"+amount,Toast.LENGTH_LONG).show();
-        if(!InternetConnectionClass.isConnected(getActivity())){
+        if (!InternetConnectionClass.isConnected(getActivity())) {
             Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
             return;
         }
-        SharedPreferences offerSp=getActivity().getSharedPreferences("offer",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=offerSp.edit();
-        editor.putString("source",source);
-        editor.putString("destination",destination);
-        editor.putString("type",type);
-        editor.putString("vname",vname);
-        editor.putString("vnumber",vnumber);
-        editor.putString("availableseats",availableSeats+"");
+        SharedPreferences offerSp = getActivity().getSharedPreferences("offer", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = offerSp.edit();
+        editor.putString("source", source);
+        editor.putString("destination", destination);
+        editor.putString("type", type);
+        editor.putString("vname", vname);
+        editor.putString("vnumber", vnumber);
+        editor.putString("availableseats", availableSeats + "");
         editor.apply();
-        offer(mobile,source,destination,type,date,time,vname,vnumber,availableSeats,chargeable,amount);
+        if ((!type.equalsIgnoreCase("auto") || !type.equalsIgnoreCase("cab")) && (vname.equalsIgnoreCase("") || vnumber.equalsIgnoreCase(""))) {
+            Toast.makeText(getView().getContext(), "Vehicle details are missing", Toast.LENGTH_SHORT).show();
+
+        }
+          else {
+            offer(mobile, source, destination, type, date, time, vname, vnumber, availableSeats, chargeable, amount);
+        }
     }
 
     //11 parameters
