@@ -334,7 +334,6 @@ public class offer_a_ride extends Fragment {
                 String result = ruc.sendPostRequest(OFFER_URL,data);
                 //Log.i("@doinBackground:", result);
                 return  result;
-
             }
         }
         OfferTheRide otr = new OfferTheRide();

@@ -1,11 +1,15 @@
 package androarmy.poolio;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Collections;
@@ -61,13 +65,26 @@ public class Recycler_View_Adapter_Message extends RecyclerView.Adapter<Recycler
         TextView message , timestamp;
         CardView cv;
         String mobile_book;
+        ImageView caller_button;
 
-        public View_Holder(View itemView) {
+        public View_Holder(final View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv);
             timestamp=(TextView)itemView.findViewById(R.id.timestamp);
             message = (TextView)itemView.findViewById(R.id.message);
-
+            caller_button=(ImageView)itemView.findViewById(R.id.call_btn);
+            caller_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String number = "tel:"+mobile_book;
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(number));
+                    intent.putExtra(Intent.EXTRA_PHONE_NUMBER, number);
+                    Log.d("imageView caller ","called in messages");
+                    Intent chosenIntent = Intent.createChooser(intent, "Call using...");
+                    chosenIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    itemView.getContext().startActivity(chosenIntent); ;
+                }
+            });
         }
 
         @Override

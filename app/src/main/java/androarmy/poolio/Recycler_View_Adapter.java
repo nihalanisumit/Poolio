@@ -127,6 +127,8 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
             source=(TextView)view.findViewById(R.id.source_tv);
             destination=(TextView)view.findViewById(R.id.destination_tv);
             openDialog=(Button)view.findViewById(R.id.btn_book);
+
+
             SharedPreferences mSharedPreferences = view.getContext().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
            final String mob = mSharedPreferences.getString("mobile", "null");
             final String username = mSharedPreferences.getString("name" , "null");
