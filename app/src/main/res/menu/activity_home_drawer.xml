@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        android:id="@+id/nvtop">
         <item
             android:id="@+id/nav_find"
             android:icon="@android:drawable/ic_menu_search"
@@ -27,8 +28,10 @@
 
     </group>
 
-    <item android:title="Communicate">
-        <menu>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/nvbottom">
+
             <item
                 android:id="@+id/nav_share"
                 android:icon="@android:drawable/ic_menu_share"
@@ -45,8 +48,9 @@
                 android:title="About us"
                 android:checked="false"/>
 
-        </menu>
-    </item>
+
+        </group>
+
     <item
         android:id="@+id/sign_out"
         android:icon="@drawable/signout"

@@ -59,7 +59,7 @@ public class Home extends AppCompatActivity
         editor.putString("password", password);
         editor.apply();
         mSharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
-        Toast.makeText(Home.this, mSharedPreferences.getString("device id","0")+"", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(Home.this, mSharedPreferences.getString("device id","0")+"", Toast.LENGTH_SHORT).show();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
