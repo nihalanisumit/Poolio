@@ -74,7 +74,8 @@
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:inputType="date"
-                    android:hint="Date" />
+                    android:hint="Date"
+                    android:enabled="false"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -85,7 +86,8 @@
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:inputType="time"
-                    android:hint="Time" />
+                    android:hint="Time"
+                          android:enabled="false"/>
             </android.support.design.widget.TextInputLayout>
 
 

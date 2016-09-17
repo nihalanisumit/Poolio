@@ -106,7 +106,8 @@
                       android:layout_width="250dp"
                       android:layout_height="wrap_content"
                       android:inputType="textCapWords"
-                      android:hint="Pick Up Date" />
+                      android:hint="Pick Up Date"
+                android:enabled="false"/>
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
@@ -131,7 +132,8 @@
                       android:layout_width="250dp"
                       android:layout_height="wrap_content"
                       android:inputType="textCapWords"
-                      android:hint="Pick Up Time" />
+                      android:hint="Pick Up Time"
+                android:enabled="false"/>
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
