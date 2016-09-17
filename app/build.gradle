@@ -40,4 +40,6 @@ dependencies {
     compile 'com.google.android.gms:play-services-location:9.0.2'
     compile 'com.msg91.sendotp.library:library:2.7'
     compile 'com.github.Q42:AndroidScrollingImageView:1.2'
+    compile 'cn.pedant.sweetalert:library:1.3'
+
 }
