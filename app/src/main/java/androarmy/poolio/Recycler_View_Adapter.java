@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -61,7 +62,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
 
     @Override
     public void onBindViewHolder(View_Holder holder, int position) {
-          Log.d("onbind","RVA");
+
 //        holder.id.setText(list.get(position).getId());
         holder.name.setText(list.get(position).getFirst_name()+" "+ list.get(position).getLast_name());
 //        holder.gender.setText(list.get(position).getGender());
@@ -75,21 +76,36 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         holder.vehicleType=list.get(position).getType();
         holder.mobile_number=list.get(position).getMobile();
 
-        Log.d("in onBindViewHolder",": mobile_number"+holder.mobile_number);
+
         holder.vehicleNo=list.get(position).getVehicle_number();
         holder.device_id=list.get(position).getDevice_id();
-//        Log.d("onBindViewHolder","method called in RVA_Find");
+
 
         //button disable code:
          SharedPreferences mSharedPreferences = holder.v.getContext().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         final String mob = mSharedPreferences.getString("mobile", "null");
 //        final String username = mSharedPreferences.getString("name" , "null");
 //        final String gender = mSharedPreferences.getString("gender" , "null");
-//        Log.d("book button: ",""+mobile_number+"~"+mob);
+
         if(mob.equals(holder.mobile_number))
-        {   Log.d("book button: ","disabled"+mob);
-            Log.d("disabled:",""+holder.mobile_number);
+        {
             holder.openDialog.setVisibility(View.GONE);
+        }
+        if(holder.vehicleType.equalsIgnoreCase("bike"))
+        {
+            holder.image_type.setImageResource(R.drawable.bike);
+        }
+        else if (holder.vehicleType.equalsIgnoreCase("car"))
+        {
+            holder.image_type.setImageResource(R.drawable.car);
+        }
+        else if (holder.vehicleType.equalsIgnoreCase("auto"))
+        {
+            holder.image_type.setImageResource(R.drawable.auto);
+        }
+        else if (holder.vehicleType.equalsIgnoreCase("cab"))
+        {
+            holder.image_type.setImageResource(R.drawable.taxi);
         }
 
     }
@@ -128,7 +144,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         public TextView date;
         public TextView time;
         public CardView cv;
-        public ImageView openDialog;
+        public ImageView openDialog,image_type;
         public String vehicleName,vehicleNo,vehicleType,mobile_number,device_id;
         public View v;
 
@@ -136,11 +152,12 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
             super(view);
             view.setOnClickListener(this);
             v=view;
-             Log.d("constructor","RVA");
+
             cv=(CardView) view.findViewById(R.id.cv);
             name=(TextView)view.findViewById(R.id.name_tv);
 //            gender=(TextView)view.findViewById(R.id.gender_tv);
 //            mobile=(TextView)view.findViewById(R.id.mobile);
+            image_type=(ImageView)view.findViewById(R.id.img_type) ;
             date=(TextView)view.findViewById(R.id.date_tv) ;
             time=(TextView)view.findViewById(R.id.time_tv);
             source=(TextView)view.findViewById(R.id.source_tv);
