@@ -113,19 +113,19 @@
             android:id="@+id/button_complete"
             android:layout_below="@+id/firstrow"
             android:layout_alignParentRight="true"
-            android:src="@drawable/check"
+            android:src="@drawable/tick"
             android:layout_marginTop="20dp"
             />
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/button_cancel"
             android:layout_below="@+id/button_complete"
             android:layout_alignLeft="@+id/button_complete"
             android:layout_alignStart="@+id/button_complete"
             android:layout_alignRight="@+id/button_complete"
             android:layout_alignEnd="@+id/button_complete"
-            android:src="@drawable/close"
+            android:src="@drawable/cross"
             android:layout_marginTop="10dp"/>
 
         <TextView
