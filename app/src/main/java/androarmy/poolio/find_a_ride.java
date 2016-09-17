@@ -36,7 +36,6 @@ public class find_a_ride extends Fragment {
     EditText dateET, timeET;
     Button b;
     String pickup, drop, time, date;
-    public final String FIND_URL="http://www.poolio.in/pooqwerty123lio/find.php";//Sumit's pc
     private ImageView dateIv, timeIV;
     private int mYear, mMonth, mDay, mHour, mMinute;
 
@@ -74,7 +73,13 @@ public class find_a_ride extends Fragment {
                 drop= actv2.getText().toString();
                 date= dateET.getText().toString();
                 time= timeET.getText().toString();
-                findRide(pickup);
+                Intent in = new Intent(getActivity(),available_rides.class);
+                in.putExtra("pickup",pickup);
+                in.putExtra("drop",drop);
+                in.putExtra("date",date);
+                in.putExtra("time",time);
+                startActivity(in);
+
             }
         });
 
@@ -139,50 +144,7 @@ public class find_a_ride extends Fragment {
         return v;
     }
 
-    void findRide(String pickup)
-    {
-        if(!InternetConnectionClass.isConnected(getActivity())){
-            Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
-            return;
-        }
 
-        fetchRides(pickup);
-
-    }
-
-    private void fetchRides(final String pickup){
-        class fetchRideClass extends AsyncTask<String,Void,String> {
-            ProgressDialog loading;
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(getContext(),"Finding Your Rides","Please wait while we connect to server",true,true);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-                //Toast.makeText(getContext(),s,Toast.LENGTH_LONG).show();
-                //Log.i("***JSON***",s);
-                Intent i = new Intent(getActivity(),available_rides.class);
-                i.putExtra("json",s);
-                startActivity(i);
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-                HashMap<String,String> data = new HashMap<>();
-                data.put("pickup",params[0]);
-
-                RegisterUserClass ruc = new RegisterUserClass();
-                String result = ruc.sendPostRequest(FIND_URL,data);
-                return result;
-            }
-        }
-        fetchRideClass frc = new fetchRideClass();
-        frc.execute(pickup);
-    }
 
 
 }
