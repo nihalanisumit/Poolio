@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 
 public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_Adapter2.View_Holder> //MYRIDES
  {
@@ -123,24 +125,31 @@ public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_A
                 @Override
                 public void onClick(View v) {
                     //Toast.makeText(view.getContext(),"completed",Toast.LENGTH_LONG).show();
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                    builder.setTitle("Found your travel partner?");
-                    builder.setMessage("Clicking on Complete will remove your offered ride from the find list. \nOnly click COMPLETE if you've found your travel buddy.")
-                            .setPositiveButton("Complete", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int ida) {
+//                 
+
+                    SweetAlertDialog pDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#3F51B5"));
+                    pDialog .setTitleText("Are you sure?")
+                            .setContentText("click confirm if you've found your travel buddy")
+                            .setCancelText("cancel")
+                            .setConfirmText("confirm")
+                            .showCancelButton(true)
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
                                     changeStatus("1",id.getText().toString());
-                                    dialog.cancel();
+                                    sDialog.dismissWithAnimation();
                                 }
                             })
-                            .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    // User cancelled the dialog
-                                    dialog.cancel();
+                            .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.cancel();
                                 }
-
                             });
-                    AlertDialog alert = builder.create();
-                    alert.show();
+
+
+                    pDialog.show();
 
                 }
             });
@@ -148,24 +157,30 @@ public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_A
             button_cancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                    builder.setTitle("Want to cancel the ride?");
-                    builder.setMessage("Clicking on YES will cancel your booking. \nAre you sure you want to cancel?")
-                            .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int ida) {
+                    SweetAlertDialog pDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#3F51B5"));
+                           pDialog .setTitleText("Are you sure?")
+                            .setContentText("Clicking on YES will cancel your booking!")
+                            .setCancelText("No!!")
+                            .setConfirmText("Yes!!")
+                            .showCancelButton(true)
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
                                     changeStatus("2",id.getText().toString());
-                                    dialog.cancel();
+                                    sDialog.dismissWithAnimation();
                                 }
                             })
-                            .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    // User cancelled the dialog
-                                    dialog.cancel();
+                            .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.cancel();
                                 }
-
                             });
-                    AlertDialog alert = builder.create();
-                    alert.show();
+
+
+                            pDialog.show();
+
 
                 }
             });
