@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Collections;
@@ -99,7 +100,7 @@ public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_A
 
         public TextView id,source,destination,time,timestampTV,date,statusTV;
         public CardView cv;
-        public Button button_cancel,button_complete;
+        public ImageView button_cancel,button_complete;
         public String status,timestamp;
 
 
@@ -113,8 +114,8 @@ public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_A
             date=(TextView)view.findViewById(R.id.date);
             time=(TextView)view.findViewById(R.id.time);
             timestampTV=(TextView)view.findViewById(R.id.timestamp);
-            button_complete = (Button)view.findViewById(R.id.button_complete);
-            button_cancel = (Button)view.findViewById(R.id.button_cancel);
+            button_complete = (ImageView) view.findViewById(R.id.button_complete);
+            button_cancel = (ImageView) view.findViewById(R.id.button_cancel);
             statusTV=(TextView)view.findViewById(R.id.status_tv);
 
 
@@ -170,7 +171,7 @@ public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_A
             });
         }
 
-        public void checkStatus(String status, Button button_complete, Button button_cancel, TextView statusTV){
+        public void checkStatus(String status, ImageView button_complete, ImageView button_cancel, TextView statusTV){
        // Log.i("View_holder:: ",status);
         //statusTV.setText(status);
             if(!"0".equals(status))
