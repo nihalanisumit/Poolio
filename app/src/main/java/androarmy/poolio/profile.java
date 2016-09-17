@@ -25,7 +25,7 @@ public class profile extends android.support.v4.app.Fragment {
     String mobile, name, gender, email, vehicle_name, vehicle_number, driving_license;
     TextView nameET, genderET;
     EditText mobileET, emailET, vehicle_nameET, vehicle_numberET, driving_licenseET;
-    ImageView vehicle_nameIV, vehicle_numberIV, dlIV;
+    ImageView vehicle_nameIV, vehicle_numberIV, dlIV,edit_image,emailIV;
     Button add_button;
 
 
@@ -52,7 +52,9 @@ public class profile extends android.support.v4.app.Fragment {
         vehicle_nameIV = (ImageView) v.findViewById(R.id.vnplus);
         vehicle_numberIV = (ImageView) v.findViewById(R.id.vnoplus);
         dlIV = (ImageView) v.findViewById(R.id.dlplus);
+        emailIV=(ImageView)v.findViewById(R.id.emailplus) ;
         add_button = (Button)v.findViewById(R.id.add_button);
+        edit_image=(ImageView)v.findViewById(R.id.edit_button);
 
         mobileET.setText(mobile);
         nameET.setText(name);
@@ -92,6 +94,38 @@ public class profile extends android.support.v4.app.Fragment {
             });
 
         }
+        edit_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                edit_image.setVisibility(View.GONE);
+                vehicle_nameIV.setVisibility(View.VISIBLE);
+                vehicle_nameIV.setImageResource(R.drawable.edit);
+                vehicle_numberIV.setVisibility(View.VISIBLE);
+                vehicle_numberIV.setImageResource(R.drawable.edit);
+                dlIV.setVisibility(View.VISIBLE);
+                dlIV.setImageResource(R.drawable.edit);
+                emailIV.setVisibility(View.VISIBLE);
+                emailIV.setImageResource(R.drawable.edit);
+
+                edit_image.setVisibility(View.GONE);
+                mobileET.setEnabled(false);
+                emailET.setEnabled(true);
+                vehicle_nameET.setEnabled(true);
+                vehicle_numberET.setEnabled(true);
+                driving_licenseET.setEnabled(true);
+                add_button.setVisibility(View.VISIBLE);
+                add_button.setText("UPDATE");
+                add_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addDetailsToDB(v,mobile);
+                    }
+                });
+
+
+            }
+        });
 
         return v;
     }
@@ -127,20 +161,21 @@ public class profile extends android.support.v4.app.Fragment {
         String v_name = vehicle_nameET.getText().toString();
         String v_number = vehicle_numberET.getText().toString();
         String dl = driving_licenseET.getText().toString();
+        String email = emailET.getText().toString();
 //        Toast.makeText(view.getContext(),v_name+" "+v_number+" "+dl+" "+mobile,Toast.LENGTH_SHORT).show();
 
-        if(v_name=="" || v_number=="" || dl=="")
+        if(email==""||v_name=="" || v_number=="" || dl=="")
         {
             Toast.makeText(getContext(),"One or more fields are emplty",Toast.LENGTH_SHORT).show();
         }
         else
         {
-            addProfile(view,mobile,v_name,v_number,dl);
+            addProfile(view,mobile,email,v_name,v_number,dl);
         }
     }
 
 
-    void addProfile(final View view,String mobile, String v_name, String v_number, String dl)
+    void addProfile(final View view,String mobile,String email, String v_name, String v_number, String dl)
     {
         //Toast.makeText(view.getContext(),"Message saved in db",Toast.LENGTH_SHORT).show();
         class addProfileClass extends AsyncTask<String, Void, String> {
@@ -178,9 +213,10 @@ public class profile extends android.support.v4.app.Fragment {
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("mobile",params[0]);
-                data.put("vehicle_name",params[1]);
-                data.put("vehicle_number",params[2]);
-                data.put("driving_license",params[3]);
+                data.put("email",params[1]);
+                data.put("vehicle_name",params[2]);
+                data.put("vehicle_number",params[3]);
+                data.put("driving_license",params[4]);
                 String result = ruc.sendPostRequest(ADD_PROFILE_URL,data);
                 //Log.i("@doinBackground:", result);
                 return  result;
@@ -188,7 +224,7 @@ public class profile extends android.support.v4.app.Fragment {
             }
         }
         addProfileClass apc = new addProfileClass();
-        apc.execute(mobile,v_name, v_number,dl);
+        apc.execute(mobile,email,v_name, v_number,dl);
 
     }
 }
