@@ -167,13 +167,10 @@ public class Home extends AppCompatActivity
 
 
             case R.id.nav_share:
-                Toast.makeText(getApplicationContext(),"Share",Toast.LENGTH_SHORT).show();
-                toolbar.setTitle("Share");
                 ShareIt();
                 break;
             case R.id.nav_contact:
-                Intent i = new Intent(getApplicationContext() , ContactUs.class);
-                startActivity(i);
+                fragmentClass = Contact_Us.class;
                 toolbar.setTitle("Contact Us");
 
                 break;
