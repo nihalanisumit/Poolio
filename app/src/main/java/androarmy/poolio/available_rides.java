@@ -1,7 +1,10 @@
 package androarmy.poolio;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.provider.ContactsContract;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -18,43 +21,44 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class available_rides extends AppCompatActivity {
     String [] id,mobile, source, destination, type, date, time, vehicle_name,vehicle_number, seats, first_name, last_name, gender,device_id;
     RecyclerView recyclerView;
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    public final String FIND_URL="http://www.poolio.in/pooqwerty123lio/find.php";//Sumit's pc
+    int refreshing=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_available_rides);
         Intent intent = getIntent();
-        String json= intent.getStringExtra("json");
+        final String pickup= intent.getStringExtra("pickup");
+        String drop= intent.getStringExtra("drop");
+        String date= intent.getStringExtra("date");
+        String time= intent.getStringExtra("time");
+        Log.i("**PREVIOUS ACTIVITY**",pickup+" "+drop);
+
+        findRide(pickup);
         //Toast.makeText(getApplicationContext(),json,Toast.LENGTH_LONG).show();
-        showRides(json);
-        List<Data> data = fill_with_data();
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-        final Recycler_View_Adapter adapter  = new Recycler_View_Adapter(data , getApplication());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager( new LinearLayoutManager(getApplicationContext()));
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
 
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                Log.d("**REFRESHING**","reffreshing");
+                refreshing=1;
+                findRide(pickup);
 
-//        adapter.setClickListener(new ItemClickListener() {
-//
-//            @Override
-//            public void onClick(View view, int position) {
-//                Log.d("odjj","hdjd");
-//
-//
-//                Intent intent1 = new Intent(getApplicationContext(),details_ride.class);
-//                //intent1.putExtra("mobile",mobile[position]);
-//                startActivity(intent1);
-//
-//            }
-//
-//        });
 
+            }
+        });
 
     }
     public List<Data>fill_with_data(){
@@ -69,6 +73,62 @@ public class available_rides extends AppCompatActivity {
         }
         return data;
 
+    }
+    void findRide(String pickup)
+    {
+        if(!InternetConnectionClass.isConnected(getApplicationContext())){
+            Toast.makeText(getApplicationContext(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        else
+            fetchRides(pickup);
+
+
+
+    }
+
+    private void fetchRides(final String pickup){
+        class fetchRideClass extends AsyncTask<String,Void,String> {
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                if(refreshing!=1)
+                {
+                    loading = ProgressDialog.show(available_rides.this,"Finding Your Rides" ,"Please wait while we connect to server",true,true);
+
+                }
+
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if(refreshing!=1)
+                {
+                    loading.dismiss();
+
+                }
+
+                mSwipeRefreshLayout.setRefreshing(false);
+
+                //Toast.makeText(getContext(),s,Toast.LENGTH_LONG).show();
+                //Log.i("***JSON***",s);
+                showRides(s);
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String,String> data = new HashMap<>();
+                data.put("pickup",params[0]);
+
+                RegisterUserClass ruc = new RegisterUserClass();
+                String result = ruc.sendPostRequest(FIND_URL,data);
+                return result;
+            }
+        }
+        fetchRideClass frc = new fetchRideClass();
+        frc.execute(pickup);
     }
 
     private void showRides(String json){
@@ -96,6 +156,11 @@ public class available_rides extends AppCompatActivity {
                 device_id[i]=c.getString("device_id");
                 //Toast.makeText(getApplicationContext(),id[i]+mobile[i],Toast.LENGTH_SHORT).show();
             }
+            List<Data> data = fill_with_data();
+            recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+            final Recycler_View_Adapter adapter  = new Recycler_View_Adapter(data , getApplication());
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager( new LinearLayoutManager(getApplicationContext()));
 
         } catch (JSONException e) {
             e.printStackTrace();

@@ -5,7 +5,7 @@
     android:id="@+id/cv"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:elevation="10dp"
+    android:elevation="20dp"
     card_view:cardCornerRadius="10dp"
     card_view:cardUseCompatPadding="true"
     android:layout_marginLeft="5dp"
@@ -65,7 +65,7 @@
         android:layout_below="@+id/firstrow">
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="1.5dp"
             android:background="@android:color/darker_gray" />
 
         <TextView
@@ -113,19 +113,19 @@
             android:id="@+id/button_complete"
             android:layout_below="@+id/firstrow"
             android:layout_alignParentRight="true"
-            android:src="@drawable/check"
+            android:src="@drawable/tick"
             android:layout_marginTop="20dp"
             />
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/button_cancel"
             android:layout_below="@+id/button_complete"
             android:layout_alignLeft="@+id/button_complete"
             android:layout_alignStart="@+id/button_complete"
             android:layout_alignRight="@+id/button_complete"
             android:layout_alignEnd="@+id/button_complete"
-            android:src="@drawable/close"
+            android:src="@drawable/cross"
             android:layout_marginTop="10dp"/>
 
         <TextView
