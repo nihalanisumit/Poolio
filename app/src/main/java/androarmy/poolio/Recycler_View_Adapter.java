@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -127,7 +128,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         public TextView date;
         public TextView time;
         public CardView cv;
-        public Button openDialog;
+        public ImageView openDialog;
         public String vehicleName,vehicleNo,vehicleType,mobile_number,device_id;
         public View v;
 
@@ -144,7 +145,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
             time=(TextView)view.findViewById(R.id.time_tv);
             source=(TextView)view.findViewById(R.id.source_tv);
             destination=(TextView)view.findViewById(R.id.destination_tv);
-            openDialog=(Button)view.findViewById(R.id.btn_book);
+            openDialog=(ImageView) view.findViewById(R.id.btn_book);
             SharedPreferences mSharedPreferences = view.getContext().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
             final String mob = mSharedPreferences.getString("mobile", "null");
             final String username = mSharedPreferences.getString("name" , "null");
