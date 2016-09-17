@@ -16,10 +16,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp">
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/firstrow">
+
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,19 +55,27 @@
 
 
     </RelativeLayout>
+
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/secondrow"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/firstrow">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/darker_gray" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/source"
             android:text="From : "
             android:textSize="13dp"
-            android:textColor="#000"/>
+            android:textColor="#000"
+            android:layout_marginTop="10dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -94,24 +107,26 @@
             android:textColor="#000"/>
     </RelativeLayout>
 
-        <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Complete"
-        android:id="@+id/button_complete"
-        android:layout_below="@+id/firstrow"
-        android:layout_alignParentRight="true"
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/button_complete"
+            android:layout_below="@+id/firstrow"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/check"
+            android:layout_marginTop="20dp"
             />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:id="@+id/button_cancel"
             android:layout_below="@+id/button_complete"
             android:layout_alignLeft="@+id/button_complete"
             android:layout_alignStart="@+id/button_complete"
             android:layout_alignRight="@+id/button_complete"
-            android:layout_alignEnd="@+id/button_complete" />
+            android:layout_alignEnd="@+id/button_complete"
+            android:src="@drawable/close"
+            android:layout_marginTop="10dp"/>
 
         <TextView
             android:layout_width="120dp"

@@ -56,7 +56,6 @@
             android:label="@string/title_activity_details_ride"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ForgotPassword" />
-        <activity android:name=".ContactUs"></activity>
     </application>
 
 </manifest>

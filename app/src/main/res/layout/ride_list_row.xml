@@ -8,6 +8,10 @@
         android:elevation="15dp"
         card_view:cardCornerRadius="4dp"
         card_view:cardUseCompatPadding="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:background="#fff"
         >
 
         <RelativeLayout
@@ -41,6 +45,7 @@
                 android:textSize="16dp"
                 android:text="name"
                 android:layout_marginLeft="20dp"
+                android:textColor="#000"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/img_user"
                 android:layout_toEndOf="@+id/img_user"/>
@@ -59,6 +64,7 @@
                 android:id="@+id/source_tv"
                 android:textSize="15sp"
                 android:text="source"
+                android:textColor="#000"
 
                 />
 
@@ -74,6 +80,7 @@
                 android:id="@+id/destination_tv"
                 android:textSize="15sp"
                 android:text="destination"
+                android:textColor="#000"
                 />
             </LinearLayout>
             <LinearLayout
@@ -126,7 +133,8 @@
                     android:layout_height="wrap_content"
                     android:text="15-07-2016"
                     android:textSize="15sp"
-                    android:id="@+id/date_tv"/>
+                    android:id="@+id/date_tv"
+                    android:textColor="#000"/>
 
 
                 <TextView
@@ -135,7 +143,8 @@
                     android:textSize="15sp"
                     android:layout_marginLeft="20dp"
                     android:text="21:28"
-                    android:id="@+id/time_tv"/>
+                    android:id="@+id/time_tv"
+                    android:textColor="#000"/>
 
 
             </LinearLayout>
@@ -173,15 +182,14 @@
 
             </LinearLayout>
 
-            <Button
-                style="?android:attr/buttonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="book"
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:id="@+id/btn_book"
                 android:layout_alignBottom="@+id/linearLayout2"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/check"/>
 
         </RelativeLayout>
 
