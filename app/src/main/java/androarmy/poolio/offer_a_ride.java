@@ -84,7 +84,7 @@ public class offer_a_ride extends Fragment {
         actv2.setAdapter(adapter);
         actv2.setTextColor(Color.RED);
         messagev=(EditText) v.findViewById(R.id.messageET);
-
+        avi=(AVLoadingIndicatorView) v.findViewById(R.id.avi_offerride);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,vehicless);
         spinner.setThreshold(1);
         spinner.setAdapter(adapter2);
@@ -273,18 +273,20 @@ public class offer_a_ride extends Fragment {
     //11 parameters
     public void offer(String mobile, String source, String destination, String type, String date, String time, String vname, String vnumber, final int availableSeats, int chargeable, int amount, String msg){
         class OfferTheRide extends AsyncTask<String, Void, String> {
-            ProgressDialog loading;
+//            ProgressDialog loading;
             RegisterUserClass ruc=new RegisterUserClass();
 
 
             protected void onPreExecute() {
-
+                avi.show();
                 super.onPreExecute();
-                loading = ProgressDialog.show(getContext(), "Saving Your Details","Thanks for offering ride", true, true);
+//                loading = ProgressDialog.show(getContext(), "Saving Your Details","Thanks for offering ride", true, true);
             }
             protected void onPostExecute(String s){
                 super.onPostExecute(s);
-                loading.dismiss();
+//                loading.dismiss();
+                avi.hide();
+
                 if("".equals(s))
                 {
                     s="Server error, Please try again after some time!";

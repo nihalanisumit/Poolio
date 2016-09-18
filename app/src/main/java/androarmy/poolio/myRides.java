@@ -42,9 +42,9 @@ public class myRides extends android.support.v4.app.Fragment {
         if(!InternetConnectionClass.isConnected(getActivity())){
             Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
         }
-        fetchMyRides(mobile);
         View view=inflater.inflate(R.layout.fragment_my_rides, container, false);
-        avi=(AVLoadingIndicatorView) view.findViewById(R.id.avi_myrides);
+        avi=(AVLoadingIndicatorView) view.findViewById(R.id.avi_myrides2);
+        fetchMyRides(mobile);
         return view;
     }
 

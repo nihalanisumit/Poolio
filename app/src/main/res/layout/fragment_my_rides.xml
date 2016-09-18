@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         />
     <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/avi_myrides"
+        android:id="@+id/avi_myrides2"
         android:layout_width="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
