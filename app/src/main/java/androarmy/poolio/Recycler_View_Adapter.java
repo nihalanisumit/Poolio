@@ -24,6 +24,7 @@ import com.onesignal.OneSignal;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,7 +35,7 @@ import java.util.List;
  */
 public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_Adapter.View_Holder>  {
     public final String MESSAGE_URL="http://www.poolio.in/pooqwerty123lio/messages.php";//Sumit's pc
-
+//FIND RIDES
     List<Data> list = Collections.emptyList();
     Context context;
     private ItemClickListener clickListener;
@@ -75,18 +76,14 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         holder.vehicleName=list.get(position).getVehicle_name();
         holder.vehicleType=list.get(position).getType();
         holder.mobile_number=list.get(position).getMobile();
-
-
+        holder.msg=list.get(position).getMsg();
         holder.vehicleNo=list.get(position).getVehicle_number();
         holder.device_id=list.get(position).getDevice_id();
-
-
         //button disable code:
          SharedPreferences mSharedPreferences = holder.v.getContext().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         final String mob = mSharedPreferences.getString("mobile", "null");
 //        final String username = mSharedPreferences.getString("name" , "null");
 //        final String gender = mSharedPreferences.getString("gender" , "null");
-
         if(mob.equals(holder.mobile_number))
         {
             holder.openDialog.setVisibility(View.GONE);
@@ -107,15 +104,11 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         {
             holder.image_type.setImageResource(R.drawable.taxi);
         }
-
     }
     @Override
-    public int getItemViewType(int position) {
-
+    public int getItemViewType(int position){
         return position;
     }
-
-
     @Override
     public int getItemCount() {
         //returns the number of elements the RecyclerView will display
@@ -145,14 +138,14 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         public TextView time;
         public CardView cv;
         public ImageView openDialog,image_type;
-        public String vehicleName,vehicleNo,vehicleType,mobile_number,device_id;
+        public TextView messageTv;
+        public String vehicleName,vehicleNo,vehicleType,mobile_number,device_id,msg;
         public View v;
 
         public View_Holder(final View view) {
             super(view);
             view.setOnClickListener(this);
             v=view;
-
             cv=(CardView) view.findViewById(R.id.cv);
             name=(TextView)view.findViewById(R.id.name_tv);
 //            gender=(TextView)view.findViewById(R.id.gender_tv);
@@ -181,6 +174,8 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
                     TextView tv_vehicleNo=(TextView)dialog.findViewById(R.id.vehicle_number);
                     TextView tv_vehicleName=(TextView)dialog.findViewById(R.id.vehicle_name);
                     TextView tv_vehicleColor=(TextView)dialog.findViewById(R.id.vehicle_color);
+                    messageTv=(TextView)dialog.findViewById(R.id.msgTv);
+                    messageTv.setText(msg);
                     tv_name.setText(name.getText());
                     tv_number.setText(mobile_number);
                     tv_location.setText("TBA");
