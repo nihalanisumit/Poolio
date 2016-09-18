@@ -49,6 +49,8 @@ dependencies {
     compile 'com.github.clans:fab:1.6.4'
     compile 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.6'
 
+    compile ('com.weiwangcn.betterspinner:library-material:1.1.0')
+
 
 
 }

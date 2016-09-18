@@ -26,14 +26,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp">
-            <AutoCompleteTextView android:id="@+id/pickup"
-                      android:layout_width="250dp"
-                      android:layout_height="wrap_content"
-                      android:inputType="textCapWords"
-                      android:hint="Pick Up Location"/>
+            <!--<android.support.v7.widget.AppCompatAutoCompleteTextView-->
+                <!--android:id="@+id/pickup"-->
+                      <!--android:layout_width="250dp"-->
+                      <!--android:layout_height="wrap_content"-->
+                      <!--android:inputType="textCapWords"-->
+                      <!--android:hint="Pick Up Location"/>-->
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/pickup"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:hint="Pick Up Location"/>
+
+
+
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,11 +60,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp">
-            <AutoCompleteTextView android:id="@+id/drop"
-                                  android:layout_width="250dp"
-                                  android:layout_height="wrap_content"
-                                  android:inputType="textCapWords"
-                                  android:hint="Drop Location" />
+            <!--<AutoCompleteTextView android:id="@+id/drop"-->
+                                  <!--android:layout_width="250dp"-->
+                                  <!--android:layout_height="wrap_content"-->
+                                  <!--android:inputType="textCapWords"-->
+                                  <!--android:hint="Drop Location" />-->
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/drop"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:hint="Drop Location"
+                 />
+
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>

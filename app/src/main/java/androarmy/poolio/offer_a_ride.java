@@ -42,10 +42,11 @@ public class offer_a_ride extends Fragment {
     //public final String REGISTER_URL="http://192.168.1.101/poolio/register.php"; //Siddharth's pc
     public final String OFFER_URL="http://www.poolio.in/pooqwerty123lio/offer.php";// Sumit's pc
     String dateforsql,timeforsql;
-    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","Backgate","Potheri Station","Guduvancheri"};//need to make it dynamic
+    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","SRM Backgate","Potheri Station","Green Pearl","Safa", "Akshaya","Airport","Central Station","Egmore Station"};//need to make it dynamic
     List<String> vehicleType = new ArrayList<String>(); //No need for dynamic i suppose
-    public static Spinner spinner;
-    AutoCompleteTextView actv,actv2;
+    //public static Spinner spinner;
+    String[] vehicless={"Bike","Car","Auto","Cab"};
+    AutoCompleteTextView actv,actv2,spinner;
     String source, destination, type,mobile,date,time,vname,vnumber,msg;
     int availableSeats, amount=0;
     public int chargeable=1; //false for free ride
@@ -69,10 +70,9 @@ public class offer_a_ride extends Fragment {
         if(!InternetConnectionClass.isConnected(getActivity())){
             Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
         }
-        spinner = (Spinner)v.findViewById(R.id.spin);
+        spinner = (AutoCompleteTextView) v.findViewById(R.id.spin);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,locations);
-
         actv= (AutoCompleteTextView)v.findViewById(R.id.from);
         actv.setThreshold(1);
         actv.setAdapter(adapter);
@@ -82,17 +82,11 @@ public class offer_a_ride extends Fragment {
         actv2.setAdapter(adapter);
         actv2.setTextColor(Color.RED);
         messagev=(EditText) v.findViewById(R.id.messageET);
-        vehicleType.add("VEHICLE TYPE");
-        vehicleType.add("Bike");
-        vehicleType.add("Car");
-        vehicleType.add("Auto");
-        vehicleType.add("Cab");
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_element, vehicleType);
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,vehicless);
+        spinner.setThreshold(1);
+        spinner.setAdapter(adapter2);
+
         sourceET = (EditText)v.findViewById(R.id.from);
         destinationET=(EditText)v.findViewById(R.id.to);
         dateET=(EditText)v.findViewById(R.id.date);
@@ -110,33 +104,10 @@ public class offer_a_ride extends Fragment {
         vnameET.setText(offerSp.getString("vname",""));
         vnumberET.setText(offerSp.getString("vnumber",""));
         availableET.setText(offerSp.getString("availableseats",""));
-        String spinnerType=offerSp.getString("type","");
-        if(!"".equalsIgnoreCase(spinnerType))
-        position=dataAdapter.getPosition(spinnerType);
-        spinner.setSelection(position,true);
+        spinner.setText(offerSp.getString("type",""));
 
-       spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-           @Override
-           public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               if(position==3||position==4)
-               {
-                   vnumberET.setVisibility(View.GONE);
-                   vnameET.setVisibility(View.GONE);
-               }
-               else
-               {
 
-                   vnumberET.setVisibility(View.VISIBLE);
-                   vnameET.setVisibility(View.VISIBLE);
 
-               }
-           }
-
-           @Override
-           public void onNothingSelected(AdapterView<?> parent) {
-
-           }
-       });
 
         Calenderiv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -254,7 +225,7 @@ public class offer_a_ride extends Fragment {
         mobile = pref.getString("mobile", null);
         source = sourceET.getText().toString().trim();
         destination = destinationET.getText().toString().trim();
-        type = spinner.getSelectedItem().toString();
+        type = spinner.getText().toString();
         if ("".equalsIgnoreCase(dateforsql) || "".equalsIgnoreCase(timeforsql)) {
             Toast.makeText(getActivity(), "please enter date or time", Toast.LENGTH_SHORT).show();
             return;
