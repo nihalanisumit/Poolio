@@ -38,11 +38,11 @@ public class available_rides extends AppCompatActivity {
         Intent intent = getIntent();
         final String pickup= intent.getStringExtra("pickup");
         String drop= intent.getStringExtra("drop");
-        String date= intent.getStringExtra("date");
-        String time= intent.getStringExtra("time");
-        Log.i("**PREVIOUS ACTIVITY**",pickup+" "+drop);
+        final String date= intent.getStringExtra("date");
+        final String time= intent.getStringExtra("time");
+       // Log.i("**PREVIOUS ACTIVITY**",pickup+" "+drop);
 
-        findRide(pickup);
+        findRide(pickup,date,time);
         //Toast.makeText(getApplicationContext(),json,Toast.LENGTH_LONG).show();
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
@@ -54,7 +54,7 @@ public class available_rides extends AppCompatActivity {
                 // Refresh items
                 Log.d("**REFRESHING**","reffreshing");
                 refreshing=1;
-                findRide(pickup);
+                findRide(pickup,date,time);
 
 
             }
@@ -74,20 +74,20 @@ public class available_rides extends AppCompatActivity {
         return data;
 
     }
-    void findRide(String pickup)
+    void findRide(String pickup,String date, String time)
     {
         if(!InternetConnectionClass.isConnected(getApplicationContext())){
             Toast.makeText(getApplicationContext(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
             return;
         }
         else
-            fetchRides(pickup);
+            fetchRides(pickup,date,time);
 
 
 
     }
 
-    private void fetchRides(final String pickup){
+    private void fetchRides(final String pickup,final String date, final String time){
         class fetchRideClass extends AsyncTask<String,Void,String> {
             ProgressDialog loading;
             @Override
@@ -121,6 +121,8 @@ public class available_rides extends AppCompatActivity {
             protected String doInBackground(String... params) {
                 HashMap<String,String> data = new HashMap<>();
                 data.put("pickup",params[0]);
+                data.put("date",params[1]);
+                data.put("time",params[2]);
 
                 RegisterUserClass ruc = new RegisterUserClass();
                 String result = ruc.sendPostRequest(FIND_URL,data);
@@ -128,7 +130,7 @@ public class available_rides extends AppCompatActivity {
             }
         }
         fetchRideClass frc = new fetchRideClass();
-        frc.execute(pickup);
+        frc.execute(pickup,date,time);
     }
 
     private void showRides(String json){
