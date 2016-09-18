@@ -292,13 +292,15 @@
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_offer"
-            android:layout_width="120dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/buttons"
+            android:background="@color/colorPrimary"
+            android:elevation="20dp"
+            android:textColor="@color/white"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:text="POOLIO"/>

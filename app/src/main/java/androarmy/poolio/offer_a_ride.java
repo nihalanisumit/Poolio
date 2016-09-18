@@ -153,6 +153,7 @@ public class offer_a_ride extends Fragment {
 
                     }
                 }, mYear, mMonth, mDay);
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 datePickerDialog.show();
 
                 mHour = c.get(Calendar.HOUR_OF_DAY);
