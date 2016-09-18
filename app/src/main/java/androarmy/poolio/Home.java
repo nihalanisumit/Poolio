@@ -338,7 +338,7 @@ public class Home extends AppCompatActivity
             }
         };
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
+
             Toast.makeText(Home.this, "Please give permissions", Toast.LENGTH_SHORT).show();
 
             return;

@@ -25,8 +25,9 @@ public class profile extends android.support.v4.app.Fragment {
     String mobile, name, gender, email, vehicle_name, vehicle_number, driving_license;
     TextView nameET, genderET;
     EditText mobileET, emailET, vehicle_nameET, vehicle_numberET, driving_licenseET;
-    ImageView vehicle_nameIV, vehicle_numberIV, dlIV,edit_image,emailIV;
+    ImageView vehicle_nameIV, vehicle_numberIV, dlIV,edit_image,emailIV,dp;
     Button add_button;
+
 
 
     @Override
@@ -55,6 +56,7 @@ public class profile extends android.support.v4.app.Fragment {
         emailIV=(ImageView)v.findViewById(R.id.emailplus) ;
         add_button = (Button)v.findViewById(R.id.add_button);
         edit_image=(ImageView)v.findViewById(R.id.edit_button);
+        dp=(ImageView)v.findViewById(R.id.user_profile_photo);
 
         mobileET.setText(mobile);
         nameET.setText(name);
@@ -126,6 +128,8 @@ public class profile extends android.support.v4.app.Fragment {
 
             }
         });
+
+        setImage(name);
 
         return v;
     }
@@ -226,5 +230,94 @@ public class profile extends android.support.v4.app.Fragment {
         addProfileClass apc = new addProfileClass();
         apc.execute(mobile,email,v_name, v_number,dl);
 
+    }
+
+    void setImage(String name)
+    {
+        String namel = name.toLowerCase();
+        char firstletter;
+        firstletter= namel.charAt(0);
+        switch (firstletter)
+        {
+            case 'a':
+                dp.setImageResource(R.drawable.a);
+                break;
+            case 'b':
+                dp.setImageResource(R.drawable.b);
+                break;
+            case 'c':
+                dp.setImageResource(R.drawable.c);
+                break;
+            case 'd':
+                dp.setImageResource(R.drawable.d);
+                break;
+            case 'e':
+                dp.setImageResource(R.drawable.e);
+                break;
+            case 'f':
+                dp.setImageResource(R.drawable.f);
+                break;
+            case 'g':
+                dp.setImageResource(R.drawable.g);
+                break;
+            case 'h':
+                dp.setImageResource(R.drawable.h);
+                break;
+            case 'i':
+                dp.setImageResource(R.drawable.i);
+                break;
+            case 'j':
+                dp.setImageResource(R.drawable.j);
+                break;
+            case 'k':
+                dp.setImageResource(R.drawable.k);
+                break;
+            case 'l':
+                dp.setImageResource(R.drawable.l);
+                break;
+            case 'm':
+                dp.setImageResource(R.drawable.m);
+                break;
+            case 'n':
+                dp.setImageResource(R.drawable.n);
+                break;
+            case 'o':
+                dp.setImageResource(R.drawable.o);
+                break;
+            case 'p':
+                dp.setImageResource(R.drawable.p);
+                break;
+            case 'q':
+                dp.setImageResource(R.drawable.q);
+                break;
+            case 'r':
+                dp.setImageResource(R.drawable.r);
+                break;
+            case 's':
+                dp.setImageResource(R.drawable.s);
+                break;
+            case 't':
+                dp.setImageResource(R.drawable.t);
+                break;
+            case 'u':
+                dp.setImageResource(R.drawable.u);
+                break;
+            case 'v':
+                dp.setImageResource(R.drawable.v);
+                break;
+            case 'w':
+                dp.setImageResource(R.drawable.w);
+                break;
+            case 'x':
+                dp.setImageResource(R.drawable.x);
+                break;
+            case 'y':
+                dp.setImageResource(R.drawable.y);
+                break;
+            case 'z':
+                dp.setImageResource(R.drawable.z);
+                break;
+
+        }
     }
 }
