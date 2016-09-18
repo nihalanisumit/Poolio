@@ -86,7 +86,6 @@ public class find_a_ride extends Fragment {
                     in.putExtra("date",dateforsql);
                     in.putExtra("time",time);
                     startActivity(in);
-
                 }
 
             }

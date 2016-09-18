@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "poolio");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "I am in DANGER. Please locate me at :" +
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "i am in DANGER. Please locate me at :" +
                 " lon="+lon+" lat="+lat);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
 

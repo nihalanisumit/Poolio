@@ -51,7 +51,7 @@ public class Home extends AppCompatActivity
     Class fragmentClass = null;
     String lon,lat;
     com.github.clans.fab.FloatingActionMenu fab;
-    com.github.clans.fab.FloatingActionButton fab2;
+//    com.github.clans.fab.FloatingActionButton fab2;
     public final String PROFILE_URL ="http://www.poolio.in/pooqwerty123lio/profile.php";//Sumit's pc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +161,7 @@ public class Home extends AppCompatActivity
         }
         switch (id){
             case R.id.nav_find:
+                fab.setVisibility(View.VISIBLE);
                 fragmentClass= TabFragment.class;
                 toolbar.setTitle("Find");
                 break;
@@ -351,7 +352,7 @@ public class Home extends AppCompatActivity
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "poolio");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "I am in DANGER. Please locate me at :" +
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "i am in DANGER. Please locate me at :" +
                 " lon="+lon+" lat="+lat);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
 
