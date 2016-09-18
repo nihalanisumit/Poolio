@@ -25,7 +25,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_Adapter2.View_Holder> //MYRIDES
  {
-
+//my RIDES
     public final String STATUS_URL="http://www.poolio.in/pooqwerty123lio/statuschange.php";//jagan's pc
 
     List<Data> list = Collections.emptyList();

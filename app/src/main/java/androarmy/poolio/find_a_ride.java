@@ -31,11 +31,12 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 public class find_a_ride extends Fragment {
-    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","SRM Backgate","Potheri Station","Green Pearl","Safa Guduvanchery", "Akshaya Guduvanchery"};//need to make it dynamic
+    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","SRM Backgate","Potheri Station","Green Pearl","Safa", "Akshaya","Airport","Central Station","Egmore Station"};//need to make it dynamic
     AutoCompleteTextView actv,actv2;
     EditText dateET, timeET;
     Button b;
     String pickup, drop, time, date;
+    String dateforsql;
     private ImageView dateIv, timeIV;
     private int mYear, mMonth, mDay, mHour, mMinute;
 
@@ -73,12 +74,19 @@ public class find_a_ride extends Fragment {
                 drop= actv2.getText().toString();
                 date= dateET.getText().toString();
                 time= timeET.getText().toString();
-                Intent in = new Intent(getActivity(),available_rides.class);
-                in.putExtra("pickup",pickup);
-                in.putExtra("drop",drop);
-                in.putExtra("date",date);
-                in.putExtra("time",time);
-                startActivity(in);
+                if(pickup.equals("")||drop.equals("")||date.equals("")||time.equals(""))
+                {
+                    Toast.makeText(getContext(),"Please enter all values",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Intent in = new Intent(getActivity(),available_rides.class);
+                    in.putExtra("pickup",pickup);
+                    in.putExtra("drop",drop);
+                    in.putExtra("date",dateforsql);
+                    in.putExtra("time",time);
+                    startActivity(in);
+                }
 
             }
         });
@@ -101,7 +109,7 @@ public class find_a_ride extends Fragment {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                               String dateforsql= year + "-" + (monthOfYear + 1)+"-"+dayOfMonth;
+                               dateforsql= year + "-" + (monthOfYear + 1)+"-"+dayOfMonth;
                                 dateET.setText(dayOfMonth+ "-" + (monthOfYear + 1)+"-"+year);
 
                             }
