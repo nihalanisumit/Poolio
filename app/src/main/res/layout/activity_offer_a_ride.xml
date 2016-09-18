@@ -247,7 +247,28 @@
             </android.support.design.widget.TextInputLayout>
 
 
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/msgicon"
+                android:id="@+id/imageView" />
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"
+                android:hint="Message(optional)" />
         </LinearLayout>
 
         <android.support.v7.widget.AppCompatButton

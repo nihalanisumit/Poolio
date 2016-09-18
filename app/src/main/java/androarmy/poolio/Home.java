@@ -1,12 +1,19 @@
 package androarmy.poolio;
 
+import android.*;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -18,8 +25,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,12 +49,17 @@ public class Home extends AppCompatActivity
     TextView emailheaderTV;
     Fragment fragment = null;
     Class fragmentClass = null;
-
+    String lon,lat;
+    com.github.clans.fab.FloatingActionMenu fab;
+    com.github.clans.fab.FloatingActionButton fab2;
     public final String PROFILE_URL ="http://www.poolio.in/pooqwerty123lio/profile.php";//Sumit's pc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        fab = (com.github.clans.fab.FloatingActionMenu) findViewById(R.id.fab_home);
+//        fab2=(com.github.clans.fab.FloatingActionButton)findViewById(R.id.material_design_floating_action_menu_item2);
+        fab.setVisibility(View.VISIBLE);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent intent=getIntent();
@@ -103,8 +118,6 @@ public class Home extends AppCompatActivity
             }
 
         }
-
-
 
 
     }
@@ -272,6 +285,76 @@ public class Home extends AppCompatActivity
         }
         fetchDetailsClass fdc = new fetchDetailsClass();
         fdc.execute(mobile);
+    }
+    public void cancel(View v) {
+        fab.setVisibility(View.GONE);
+    }
+
+    public void policeSupport(View v) {
+        String number = "tel:" + "7708519676";
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(number));
+        intent.putExtra(Intent.EXTRA_PHONE_NUMBER, number);
+        Intent chosenIntent = Intent.createChooser(intent, "Call to Police Station!");
+        chosenIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(chosenIntent);
+
+    }
+
+    public void customerCare(View v) {
+        String number = "tel:" + "7708519676";
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(number));
+        intent.putExtra(Intent.EXTRA_PHONE_NUMBER, number);
+        Intent chosenIntent = Intent.createChooser(intent, "Call To Customer Care!");
+        chosenIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(chosenIntent);
+
+    }
+
+    public void shareYourLocation(View v) {
+
+        final LocationManager locationManager = (LocationManager) getApplicationContext()
+                .getSystemService(LOCATION_SERVICE);
+        LocationListener ll = new LocationListener() {
+
+            @Override
+            public void onLocationChanged(Location location) {
+                lon = String.valueOf(location.getLongitude());
+                lat = String.valueOf(location.getLatitude());
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            Toast.makeText(Home.this, "Please give permissions", Toast.LENGTH_SHORT).show();
+
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,ll);
+        if("".equalsIgnoreCase(lon)||"".equalsIgnoreCase("len")){
+            Log.d("either lat or long","::are null");
+            return;
+        }
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "poolio");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "I am in DANGER. Please locate me at :" +
+                " lon="+lon+" lat="+lat);
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
+
     }
 
 }

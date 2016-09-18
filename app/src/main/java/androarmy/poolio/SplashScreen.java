@@ -42,7 +42,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class SplashScreen extends Activity {
     MyCountdownTimer myCountdownTimer;
     Animation fadeIn;
-    private ImageView logo;
+//    private ImageView logo;
     public String NO_VAL="empty";
      //public final String SIGNIN_URL="http://192.168.1.6/poolio/signin.php";//Siddharth's pc
      public final String SIGNIN_URL="http://www.poolio.in/pooqwerty123lio/signin.php";//Sumit's pc
@@ -57,17 +57,12 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         temp=savedInstanceState;
-        if(!InternetConnectionClass.isConnected(getApplicationContext())){
-            Toast.makeText(SplashScreen.this, "Please connect to internet!", Toast.LENGTH_LONG).show();
-            finish();
-            Log.d("Internet ::","not connected");
-            return;
-        }
+
         OneSignal.startInit(this).init();
                getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
-        StartAnimations();
+//        StartAnimations();
         SharedPreferences session = getSharedPreferences("session", MODE_PRIVATE);
         mob = session.getString("mobile", NO_VAL);
         pass = session.getString("password", NO_VAL);
@@ -77,23 +72,23 @@ public class SplashScreen extends Activity {
         myCountdownTimer = new MyCountdownTimer(3000, 1000);
         myCountdownTimer.start();
 
-        logo = (ImageView)findViewById(R.id.logo);
-        fadeIn = new AlphaAnimation(0.0f , 1.0f ) ;
-        fadeIn.setDuration(2100);
-        fadeIn.setFillAfter(true);
-        logo.startAnimation(fadeIn);
+//        logo = (ImageView)findViewById(R.id.logo);
+//        fadeIn = new AlphaAnimation(0.0f , 1.0f ) ;
+//        fadeIn.setDuration(2100);
+//        fadeIn.setFillAfter(true);
+//        logo.startAnimation(fadeIn);
 
     }
 
-    private void StartAnimations() {
-        Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
-        anim.reset();
-        anim = AnimationUtils.loadAnimation(this, R.anim.translate);
-        anim.reset();
-        ImageView iv = (ImageView) findViewById(R.id.logo);
-        iv.clearAnimation();
-        iv.startAnimation(anim);
-    }
+//    private void StartAnimations() {
+//        Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
+//        anim.reset();
+//        anim = AnimationUtils.loadAnimation(this, R.anim.translate);
+//        anim.reset();
+//        ImageView iv = (ImageView) findViewById(R.id.logo);
+//        iv.clearAnimation();
+//        iv.startAnimation(anim);
+//    }
 
     public class MyCountdownTimer extends CountDownTimer
     {
