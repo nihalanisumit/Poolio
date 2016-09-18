@@ -125,12 +125,12 @@ public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_A
                 @Override
                 public void onClick(View v) {
                     //Toast.makeText(view.getContext(),"completed",Toast.LENGTH_LONG).show();
-//                 
+
 
                     SweetAlertDialog pDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
                     pDialog.getProgressHelper().setBarColor(Color.parseColor("#3F51B5"));
                     pDialog .setTitleText("Are you sure?")
-                            .setContentText("click confirm if you've found your travel buddy")
+                            .setContentText("Clicking on Complete will remove your offered ride from the find list. \nOnly click COMPLETE if you've found your travel buddy")
                             .setCancelText("cancel")
                             .setConfirmText("confirm")
                             .showCancelButton(true)
@@ -161,8 +161,8 @@ public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_A
                     pDialog.getProgressHelper().setBarColor(Color.parseColor("#3F51B5"));
                            pDialog .setTitleText("Are you sure?")
                             .setContentText("Clicking on YES will cancel your booking!")
-                            .setCancelText("No!!")
-                            .setConfirmText("Yes!!")
+                            .setCancelText("No")
+                            .setConfirmText("Yes")
                             .showCancelButton(true)
                             .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
