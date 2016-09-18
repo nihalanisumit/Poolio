@@ -24,10 +24,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
+
 public class available_rides extends AppCompatActivity {
     String [] id,mobile, source, destination, type, date, time, vehicle_name,vehicle_number, seats, first_name, last_name, gender,device_id,msg;
     RecyclerView recyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
+    WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
     public final String FIND_URL="http://www.poolio.in/pooqwerty123lio/find.php";//Sumit's pc
     int refreshing=0;
 
@@ -45,20 +48,27 @@ public class available_rides extends AppCompatActivity {
         findRide(pickup);
         //Toast.makeText(getApplicationContext(),json,Toast.LENGTH_LONG).show();
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
-
-
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Refresh items
+      //  mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout) findViewById(R.id.main_swipe);
+        mWaveSwipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
+            @Override public void onRefresh() {
+                // Do work to refresh the list here.
                 Log.d("**REFRESHING**","reffreshing");
                 refreshing=1;
                 findRide(pickup);
-
-
             }
         });
+//        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                // Refresh items
+//                Log.d("**REFRESHING**","reffreshing");
+//                refreshing=1;
+//                findRide(pickup);
+//
+//
+//            }
+//        });
 
     }
     public List<Data>fill_with_data(){
@@ -110,7 +120,7 @@ public class available_rides extends AppCompatActivity {
 
                 }
 
-                mSwipeRefreshLayout.setRefreshing(false);
+                mWaveSwipeRefreshLayout.setRefreshing(false);
 
                 //Toast.makeText(getContext(),s,Toast.LENGTH_LONG).show();
                 //Log.i("***JSON***",s);
