@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import com.wang.avi.AVLoadingIndicatorView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,7 +38,7 @@ public class Messages extends android.support.v4.app.Fragment {
     ProgressDialog loading;
     String[] id ,messages , timestamp ,mobile_book; // booked mobile no.
     String mobile;
-
+    AVLoadingIndicatorView avi;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +49,7 @@ public class Messages extends android.support.v4.app.Fragment {
 
         mSharedPreferences = getActivity().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         mobile = mSharedPreferences.getString("mobile", "null");
+        avi=(AVLoadingIndicatorView)view.findViewById(R.id.avi_msg);
         fetchMessages(mobile);
         return view;
     }
@@ -68,17 +71,19 @@ public class Messages extends android.support.v4.app.Fragment {
 
     private void fetchMessages(final String mobile){
         class fetchMessageClass extends AsyncTask<String,Void,String> {
-            ProgressDialog loading;
+//            ProgressDialog loading;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(getContext(),"Fetching Your messages","Please wait while we connect to our server",true,true);
+//                loading = ProgressDialog.show(getContext(),"Fetching Your messages","Please wait while we connect to our server",true,true);
+                avi.show();
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                loading.dismiss();
+//                loading.dismiss();
+                avi.hide();
                 try {
 
 

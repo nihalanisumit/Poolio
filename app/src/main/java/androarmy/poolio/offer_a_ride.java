@@ -29,6 +29,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 
+import com.wang.avi.AVLoadingIndicatorView;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -59,7 +61,7 @@ public class offer_a_ride extends Fragment {
     static boolean timeCheck;// if timeCheck is false -> don't go to next screen
     ImageView Calenderiv;
     private int mYear, mMonth, mDay, mHour, mMinute,position;
-
+    AVLoadingIndicatorView avi;
 
 
     @Nullable
