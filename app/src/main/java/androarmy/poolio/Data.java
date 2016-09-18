@@ -29,6 +29,7 @@ public class Data {
     public String status;
     public String message;
     public String mobile_book;
+    public String msg;
 
 
 
@@ -37,7 +38,7 @@ public class Data {
 
 
     Data(String id , String first_name, String last_name, String mobile, String gender, String source , String destination, String type,
-         String date, String time, String vehicle_name, String vehicle_number, String seats,String device_id)//constructor for findrides
+         String date, String time, String vehicle_name, String vehicle_number, String seats,String device_id,String msg)//constructor for findrides
     {
         this.id = id;
         this.first_name=first_name;
@@ -70,6 +71,7 @@ public class Data {
         this.vehicle_number = vehicle_number;
         this.seats = seats;
         this.device_id=device_id;
+        this.msg=msg;
 
     }
 
@@ -164,7 +166,7 @@ public class Data {
     public String getMobile_book(){
         return mobile_book;
     }
-
+    public String getMsg(){return msg;}
     public String getVehicle_name(){
         return vehicle_name;
     }

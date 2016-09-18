@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 public class offer_a_ride extends Fragment {
 
@@ -44,11 +46,11 @@ public class offer_a_ride extends Fragment {
     List<String> vehicleType = new ArrayList<String>(); //No need for dynamic i suppose
     public static Spinner spinner;
     AutoCompleteTextView actv,actv2;
-    String source, destination, type,mobile,date,time,vname,vnumber;
+    String source, destination, type,mobile,date,time,vname,vnumber,msg;
     int availableSeats, amount=0;
     public int chargeable=1; //false for free ride
     SharedPreferences pref;
-    EditText sourceET,destinationET, dateET, timeET,vnameET,vnumberET,availableET,amountET;
+    EditText sourceET,destinationET, dateET, timeET,vnameET,vnumberET,availableET,messagev;
     static RadioGroup chargeableRG;
     Button offer_button;
     static int dayCheck;
@@ -79,7 +81,7 @@ public class offer_a_ride extends Fragment {
         actv2.setThreshold(0);
         actv2.setAdapter(adapter);
         actv2.setTextColor(Color.RED);
-
+        messagev=(EditText) v.findViewById(R.id.messageET);
         vehicleType.add("VEHICLE TYPE");
         vehicleType.add("Bike");
         vehicleType.add("Car");
@@ -98,7 +100,7 @@ public class offer_a_ride extends Fragment {
         vnameET=(EditText)v.findViewById(R.id.vname);
         vnumberET=(EditText)v.findViewById(R.id.vnumber);
         availableET=(EditText)v.findViewById(R.id.passengers);
-        amountET=(EditText)v.findViewById(R.id.money);
+//        amountET=(EditText)v.findViewById(R.id.money);
         Calenderiv = (ImageView)v.findViewById(R.id.calender);
         chargeLayout = (LinearLayout)v.findViewById(R.id.layer_charge);
         chargeableRG=(RadioGroup)v.findViewById(R.id.radioGrp);
@@ -247,6 +249,7 @@ public class offer_a_ride extends Fragment {
             Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
             return;
         }
+        msg=messagev.getText().toString();
         pref = getActivity().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         mobile = pref.getString("mobile", null);
         source = sourceET.getText().toString().trim();
@@ -289,12 +292,12 @@ public class offer_a_ride extends Fragment {
 
         }
           else {
-            offer(mobile, source, destination, type, date, time, vname, vnumber, availableSeats, chargeable, amount);
+            offer(mobile, source, destination, type, date, time, vname, vnumber, availableSeats, chargeable, amount,msg);
         }
     }
 
     //11 parameters
-    public void offer(String mobile,String source,String destination,String type,String date,String time, String vname, String vnumber, final int availableSeats, int chargeable,int amount){
+    public void offer(String mobile, String source, String destination, String type, String date, String time, String vname, String vnumber, final int availableSeats, int chargeable, int amount, String msg){
         class OfferTheRide extends AsyncTask<String, Void, String> {
             ProgressDialog loading;
             RegisterUserClass ruc=new RegisterUserClass();
@@ -339,13 +342,14 @@ public class offer_a_ride extends Fragment {
                 data.put("availableSeats",params[8]);
                 data.put("chargeable",params[9]);
                 data.put("amount",params[10]);
+                data.put("msg",params[11]);
                 String result = ruc.sendPostRequest(OFFER_URL,data);
                 //Log.i("@doinBackground:", result);
                 return  result;
             }
         }
         OfferTheRide otr = new OfferTheRide();
-        otr.execute(mobile,source,destination,type,date,time,vname,vnumber,Integer.toString(availableSeats),Integer.toString(chargeable),Integer.toString(amount));
+        otr.execute(mobile,source,destination,type,date,time,vname,vnumber,Integer.toString(availableSeats),Integer.toString(chargeable),Integer.toString(amount),msg);
     }
 
 

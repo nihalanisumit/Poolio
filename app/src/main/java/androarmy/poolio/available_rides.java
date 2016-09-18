@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class available_rides extends AppCompatActivity {
-    String [] id,mobile, source, destination, type, date, time, vehicle_name,vehicle_number, seats, first_name, last_name, gender,device_id;
+    String [] id,mobile, source, destination, type, date, time, vehicle_name,vehicle_number, seats, first_name, last_name, gender,device_id,msg;
     RecyclerView recyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     public final String FIND_URL="http://www.poolio.in/pooqwerty123lio/find.php";//Sumit's pc
@@ -67,7 +67,7 @@ public class available_rides extends AppCompatActivity {
         for (int i = 0 ; i<id.length ; i++){
             if (id[i]!=null) {
                 //Log.e("**CHECKING**",source[0]+" "+ destination[0]+vehicle_name[0]);
-                data.add(new Data(id[i],first_name[i] ,last_name[i],mobile[i],gender[i],source[i], destination[i],type[i],date[i],time[i],vehicle_name[i],vehicle_number[i],seats[i],device_id[i]));
+                data.add(new Data(id[i],first_name[i] ,last_name[i],mobile[i],gender[i],source[i], destination[i],type[i],date[i],time[i],vehicle_name[i],vehicle_number[i],seats[i],device_id[i],msg[i]));
             }
 
         }
@@ -154,6 +154,7 @@ public class available_rides extends AppCompatActivity {
                 vehicle_number [i] = c.getString("vehicle_number");
                 seats [i]= c.getString("seats");
                 device_id[i]=c.getString("device_id");
+                msg[i]=c.getString("msg");
                 //Toast.makeText(getApplicationContext(),id[i]+mobile[i],Toast.LENGTH_SHORT).show();
             }
             List<Data> data = fill_with_data();
@@ -183,6 +184,7 @@ public class available_rides extends AppCompatActivity {
         last_name= new String[len];
         gender= new String[len];
         device_id=new String[len];
+        msg=new String[len];
 
 
     }
