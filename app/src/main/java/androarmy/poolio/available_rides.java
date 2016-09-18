@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.wang.avi.AVLoadingIndicatorView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,10 +31,11 @@ import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 public class available_rides extends AppCompatActivity {
     String [] id,mobile, source, destination, type, date, time, vehicle_name,vehicle_number, seats, first_name, last_name, gender,device_id,msg;
     RecyclerView recyclerView;
-    SwipeRefreshLayout mSwipeRefreshLayout;
+//    SwipeRefreshLayout mSwipeRefreshLayout;
     WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
     public final String FIND_URL="http://www.poolio.in/pooqwerty123lio/find.php";//Sumit's pc
     int refreshing=0;
+    AVLoadingIndicatorView  avi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,7 @@ public class available_rides extends AppCompatActivity {
         final String date= intent.getStringExtra("date");
         final String time= intent.getStringExtra("time");
        // Log.i("**PREVIOUS ACTIVITY**",pickup+" "+drop);
-
+         avi=(AVLoadingIndicatorView)findViewById(R.id.avi);
         findRide(pickup,date,time);
         //Toast.makeText(getApplicationContext(),json,Toast.LENGTH_LONG).show();
 
@@ -61,8 +64,6 @@ public class available_rides extends AppCompatActivity {
 
             }
         });
-
-
     }
     public List<Data>fill_with_data(){
 
@@ -92,14 +93,14 @@ public class available_rides extends AppCompatActivity {
 
     private void fetchRides(final String pickup,final String date, final String time){
         class fetchRideClass extends AsyncTask<String,Void,String> {
-            ProgressDialog loading;
+//            ProgressDialog loading;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
                 if(refreshing!=1)
                 {
-                    loading = ProgressDialog.show(available_rides.this,"Finding Your Rides" ,"Please wait while we connect to server",true,true);
-
+//                    loading = ProgressDialog.show(available_rides.this,"Finding Your Rides" ,"Please wait while we connect to server",true,true);
+                  avi.show();
                 }
 
             }
@@ -109,7 +110,8 @@ public class available_rides extends AppCompatActivity {
                 super.onPostExecute(s);
                 if(refreshing!=1)
                 {
-                    loading.dismiss();
+                      avi.hide();
+//                    loading.dismiss();
 
                 }
 
