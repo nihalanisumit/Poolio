@@ -129,6 +129,7 @@ public class Home extends AppCompatActivity
 
                         }
                     }).setNegativeButton("no", null).show();
+
         }
         overridePendingTransition(R.anim.previous_slide_in, R.anim.previous_slide_out);
     }
@@ -178,6 +179,18 @@ public class Home extends AppCompatActivity
                 Toast.makeText(getApplicationContext(),"about us",Toast.LENGTH_SHORT).show();
                 toolbar.setTitle("About Us");
                 break;
+            case R.id.nav_feedback:
+                fragmentClass = Feedback.class;
+                toolbar.setTitle("Feedback");
+                break;
+            case R.id.nav_faq:
+                fragmentClass  = Faq.class;
+                Intent i = new Intent(getApplicationContext(),Faq.class);
+                startActivity(i);
+
+                toolbar.setTitle("FAQ");
+                break;
+
             case R.id.sign_out:
                 signout();
                 break;

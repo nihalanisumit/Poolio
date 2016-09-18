@@ -45,6 +45,16 @@
                 android:title="About us"
                 android:checked="false"/>
 
+            <item android:id="@+id/nav_feedback"
+                android:title="Feedback"
+                android:checked="false"
+
+                />
+            <item android:id="@+id/nav_faq"
+                android:title="FAQ"
+                android:checked="false"/>
+
+
         </menu>
     </item>
     <item
