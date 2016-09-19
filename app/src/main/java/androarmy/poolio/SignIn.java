@@ -130,6 +130,7 @@ public class SignIn extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
 //                loading = ProgressDialog.show(SignIn.this,"Signing in","Please wait while we connect to server",true,true);
+                  avi.setVisibility(View.VISIBLE);
                    avi.show();
             }
 

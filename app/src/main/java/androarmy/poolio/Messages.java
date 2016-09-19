@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 
 public class Messages extends android.support.v4.app.Fragment {
@@ -39,6 +40,8 @@ public class Messages extends android.support.v4.app.Fragment {
     String[] id ,messages , timestamp ,mobile_book; // booked mobile no.
     String mobile;
     AVLoadingIndicatorView avi;
+    int refreshing=0;
+    WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,7 +53,18 @@ public class Messages extends android.support.v4.app.Fragment {
         mSharedPreferences = getActivity().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         mobile = mSharedPreferences.getString("mobile", "null");
         avi=(AVLoadingIndicatorView)view.findViewById(R.id.avi_msg);
+        avi.setVisibility(View.GONE);
+        mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout) view.findViewById(R.id.main_swipe);
+
         fetchMessages(mobile);
+        mWaveSwipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
+            @Override public void onRefresh() {
+                // Do work to refresh the list here.
+                //Log.d("**REFRESHING**","reffreshing");
+                refreshing=1;
+                fetchMessages(mobile);
+            }
+        });
         return view;
     }
 
@@ -76,14 +90,26 @@ public class Messages extends android.support.v4.app.Fragment {
             protected void onPreExecute() {
                 super.onPreExecute();
 //                loading = ProgressDialog.show(getContext(),"Fetching Your messages","Please wait while we connect to our server",true,true);
-                avi.show();
+                if(refreshing!=1)
+                {
+//                    loading = ProgressDialog.show(available_rides.this,"Finding Your Rides" ,"Please wait while we connect to server",true,true);
+                    avi.setVisibility(View.VISIBLE);
+                    avi.show();
+                }
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
 //                loading.dismiss();
-                avi.hide();
+                if(refreshing!=1)
+                {
+                    avi.hide();
+//                    loading.dismiss();
+
+                }
+
+                mWaveSwipeRefreshLayout.setRefreshing(false);
                 try {
 
 

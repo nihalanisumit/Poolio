@@ -15,7 +15,7 @@
         android:layout_centerInParent="true"
         android:layout_height="wrap_content"
         style="@style/AVLoadingIndicatorView"
-        android:visibility="visible"
+        android:visibility="gone"
         app:indicatorName="BallSpinFadeLoaderIndicator"
         app:indicatorColor="@color/bg_screen3"
         />
