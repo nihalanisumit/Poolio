@@ -2,6 +2,7 @@ package androarmy.poolio;
 
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,10 +11,23 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +46,27 @@ public class Faq extends AppCompatActivity {
             R.drawable.code
     };
 
+    public String General_faq , Security_faq ,Technical_faq;
+    public String[] faqQue =null , faqAns=null;
+    public String[] SecurityfaqQue=null , SecurityfaqAns = null;
+    public  String[] TechnicalfaqQue =null, TechnicalfaqAns = null;
+    ArrayList<String> quest = new ArrayList<String>();
+    ArrayList<String> ans = new ArrayList<String>();
+
+    ArrayList<String> securityquest = new ArrayList<String>();
+    ArrayList<String> securityans = new ArrayList<String>();
+
+
+    ArrayList<String> techquest = new ArrayList<String>();
+    ArrayList<String> techans = new ArrayList<String>();
+
+
+
+
+
+
+
+
 
 
     @Override
@@ -46,12 +81,19 @@ public class Faq extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        new Faqs().execute("http://www.poolio.in/pooqwerty123lio/FAQ.json");
+
+
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
+
+
+
+
 
 
     }
@@ -64,7 +106,7 @@ public class Faq extends AppCompatActivity {
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-        tabTwo.setText("     Security");
+        tabTwo.setText("       Security");
         tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.security, 0, 0);
         tabLayout.getTabAt(1).setCustomView(tabTwo);
 
@@ -130,6 +172,167 @@ public class Faq extends AppCompatActivity {
         startActivity(intent);
         overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
 
+    }
+
+
+    public class Faqs extends AsyncTask<String , Void ,String> {
+        String server_response;
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            URL url;
+            HttpURLConnection urlConnection = null;
+
+            try {
+                url = new URL(strings[0]);
+                urlConnection = (HttpURLConnection) url.openConnection();
+
+                int responseCode = urlConnection.getResponseCode();
+
+                if(responseCode == HttpURLConnection.HTTP_OK){
+                    server_response = readStream(urlConnection.getInputStream());
+                    Log.v("CatalogClient", server_response);
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Log.e("Response", "" + server_response);
+
+            if (server_response!=null){
+                try {
+
+                    JSONObject jsonObj = new JSONObject(server_response);
+                    JSONArray categories = jsonObj.getJSONArray("categories");
+                    for (int i = 0; i < categories.length(); i++) {
+
+                        JSONObject c = categories.getJSONObject(i);
+                        String title = c.getString("title");
+
+
+
+
+                        JSONArray posts = c.getJSONArray("posts");
+                        if (title.equals("general")) {
+                            General_faq = title;
+
+                            for (int j = 0; j < posts.length(); j++) {
+
+                                JSONObject foo = posts.getJSONObject(j);
+
+                                String question = foo.getString("question");
+                                String answer = foo.getString("answer");
+                                Log.d("question",question);
+//
+//                                faqQue[j] = question;
+//                                faqAns[j] = answer;
+                                quest.add(question);
+                                ans.add(answer);
+
+
+                            }
+                        }
+
+                            else if(title.equals("security")){
+
+                                Security_faq = title;
+
+                            for (int j = 0; j < posts.length(); j++) {
+
+                                JSONObject foo = posts.getJSONObject(j);
+
+                                String question = foo.getString("question");
+                                String answer = foo.getString("answer");
+
+//                                SecurityfaqQue[j] = question;
+//                                SecurityfaqAns[j] = answer;
+                                securityquest.add(question);
+                                securityans.add(answer);
+
+
+                            }
+
+                            }
+                            else if (title.equals("technical")){
+                                Technical_faq = title;
+
+                            for (int j = 0; j < posts.length(); j++) {
+
+                                JSONObject foo = posts.getJSONObject(j);
+
+                                String question = foo.getString("question");
+                                String answer = foo.getString("answer");
+
+//                                TechnicalfaqQue[j] = question;
+//                                TechnicalfaqAns[j] = answer;
+
+                                techquest.add(question);
+                                techans.add(answer);
+
+
+                            }
+
+
+                        }
+
+
+
+
+                    }
+
+                    Bundle data = new Bundle();
+                    data.putStringArrayList("general",quest);
+                    Log.d("general array",quest.toString());
+                    Fragment f  = new Fragment();
+                    f.setArguments(data);
+
+
+
+
+                }
+                catch (JSONException e){
+
+                }
+            }
+
+
+        }
+    }
+
+// Converting InputStream to String
+
+    private String readStream(InputStream in) {
+        BufferedReader reader = null;
+        StringBuffer response = new StringBuffer();
+        try {
+            reader = new BufferedReader(new InputStreamReader(in));
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return response.toString();
     }
 
 
