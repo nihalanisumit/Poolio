@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.wang.avi.AVLoadingIndicatorView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +32,7 @@ public class myRides extends android.support.v4.app.Fragment {
     String mobile;
     String [] id,source, destination, type, date, time, vehicle_name,vehicle_number, seats,timestamp,status;
     RecyclerView recyclerView;
-
+    AVLoadingIndicatorView avi;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,11 +42,10 @@ public class myRides extends android.support.v4.app.Fragment {
         if(!InternetConnectionClass.isConnected(getActivity())){
             Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
         }
+        View view=inflater.inflate(R.layout.fragment_my_rides, container, false);
+        avi=(AVLoadingIndicatorView) view.findViewById(R.id.avi_myrides2);
         fetchMyRides(mobile);
-
-
-
-        return inflater.inflate(R.layout.fragment_my_rides, container, false);
+        return view;
     }
 
     public List<Data>fill_with_data(){
@@ -63,17 +64,19 @@ public class myRides extends android.support.v4.app.Fragment {
 
     private void fetchMyRides(final String mobile){
         class fetchRideClass extends AsyncTask<String,Void,String> {
-            ProgressDialog loading;
+//            ProgressDialog loading;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(getContext(),"Fetching Your Rides","Please wait while we connect to our server",true,true);
+//                loading = ProgressDialog.show(getContext(),"Fetching Your Rides","Please wait while we connect to our server",true,true);
+                avi.show();
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                loading.dismiss();
+//                loading.dismiss();
+                avi.hide();
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     JSONArray result = jsonObject.getJSONArray("result");

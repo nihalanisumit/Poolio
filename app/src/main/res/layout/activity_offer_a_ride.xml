@@ -4,7 +4,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    ><RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -267,41 +269,64 @@
 
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="30dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/msgicon"
-                android:id="@+id/imageView" />
+            android:src="@drawable/msgicon"
+            android:id="@+id/imageView" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp">
 
             <EditText
                 android:id="@+id/messageET"
                 android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:inputType="textCapWords"
-                android:hint="Message(optional)" />
+                android:layout_height="100dp"
+                android:inputType="textMultiLine"
+                android:hint="Message(optional)"
+                android:singleLine="false"
+                android:gravity="top"
+                android:breakStrategy="balanced"
+                />
+        </android.support.design.widget.TextInputLayout>
         </LinearLayout>
+
+
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_offer"
-            android:layout_width="120dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/buttons"
+            android:background="@color/colorPrimary"
+            android:elevation="20dp"
+            android:textColor="@color/white"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:text="POOLIO"/>
 
     </LinearLayout>
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi_offerride"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        style="@style/AVLoadingIndicatorView"
+        android:visibility="visible"
+        app:indicatorName="BallSpinFadeLoaderIndicator"
+        app:indicatorColor="@color/bg_screen3"
+        />
+</RelativeLayout>
 </ScrollView>

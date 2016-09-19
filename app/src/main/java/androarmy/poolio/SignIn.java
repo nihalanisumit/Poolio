@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.onesignal.OneSignal;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +35,7 @@ public class SignIn extends AppCompatActivity {
     String mob="12345",pass,device_id;
     SharedPreferences mSharedPreferences;
     private String password = null;
+    AVLoadingIndicatorView avi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,7 @@ public class SignIn extends AppCompatActivity {
         skipbtn=(Button)findViewById(R.id.skip_but);
         input_mob=(EditText)findViewById(R.id.input_number);
         input_pass=(EditText)findViewById(R.id.input_password);
+        avi=(AVLoadingIndicatorView)findViewById(R.id.avi_signin);
         OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
             @Override
             public void idsAvailable( String userId, String registrationId) {
@@ -122,17 +125,19 @@ public class SignIn extends AppCompatActivity {
     }
     private void userLogin(final String mobile, final String password){
         class UserLoginClass extends AsyncTask<String,Void,String> {
-            ProgressDialog loading;
+//            ProgressDialog loading;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(SignIn.this,"Signing in","Please wait while we connect to server",true,true);
+//                loading = ProgressDialog.show(SignIn.this,"Signing in","Please wait while we connect to server",true,true);
+                   avi.show();
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                loading.dismiss();
+//                loading.dismiss();
+                avi.hide();
                 if("success".equalsIgnoreCase(s)){
 
                     Intent intent = new Intent(SignIn.this,Home.class);

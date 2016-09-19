@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.onesignal.OneSignal;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,6 +53,7 @@ public class SplashScreen extends Activity {
     String heading, description;
     String mob,pass;
     Bundle temp;
+    AVLoadingIndicatorView avi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class SplashScreen extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
 //        StartAnimations();
+        avi=(AVLoadingIndicatorView)findViewById(R.id.avi_splash);
         SharedPreferences session = getSharedPreferences("session", MODE_PRIVATE);
         mob = session.getString("mobile", NO_VAL);
         pass = session.getString("password", NO_VAL);
@@ -173,17 +176,18 @@ public class SplashScreen extends Activity {
     }
     private void userLogin(final String mobile, final String password){
         class UserLoginClass extends AsyncTask<String,Void,String> {
-            ProgressDialog loading;
+//            ProgressDialog loading;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(SplashScreen.this,"Signing in","Please wait while we connect to server",true,true);
+
+//                loading = ProgressDialog.show(SplashScreen.this,"Signing in","Please wait while we connect to server",true,true);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                loading.dismiss();
+//                loading.dismiss();
                 if("success".equalsIgnoreCase(s)){
 
                     Intent intent = new Intent(SplashScreen.this,Home.class);
@@ -224,7 +228,7 @@ public class SplashScreen extends Activity {
             protected void onPreExecute() {
                 super.onPreExecute();
                 //loading = ProgressDialog.show(getContext(),"Please Wait",null,true,true);
-
+                 avi.show();
             }
 
             @Override
@@ -270,7 +274,7 @@ public class SplashScreen extends Activity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 //loading.dismiss();
-
+                avi.hide();
 
 
                 try {

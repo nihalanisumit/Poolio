@@ -114,6 +114,7 @@ public class find_a_ride extends Fragment {
 
                             }
                         }, mYear, mMonth, mDay);
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 datePickerDialog.show();
 
 
@@ -145,6 +146,7 @@ public class find_a_ride extends Fragment {
                                 timeET.setText(hour + ":" + minute);
                             }
                         }, mHour, mMinute, false);
+
                 timePickerDialog.show();
 
             }
