@@ -63,6 +63,9 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
 
     @Override
     public void onBindViewHolder(View_Holder holder, int position) {
+        holder.date_text=list.get(position).getDate();
+        holder.time_text=list.get(position).getTime();
+
 
 //        holder.id.setText(list.get(position).getId());
         holder.name.setText(list.get(position).getFirst_name()+" "+ list.get(position).getLast_name());
@@ -71,8 +74,8 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         holder.source.setText(list.get(position).getSource());
         holder.destination.setText(list.get(position).getDestination());
 //        holder.type.setText(list.get(position).getType());
-        holder.date.setText(list.get(position).getDate());
-        holder.time.setText(list.get(position).getTime());
+        holder.date.setText(holder.date_text);
+        holder.time.setText(holder.time_text);
         holder.vehicleName=list.get(position).getVehicle_name();
         holder.vehicleType=list.get(position).getType();
         holder.mobile_number=list.get(position).getMobile();
@@ -139,7 +142,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         public CardView cv;
         public ImageView openDialog,image_type;
         public TextView messageTv;
-        public String vehicleName,vehicleNo,vehicleType,mobile_number,device_id,msg;
+        public String vehicleName,vehicleNo,vehicleType,mobile_number,device_id,msg,date_text,time_text;
         public View v;
 
         public View_Holder(final View view) {
@@ -201,7 +204,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
                                 hh="him/her";
                             }
 
-                            message= username +  " has booked your ride from "+source.getText().toString()+" to "+destination.getText().toString()+". Contact "+hh+" on " +mob;
+                            message= username +  " has booked your ride from "+source.getText().toString()+" to "+destination.getText().toString()+" scheduled on "+date_text+" at "+time_text;
 
                             saveMessage(view,message,mobile_number,username,mob);
                             try {
@@ -273,7 +276,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
                 }
                 else if("successfully saved".equalsIgnoreCase(s)){
 
-                    Toast.makeText(view.getContext(),"Message Saved",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(),"Booked, wait for the call.",Toast.LENGTH_SHORT).show();
                 }
 
                 Toast.makeText(view.getContext(),s,Toast.LENGTH_LONG).show();
