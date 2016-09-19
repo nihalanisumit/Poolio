@@ -14,6 +14,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wang.avi.AVLoadingIndicatorView;
+
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
@@ -26,7 +28,7 @@ public class SignUp extends AppCompatActivity {
     Button signup;
     EditText fnameet,lnameet,emailet,passwordet;
     Switch genderSwitch;
-
+    AVLoadingIndicatorView avi;
     //public final String REGISTER_URL="http://192.168.1.6/poolio/register.php"; //Siddharth's pc
     public final String REGISTER_URL="http://www.poolio.in/pooqwerty123lio/register.php";// Sumit's pc
     @Override
@@ -34,6 +36,7 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         goToSignUp = (TextView)findViewById(R.id.link_login);
+        avi=(AVLoadingIndicatorView)findViewById(R.id.avi_signup);
         goToSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,16 +150,19 @@ public class SignUp extends AppCompatActivity {
     }
     public void register(String fname,String lname, final String password,String email, final String mobile,final String gender){
         class RegisterUser extends AsyncTask<String, Void, String>{
-            ProgressDialog loading;
+//            ProgressDialog loading;
             RegisterUserClass ruc=new RegisterUserClass();
 
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(SignUp.this, "Signing Up","Please wait while we connect to server", true, true);
+//                loading = ProgressDialog.show(SignUp.this, "Signing Up","Please wait while we connect to server", true, true);
+                avi.setVisibility(View.VISIBLE);
+                avi.show();
             }
             protected void onPostExecute(String s){
                 super.onPostExecute(s);
-                loading.dismiss();
+                avi.hide();
+//                loading.dismiss();
                 if("".equals(s))
                 {
                     s="Server error, Please try again after some time!";

@@ -48,6 +48,7 @@ public class available_rides extends AppCompatActivity {
         final String time= intent.getStringExtra("time");
        // Log.i("**PREVIOUS ACTIVITY**",pickup+" "+drop);
          avi=(AVLoadingIndicatorView)findViewById(R.id.avi);
+        avi.setVisibility(View.GONE);
         findRide(pickup,date,time);
         //Toast.makeText(getApplicationContext(),json,Toast.LENGTH_LONG).show();
 
@@ -100,6 +101,7 @@ public class available_rides extends AppCompatActivity {
                 if(refreshing!=1)
                 {
 //                    loading = ProgressDialog.show(available_rides.this,"Finding Your Rides" ,"Please wait while we connect to server",true,true);
+                  avi.setVisibility(View.VISIBLE);
                   avi.show();
                 }
 
@@ -192,7 +194,5 @@ public class available_rides extends AppCompatActivity {
         gender= new String[len];
         device_id=new String[len];
         msg=new String[len];
-
-
     }
 }

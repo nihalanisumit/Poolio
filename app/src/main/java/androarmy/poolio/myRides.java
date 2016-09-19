@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
+
 
 public class myRides extends android.support.v4.app.Fragment {
 
@@ -33,6 +35,8 @@ public class myRides extends android.support.v4.app.Fragment {
     String [] id,source, destination, type, date, time, vehicle_name,vehicle_number, seats,timestamp,status;
     RecyclerView recyclerView;
     AVLoadingIndicatorView avi;
+    int refreshing=0;
+    WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,6 +48,16 @@ public class myRides extends android.support.v4.app.Fragment {
         }
         View view=inflater.inflate(R.layout.fragment_my_rides, container, false);
         avi=(AVLoadingIndicatorView) view.findViewById(R.id.avi_myrides2);
+        avi.setVisibility(View.GONE);
+        mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout) view.findViewById(R.id.main_swipe);
+        mWaveSwipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
+            @Override public void onRefresh() {
+                // Do work to refresh the list here.
+                //Log.d("**REFRESHING**","reffreshing");
+                refreshing=1;
+                fetchMyRides(mobile);
+            }
+        });
         fetchMyRides(mobile);
         return view;
     }
@@ -69,14 +83,24 @@ public class myRides extends android.support.v4.app.Fragment {
             protected void onPreExecute() {
                 super.onPreExecute();
 //                loading = ProgressDialog.show(getContext(),"Fetching Your Rides","Please wait while we connect to our server",true,true);
-                avi.show();
+                if(refreshing!=1)
+                {
+                    avi.setVisibility(View.VISIBLE);
+                    avi.show();
+                }
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-//                loading.dismiss();
-                avi.hide();
+                if(refreshing!=1)
+                {
+                    avi.hide();
+//                    loading.dismiss();
+
+
+                }
+                mWaveSwipeRefreshLayout.setRefreshing(false);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     JSONArray result = jsonObject.getJSONArray("result");
@@ -96,8 +120,6 @@ public class myRides extends android.support.v4.app.Fragment {
                         timestamp[i]=c.getString("offer_time");
                         status[i]=c.getString("status");
                         //Log.i("**STATUS**",id[i]+" "+status[i]);
-
-
                     }
 
 

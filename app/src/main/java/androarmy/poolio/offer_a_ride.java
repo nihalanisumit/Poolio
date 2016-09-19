@@ -85,6 +85,7 @@ public class offer_a_ride extends Fragment {
         actv2.setTextColor(Color.RED);
         messagev=(EditText) v.findViewById(R.id.messageET);
         avi=(AVLoadingIndicatorView) v.findViewById(R.id.avi_offerride);
+        avi.setVisibility(View.GONE);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,vehicless);
         spinner.setThreshold(1);
         spinner.setAdapter(adapter2);
@@ -278,6 +279,7 @@ public class offer_a_ride extends Fragment {
 
 
             protected void onPreExecute() {
+                avi.setVisibility(View.VISIBLE);
                 avi.show();
                 super.onPreExecute();
 //                loading = ProgressDialog.show(getContext(), "Saving Your Details","Thanks for offering ride", true, true);
