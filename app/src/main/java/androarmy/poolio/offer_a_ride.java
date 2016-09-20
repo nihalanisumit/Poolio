@@ -296,7 +296,8 @@ public class offer_a_ride extends Fragment {
             Toast.makeText(getActivity(), "please enter date or time", Toast.LENGTH_SHORT).show();
             return;
         }
-        date = dateforsql;
+        date = dateET.getText().toString();
+        time=timeET.getText().toString();
         time = timeforsql;
         vname = vnameET.getText().toString();
         vnumber = vnumberET.getText().toString();
@@ -324,9 +325,8 @@ public class offer_a_ride extends Fragment {
         editor.putString("vnumber", vnumber);
         editor.putString("availableseats", availableSeats + "");
         editor.apply();
-        if ((!type.equalsIgnoreCase("auto") || !type.equalsIgnoreCase("cab")) && (vname.equalsIgnoreCase("") || vnumber.equalsIgnoreCase(""))) {
-            Toast.makeText(getView().getContext(), "Vehicle details are missing", Toast.LENGTH_SHORT).show();
-
+        if ((!"auto".equalsIgnoreCase(type) || !"cab".equalsIgnoreCase(type)) && (("".equalsIgnoreCase(vname) || "".equalsIgnoreCase(vnumber))||"".equalsIgnoreCase(source)||"".equalsIgnoreCase(destination)||"".equalsIgnoreCase(date)||"".equalsIgnoreCase(time))) {
+            Toast.makeText(getView().getContext(), "Please fill all values", Toast.LENGTH_SHORT).show();
         }
           else {
             offer(mobile, source, destination, type, date, time, vname, vnumber, availableSeats, chargeable, amount,msg);

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -42,6 +43,8 @@ public class Messages extends android.support.v4.app.Fragment {
     AVLoadingIndicatorView avi;
     int refreshing=0;
     WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
+    TextView sorryTV;
+    ImageView sorryIV;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +53,9 @@ public class Messages extends android.support.v4.app.Fragment {
         view=inflater.inflate(R.layout.fragment_messages, container, false);
         // Inflate the layout for this fragment
 
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+        sorryTV=(TextView)view.findViewById(R.id.sorrytv);
+        sorryIV=(ImageView)view.findViewById(R.id.proud);
         mSharedPreferences = getActivity().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         mobile = mSharedPreferences.getString("mobile", "null");
         avi=(AVLoadingIndicatorView)view.findViewById(R.id.avi_msg);
@@ -134,7 +140,12 @@ public class Messages extends android.support.v4.app.Fragment {
 
                 }
                 List<Data> data = fill_with_data();
-                recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+                if(messages.length==0)
+                {
+                    recyclerView.setVisibility(View.GONE);
+                    sorryIV.setVisibility(View.VISIBLE);
+                    sorryTV.setVisibility(View.VISIBLE);
+                }
                 final Recycler_View_Adapter_Message adapter  = new Recycler_View_Adapter_Message(data , getActivity());
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
