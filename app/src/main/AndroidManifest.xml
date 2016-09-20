@@ -32,9 +32,7 @@
         <activity
             android:name=".EnterOTP"
             android:theme="@style/AppFullScreenTheme" />
-        <activity
-            android:name=".Main2Activity"
-            android:theme="@style/AppFullScreenTheme" />
+
         <activity
             android:name=".SignUp"
             android:theme="@style/AppFullScreenTheme" />
@@ -44,7 +42,7 @@
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppFullScreenTheme" />
+            android:theme="@style/MyMaterialTheme" />
         <activity
             android:name=".find_a_ride"
             android:theme="@style/AppFullScreenTheme" />
