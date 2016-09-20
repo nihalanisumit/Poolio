@@ -50,22 +50,25 @@ public class SplashScreen extends Activity {
     public final String CONDITION_URL="http://www.poolio.in/pooqwerty123lio/conditions.php";//Sumit's pc
     private String password = null;
     int flag;
+    ImageView logo;
     String heading, description;
     String mob,pass;
     Bundle temp;
-    AVLoadingIndicatorView avi;
+    int version_get;
+    int version_now=1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         temp=savedInstanceState;
-
+        logo=(ImageView) findViewById(R.id.logo_splash);
         OneSignal.startInit(this).init();
                getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
 //        StartAnimations();
-        avi=(AVLoadingIndicatorView)findViewById(R.id.avi_splash);
+//        avi=(AVLoadingIndicatorView)findViewById(R.id.avi_splash);
         SharedPreferences session = getSharedPreferences("session", MODE_PRIVATE);
         mob = session.getString("mobile", NO_VAL);
         pass = session.getString("password", NO_VAL);
@@ -73,6 +76,7 @@ public class SplashScreen extends Activity {
         getCondition(CONDITION_URL);
 
         myCountdownTimer = new MyCountdownTimer(3000, 1000);
+
         myCountdownTimer.start();
 
 //        logo = (ImageView)findViewById(R.id.logo);
@@ -101,9 +105,15 @@ public class SplashScreen extends Activity {
         }
 
         @Override
-        public void onTick(long millisUntilFinished)
-        {
-
+        public void onTick(long millisUntilFinished){
+//         Log.d("Splash",String.valueOf(logo.getAlpha()));
+//           if(logo.getAlpha()==0.3){
+//               logo.animate().alpha((float) 1).setDuration(200).start();
+//           }
+//            else {
+//               logo.animate().alpha((float)0.3).setDuration(200).start();
+//           }
+//            logo.animate().alpha(1.0f).setDuration(3000).start();
 
         }
         @Override
@@ -136,6 +146,31 @@ public class SplashScreen extends Activity {
                     @Override
                     public void onClick(View v) {
                         String url = "https://play.google.com/store/apps/details?id=androarmy.torque&hl=en";
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);
+                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                        //pass the url to intent data
+                        intent.setData(Uri.parse(url));
+                        startActivity(intent);
+                    }
+                });
+                dialog.show();
+
+            }
+            else if(flag==2 && version_get > version_now){
+                Dialog dialog = new Dialog(SplashScreen.this);
+                dialog.setTitle("UPDATE");
+                dialog.setContentView(R.layout.customdialog2);
+                TextView headingtv = (TextView)dialog.findViewById(R.id.heading_tv);
+                TextView descriptiontv = (TextView)dialog.findViewById(R.id.description_tv);
+                headingtv.setText(heading);
+                descriptiontv.setText(description);
+                Button button_close = (Button)dialog.findViewById(R.id.button_exit);
+                button_close.setText("Update");
+                button_close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String url = "https://play.google.com/store/apps/details?id=com.zipyrides&hl=en";
 
                         Intent intent = new Intent();
                         intent.setAction(Intent.ACTION_VIEW);
@@ -145,23 +180,6 @@ public class SplashScreen extends Activity {
                         intent.setData(Uri.parse(url));
 
                         startActivity(intent);
-                    }
-                });
-                dialog.show();
-
-            }
-            else if(flag==2){
-                Dialog dialog = new Dialog(SplashScreen.this);
-                dialog.setTitle("UPDATE");
-                dialog.setContentView(R.layout.customdialog2);
-                TextView headingtv = (TextView)dialog.findViewById(R.id.heading_tv);
-                TextView descriptiontv = (TextView)dialog.findViewById(R.id.description_tv);
-                headingtv.setText(heading);
-                descriptiontv.setText(description);
-                Button button_close = (Button)dialog.findViewById(R.id.button_exit);
-                button_close.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
                         finish();
                     }
                 });
@@ -221,14 +239,14 @@ public class SplashScreen extends Activity {
     public void getCondition(String url) {
 
         class GetJSON extends AsyncTask<String, Void, String> {
-            ProgressDialog loading;
+
 
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
                 //loading = ProgressDialog.show(getContext(),"Please Wait",null,true,true);
-                 avi.show();
+//                 avi.show();
             }
 
             @Override
@@ -274,14 +292,15 @@ public class SplashScreen extends Activity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 //loading.dismiss();
-                avi.hide();
+//                avi.hide();
 
 
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     JSONArray result = jsonObject.getJSONArray("result");
                     JSONObject c = result.getJSONObject(0);
-                    flag = c.getInt("id");
+                    version_get=c.getInt("version");
+                    flag = c.getInt("id");//flag=0 normal operation flag=1 update flag=2 force update
                     if(flag!=0)
                     {
                         heading=c.getString("heading");
