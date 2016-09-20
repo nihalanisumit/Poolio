@@ -171,22 +171,18 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
                     dialog.setContentView(R.layout.find_dialog);
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     TextView tv_name=(TextView)dialog.findViewById(R.id.driver_name);
-                    TextView tv_number=(TextView)dialog.findViewById(R.id.driver_number);
-                    TextView tv_location=(TextView)dialog.findViewById(R.id.driver_location);
-                    TextView tv_wait=(TextView)dialog.findViewById(R.id.driver_waitingTime);
+
                     TextView tv_vehicleNo=(TextView)dialog.findViewById(R.id.vehicle_number);
                     TextView tv_vehicleName=(TextView)dialog.findViewById(R.id.vehicle_name);
-                    TextView tv_vehicleColor=(TextView)dialog.findViewById(R.id.vehicle_color);
                     messageTv=(TextView)dialog.findViewById(R.id.msgTv);
                     messageTv.setText(msg);
                     tv_name.setText(name.getText());
-                    tv_number.setText(mobile_number);
-                    tv_location.setText("TBA");
-                    tv_wait.setText("TBA");
+//                    tv_location.setText("TBA");
+//                    tv_wait.setText("TBA");
                     tv_vehicleNo.setText(vehicleNo);
-                    tv_vehicleColor.setText("TBA");
+//                    tv_vehicleColor.setText("TBA");
                     tv_vehicleName.setText(vehicleName);
-                    Button book=(Button)dialog.findViewById(R.id.book_button);
+                    ImageView book=(ImageView)dialog.findViewById(R.id.book_button);
                     book.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -228,7 +224,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
 
                         }
                     });
-                    Button cancel=(Button)dialog.findViewById(R.id.cancel_button);
+                    ImageView cancel=(ImageView) dialog.findViewById(R.id.cancel_button);
                     cancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

@@ -55,22 +55,7 @@ public class SignIn extends AppCompatActivity {
                     Log.d("debug", "registrationId:" + registrationId);
             }
         });
-        try {
-            OneSignal.postNotification(new JSONObject("{'contents': {'en':'Test Message'}, 'include_player_ids': ['" + device_id + "']}"),
-                    new OneSignal.PostNotificationResponseHandler() {
-                        @Override
-                        public void onSuccess(JSONObject response) {
-                            Log.i("OneSignalExample", "postNotification Success: " + response.toString());
-                        }
 
-                        @Override
-                        public void onFailure(JSONObject response) {
-                            Log.e("OneSignalExample", "postNotification Failure: " + response.toString());
-                        }
-                    });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         skipbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
