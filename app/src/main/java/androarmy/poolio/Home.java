@@ -189,21 +189,12 @@ public class Home extends AppCompatActivity
                 toolbar.setTitle("Contact Us");
 
                 break;
-            case R.id.nav_about:
-                Toast.makeText(getApplicationContext(),"about us",Toast.LENGTH_SHORT).show();
-                toolbar.setTitle("About Us");
-                break;
+
             case R.id.nav_feedback:
                 fragmentClass = Feedback.class;
                 toolbar.setTitle("Feedback");
                 break;
-            case R.id.nav_faq:
-                fragmentClass  = Faq.class;
-                Intent i = new Intent(getApplicationContext(),Faq.class);
-                startActivity(i);
 
-                toolbar.setTitle("FAQ");
-                break;
 
             case R.id.sign_out:
                 signout();
