@@ -40,7 +40,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
     Context context;
     private ItemClickListener clickListener;
     public View view;
-    String message;
+    String message,message2;
 //    String mobile_number,vehicleType,vehicleName,vehicleNo,gender,seats;
 
     public Recycler_View_Adapter(final List<Data> list, Context context)
@@ -65,10 +65,11 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
     public void onBindViewHolder(View_Holder holder, int position) {
         holder.date_text=list.get(position).getDate();
         holder.time_text=list.get(position).getTime();
+        holder.name_offered=list.get(position).getFirst_name()+" "+ list.get(position).getLast_name();
 
 
 //        holder.id.setText(list.get(position).getId());
-        holder.name.setText(list.get(position).getFirst_name()+" "+ list.get(position).getLast_name());
+        holder.name.setText(holder.name_offered);
 //        holder.gender.setText(list.get(position).getGender());
 //        holder.mobile.setText(list.get(position).getMobile());
         holder.source.setText(list.get(position).getSource());
@@ -142,7 +143,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         public CardView cv;
         public ImageView openDialog,image_type;
         public TextView messageTv;
-        public String vehicleName,vehicleNo,vehicleType,mobile_number,device_id,msg,date_text,time_text;
+        public String vehicleName,vehicleNo,vehicleType,mobile_number,device_id,msg,date_text,time_text,name_offered;
         public View v;
 
         public View_Holder(final View view) {
@@ -201,8 +202,8 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
                             }
 
                             message= username +  " has booked your ride from "+source.getText().toString()+" to "+destination.getText().toString()+" scheduled on "+date_text+" at "+time_text;
-
-                            saveMessage(view,message,mobile_number,username,mob);
+                            message2 = "You have requested a seat from "+name_offered+" going from "+source.getText().toString()+" to "+destination.getText().toString()+" scheduled on "+date_text+" at "+time_text;
+                            saveMessage(view,message,message2,mobile_number,username,mob);
                             try {
                                 OneSignal.postNotification(new JSONObject("{'contents': {'en': '"  + message+"'  }, 'include_player_ids': ['" + device_id + "']}"),
                                         new OneSignal.PostNotificationResponseHandler() {
@@ -250,7 +251,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
         }
     }
 
-    void saveMessage(final View view, String message, String mobile, String name_book,String mobile_book)
+    void saveMessage(final View view, String message,String message2, String mobile, String name_book,String mobile_book)
     {
         //Toast.makeText(view.getContext(),"Message saved in db",Toast.LENGTH_SHORT).show();
         class saveMessageClass extends AsyncTask<String, Void, String> {
@@ -272,7 +273,11 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
                 }
                 else if("successfully saved".equalsIgnoreCase(s)){
 
-                    Toast.makeText(view.getContext(),"Booked, wait for the call.",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(view.getContext(),"Booked, wait for the call.",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(view.getContext(),Home.class);
+                    intent.putExtra("switch","message");
+                    view.getContext().startActivity(intent);
+
                 }
 
                 Toast.makeText(view.getContext(),s,Toast.LENGTH_LONG).show();
@@ -285,9 +290,10 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("message",params[0]);
-                data.put("mobile",params[1]);
-                data.put("name_book",params[2]);
-                data.put("mobile_book",params[3]);
+                data.put("message2",params[1]);
+                data.put("mobile",params[2]);
+                data.put("name_book",params[3]);
+                data.put("mobile_book",params[4]);
                 String result = ruc.sendPostRequest(MESSAGE_URL,data);
                 //Log.i("@doinBackground:", result);
                 return  result;
@@ -295,7 +301,7 @@ public class Recycler_View_Adapter  extends RecyclerView.Adapter<Recycler_View_A
             }
         }
          saveMessageClass smc = new saveMessageClass();
-         smc.execute(message,mobile,name_book,mobile_book);
+         smc.execute(message,message2,mobile,name_book,mobile_book);
     }
 
 }
