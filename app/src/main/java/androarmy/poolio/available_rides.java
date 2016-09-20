@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wang.avi.AVLoadingIndicatorView;
@@ -36,6 +38,8 @@ public class available_rides extends AppCompatActivity {
     public final String FIND_URL="http://www.poolio.in/pooqwerty123lio/find.php";//Sumit's pc
     int refreshing=0;
     AVLoadingIndicatorView  avi;
+    TextView sorryTV;
+    ImageView sorryIV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,9 @@ public class available_rides extends AppCompatActivity {
         String drop= intent.getStringExtra("drop");
         final String date= intent.getStringExtra("date");
         final String time= intent.getStringExtra("time");
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        sorryTV=(TextView)findViewById(R.id.sorrytv);
+        sorryIV=(ImageView)findViewById(R.id.sadimage);
        // Log.i("**PREVIOUS ACTIVITY**",pickup+" "+drop);
          avi=(AVLoadingIndicatorView)findViewById(R.id.avi);
         avi.setVisibility(View.GONE);
@@ -74,6 +81,7 @@ public class available_rides extends AppCompatActivity {
                 //Log.e("**CHECKING**",source[0]+" "+ destination[0]+vehicle_name[0]);
                 data.add(new Data(id[i],first_name[i] ,last_name[i],mobile[i],gender[i],source[i], destination[i],type[i],date[i],time[i],vehicle_name[i],vehicle_number[i],seats[i],device_id[i],msg[i]));
             }
+
 
         }
         return data;
@@ -166,8 +174,14 @@ public class available_rides extends AppCompatActivity {
                 msg[i]=c.getString("msg");
                 //Toast.makeText(getApplicationContext(),id[i]+mobile[i],Toast.LENGTH_SHORT).show();
             }
+            if(id.length==0)
+                {
+                    recyclerView.setVisibility(View.GONE);
+                    sorryIV.setVisibility(View.VISIBLE);
+                    sorryTV.setVisibility(View.VISIBLE);
+                }
             List<Data> data = fill_with_data();
-            recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+
             final Recycler_View_Adapter adapter  = new Recycler_View_Adapter(data , getApplication());
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager( new LinearLayoutManager(getApplicationContext()));

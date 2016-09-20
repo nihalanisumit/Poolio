@@ -96,14 +96,29 @@ public class Home extends AppCompatActivity
         usernameheaderTV = (TextView)header.findViewById(R.id.txt_user);
         emailheaderTV = (TextView)header.findViewById(R.id.txt_email);
 
-        Intent in = getIntent();//intent coming after adding vehicle number, vehile name and DL from profile.java
+        Intent in = getIntent();
         String text = "a";
         text="a"+in.getStringExtra("switch");
         if(!"a".equals(text))
         {
-            if(text.equalsIgnoreCase("aride"))
+            if(text.equalsIgnoreCase("aride"))//intent coming after adding vehicle number, vehile name and DL from profile.java
             {
-                fragmentClass=TabFragment.class;
+                fragmentClass=profile.class;
+                try {
+
+                    fragment = (Fragment) fragmentClass.newInstance();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }if (fragment!=null){
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.containerView, fragment).commit();
+
+            }
+            }
+            if(text.equalsIgnoreCase("amessage"))//intent coming after booking ride from Recylcer_view_adapter.java
+            {
+                fragmentClass=Messages.class;
                 try {
 
                     fragment = (Fragment) fragmentClass.newInstance();
@@ -189,21 +204,12 @@ public class Home extends AppCompatActivity
                 toolbar.setTitle("Contact Us");
 
                 break;
-            case R.id.nav_about:
-                Toast.makeText(getApplicationContext(),"about us",Toast.LENGTH_SHORT).show();
-                toolbar.setTitle("About Us");
-                break;
+
             case R.id.nav_feedback:
                 fragmentClass = Feedback.class;
                 toolbar.setTitle("Feedback");
                 break;
-            case R.id.nav_faq:
-                fragmentClass  = Faq.class;
-                Intent i = new Intent(getApplicationContext(),Faq.class);
-                startActivity(i);
 
-                toolbar.setTitle("FAQ");
-                break;
 
             case R.id.sign_out:
                 signout();

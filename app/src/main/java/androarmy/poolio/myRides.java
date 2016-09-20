@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wang.avi.AVLoadingIndicatorView;
@@ -37,16 +39,24 @@ public class myRides extends android.support.v4.app.Fragment {
     AVLoadingIndicatorView avi;
     int refreshing=0;
     WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
+    TextView sorryTV;
+    ImageView sorryIV;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.fragment_my_rides, container, false);
+
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+        sorryTV=(TextView)view.findViewById(R.id.sorrytv);
+        sorryIV=(ImageView)view.findViewById(R.id.proud);
         mSharedPreferences = getActivity().getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         mobile = mSharedPreferences.getString("mobile", "null");
         //Toast.makeText(getContext(),mobile,Toast.LENGTH_LONG).show();
         if(!InternetConnectionClass.isConnected(getActivity())){
             Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
         }
-        View view=inflater.inflate(R.layout.fragment_my_rides, container, false);
+
         avi=(AVLoadingIndicatorView) view.findViewById(R.id.avi_myrides2);
         avi.setVisibility(View.GONE);
         mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout) view.findViewById(R.id.main_swipe);
@@ -126,8 +136,14 @@ public class myRides extends android.support.v4.app.Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                if(id.length==0)
+                {
+                    recyclerView.setVisibility(View.GONE);
+                    sorryIV.setVisibility(View.VISIBLE);
+                    sorryTV.setVisibility(View.VISIBLE);
+                }
                 List<Data> data = fill_with_data();
-                recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview);
+
                 final Recycler_View_Adapter2 adapter  = new Recycler_View_Adapter2(data , getActivity());
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
