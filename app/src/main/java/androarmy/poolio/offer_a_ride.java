@@ -74,7 +74,7 @@ public class offer_a_ride extends Fragment {
         }
         spinner = (AutoCompleteTextView) v.findViewById(R.id.spin);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,locations);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,locations);
         actv= (AutoCompleteTextView)v.findViewById(R.id.from);
         actv.setThreshold(1);
         actv.setAdapter(adapter);
@@ -86,7 +86,7 @@ public class offer_a_ride extends Fragment {
         messagev=(EditText) v.findViewById(R.id.messageET);
         avi=(AVLoadingIndicatorView) v.findViewById(R.id.avi_offerride);
         avi.setVisibility(View.GONE);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,vehicless);
+        final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,vehicless);
         spinner.setThreshold(1);
         spinner.setAdapter(adapter2);
 
@@ -108,6 +108,68 @@ public class offer_a_ride extends Fragment {
         vnumberET.setText(offerSp.getString("vnumber",""));
         availableET.setText(offerSp.getString("availableseats",""));
         spinner.setText(offerSp.getString("type",""));
+
+
+        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                if(spinner.getText().toString().equalsIgnoreCase("auto")||spinner.getText().toString().equalsIgnoreCase("cab"))
+                {
+
+                    if(spinner.getText().toString().equalsIgnoreCase("auto"))
+                        vnameET.setVisibility(View.GONE);
+                        vnumberET.setVisibility(View.GONE);
+                        availableET.setText("2");
+                    if(spinner.getText().toString().equalsIgnoreCase("cab"))
+                        vnameET.setVisibility(View.VISIBLE);
+                        vnumberET.setVisibility(View.GONE);
+                        availableET.setText("3");
+
+                }
+                else
+                {
+                    vnameET.setVisibility(View.VISIBLE);
+                    vnumberET.setVisibility(View.VISIBLE);
+                    if(spinner.getText().toString().equalsIgnoreCase("car"))
+                        availableET.setText("4");
+                    if(spinner.getText().toString().equalsIgnoreCase("bike"))
+                        availableET.setText("1");
+                }
+
+
+            }
+        });
+
+        availableET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Integer count = Integer.parseInt(availableET.getText().toString());
+                if(spinner.getText().toString().equalsIgnoreCase("bike"))
+                {
+                    if(count>1)
+                        availableET.setText("1");
+                }
+                if(spinner.getText().toString().equalsIgnoreCase("car"))
+                {
+                    if(count>5)
+                        availableET.setText("4");
+                }
+                if(spinner.getText().toString().equalsIgnoreCase("cab"))
+                {
+                    if(count>3)
+                        availableET.setText("3");
+                }
+                if(spinner.getText().toString().equalsIgnoreCase("auto"))
+                {
+                    if(count>2)
+                        availableET.setText("2");
+                }
+            }
+        });
+
+
 
 
 

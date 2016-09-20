@@ -190,7 +190,7 @@
                 android:layout_alignBottom="@+id/linearLayout2"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/tick"/>
+                android:src="@drawable/send"/>
 
         </RelativeLayout>
 
