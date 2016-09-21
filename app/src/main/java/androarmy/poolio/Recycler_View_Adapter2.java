@@ -237,7 +237,7 @@ public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_A
                         if(status.equals("1"))
                         {
                             statusTV.setText("found a travel buddy");
-                            statusTV.setTextColor(Color.GREEN);
+                            statusTV.setTextColor(context.getResources().getColor(R.color.colorPrimary));
                         }
                         else if(status.equals("2"))
                         {
