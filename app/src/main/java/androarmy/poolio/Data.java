@@ -102,6 +102,7 @@ public class Data {
         String date1=strToken.nextToken();
         Log.d("date:",date1);
         String time1=strToken.nextToken();
+        time1=time1.substring(0,5);
         Log.d("time:",time1);
         final String oldDateFormat2="yyyy-MM-dd";
         final String newDateFormat2="EEE, d MMM yyyy";
@@ -122,7 +123,7 @@ public class Data {
         }
         this.status=status;
     }
-    public Data(String message , String mobile_book , String timestamp ){
+    public Data(String message , String mobile_book , String timestamp ){  //constructor for messages
 
         this.message = message;
         this.mobile_book = mobile_book;
@@ -130,6 +131,7 @@ public class Data {
         String date1=strToken.nextToken();
         Log.d("date:",date1);
         String time1=strToken.nextToken();
+        time1=time1.substring(0,5);
         Log.d("time:",time1);
         final String oldDateFormat2="yyyy-MM-dd";
         final String newDateFormat2="EEE, d MMM yyyy";

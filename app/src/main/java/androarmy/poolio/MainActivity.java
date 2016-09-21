@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     com.github.clans.fab.FloatingActionMenu fab;
     String lon;
     String lat;
+    CoordinatorLayout parentView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         button_signup = (Button) findViewById(R.id.btn_signup);
         fab = (com.github.clans.fab.FloatingActionMenu) findViewById(R.id.fab_actionmenu);
         fab.setVisibility(View.VISIBLE);
+        parentView=(CoordinatorLayout)findViewById(R.id.mainact_layout);
         button_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,12 +131,21 @@ public class MainActivity extends AppCompatActivity {
 
         final LocationManager locationManager = (LocationManager) getApplicationContext()
                 .getSystemService(LOCATION_SERVICE);
+        String provider;
+        provider = locationManager.getBestProvider(new Criteria(), false);
+        Location location = locationManager.getLastKnownLocation(provider);
+        if (location != null) {
+            Log.i("location::", "achieved");
+        } else {
+            Log.i("location::", " not achieved");
+        }
         LocationListener ll = new LocationListener() {
 
             @Override
             public void onLocationChanged(Location location) {
                 lon = String.valueOf(location.getLongitude());
                 lat = String.valueOf(location.getLatitude());
+
             }
 
             @Override
@@ -151,12 +164,10 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            Toast.makeText(MainActivity.this, "Please give permissions", Toast.LENGTH_SHORT).show();
-
+            Snackbar.make(parentView,"Please give permissions",Snackbar.LENGTH_SHORT).show();
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,ll);
+        locationManager.requestLocationUpdates(provider, 1000, 5, ll);
         if("".equalsIgnoreCase(lon)||"".equalsIgnoreCase("len")){
             Log.d("either lat or long","::are null");
             return;
@@ -166,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "poolio");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "i am in DANGER. Please locate me at :" +
                 " lon="+lon+" lat="+lat);
+        locationManager.removeUpdates(ll);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
 
     }
@@ -190,6 +202,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         overridePendingTransition(R.anim.previous_slide_in, R.anim.previous_slide_out);
+    }
+    public void onResume(){
+        super.onResume();
+
     }
 
 }
