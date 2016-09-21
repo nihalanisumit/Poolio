@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:id="@+id/toolbar"
-        android:theme="@style/MyMaterialTheme"
+        android:theme="@style/AppTheme.PopupOverlay"
         app:title="Drawer With Swipe Tabs" />
 
     <android.support.v4.widget.DrawerLayout
