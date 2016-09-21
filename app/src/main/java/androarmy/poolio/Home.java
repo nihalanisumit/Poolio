@@ -52,6 +52,7 @@ public class Home extends AppCompatActivity
     Class fragmentClass = null;
     String lon,lat;
     com.github.clans.fab.FloatingActionMenu fab;
+    public int[][] rate[][];
 //    com.github.clans.fab.FloatingActionButton fab2;
     public final String PROFILE_URL ="http://www.poolio.in/pooqwerty123lio/profile.php";
     public final String RATE_URL ="http://www.poolio.in/pooqwerty123lio/rate_fetch.php";//Sumit's pc
@@ -64,6 +65,7 @@ public class Home extends AppCompatActivity
         fab.setVisibility(View.VISIBLE);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+//        rate[12][12]=new int[12][12];
         Intent intent=getIntent();
         mobile =intent.getStringExtra("mobile");
         password= intent.getStringExtra("pass");
@@ -324,28 +326,28 @@ public class Home extends AppCompatActivity
                 super.onPostExecute(s);
                 Log.d("rates:",s);
                 //loading.dismiss();
-//                try {
-//                    JSONObject jsonObject = new JSONObject(s);
-//                    JSONArray result = jsonObject.getJSONArray("result");
-//                    JSONObject c = result.getJSONObject(0);
-//
-//                    places=c.getString("places");
-//                    estancia=c.getString("estancia");
-//                    abode=c.getString("abode");
-//                    archgate=c.getString("archgate");
-//                    backgate=c.getString("backgate");
-//                    maincampus=c.getString("maincampus/station");
-//                    greenpearl=c.getString("greenpearl");
-//                    safaa=c.getString("safaa");
-//                    akshaya=c.getString("akshaya");
-//                    egmorestation=c.getString("egmorestation");
-//                    centralstation=c.getString("centralstation");
-//                    airport=c.getString("airport");
-//                }
-//                catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONArray result = jsonObject.getJSONArray("result");
+                    JSONObject c = result.getJSONObject(0);
 
+                    places=c.getString("places");
+                    estancia=c.getString("estancia");
+                    abode=c.getString("abode");
+                    archgate=c.getString("archgate");
+                    backgate=c.getString("backgate");
+                    maincampus=c.getString("maincampus/station");
+                    greenpearl=c.getString("greenpearl");
+                    safaa=c.getString("safaa");
+                    akshaya=c.getString("akshaya");
+                    egmorestation=c.getString("egmorestation");
+                    centralstation=c.getString("centralstation");
+                    airport=c.getString("airport");
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                 Log.d("places:",""+places);
             }
 
             @Override

@@ -42,7 +42,7 @@
             android:id="@+id/skip_button"
             android:layout_gravity="right"/>
 
-        <android.support.v7.widget.AppCompatButton
+        <Button
             android:id="@+id/btn_sendotp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
 
 
             <!-- Send OTP Button -->
-            <android.support.v7.widget.AppCompatButton
+            <Button
                 android:id="@+id/btn_verify"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
