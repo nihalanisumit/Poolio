@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,7 +84,8 @@ SharedPreferences mSharedPreferences;
                 }
                 else if("successfully saved".equalsIgnoreCase(s)){
 
-                    Toast.makeText(view.getContext(),"Feedback sent",Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(getView(),"Feedback Sent",Snackbar.LENGTH_SHORT);
+                    snackbar.show();
                     Intent intent = new Intent(view.getContext(),Home.class);
                     startActivity(intent);
                 }

@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -34,10 +35,12 @@ public class ForgotPassword extends AppCompatActivity implements VerificationLis
     private Verification mVerification;
       private final String MOBVER_URL = "http://www.poolio.in/pooqwerty123lio/mobforgot.php";
       private final String MOBUPDATE_URL="http://www.poolio.in/pooqwerty123lio/mobupdate.php";
+    View parentview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
+        parentview = findViewById(R.id.root_view);
         mPhone = (EditText) findViewById(R.id.input_number);
         relativeLayoutOtp=(RelativeLayout)findViewById(R.id.relative_layout_otp);
         relativeLayoutMobInput=(RelativeLayout)findViewById(R.id.mob_input_rl);
@@ -72,13 +75,18 @@ public class ForgotPassword extends AppCompatActivity implements VerificationLis
     public void check(View view)
     {   phoneNo = mPhone.getText().toString().trim();
         if(!InternetConnectionClass.isConnected(getApplicationContext())){
-            Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_LONG).show();
+            Snackbar snackbar = Snackbar.make(parentview,"One or more fields are empty",Snackbar.LENGTH_SHORT);
+            snackbar.show();
+
             return;
         }
         if(checkLength()) {
             char c = phoneNo.charAt(0);
             if ((c != '9') && (c != '8') && (c != '7')) {
-                Toast.makeText(getApplicationContext(), "Invalid Mobile Number", Toast.LENGTH_LONG).show();
+
+                Snackbar snackbar = Snackbar.make(parentview,"Invalid mobile number",Snackbar.LENGTH_SHORT);
+                snackbar.show();
+
                 mPhone.setText("");
                 return;
             }
@@ -95,7 +103,8 @@ public class ForgotPassword extends AppCompatActivity implements VerificationLis
 
             return true;
         } else {
-            Toast.makeText(ForgotPassword.this, "Please enter a valid phone number", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(parentview,"Not a valid phone number",Snackbar.LENGTH_SHORT);
+            snackbar.show();
             return false;
         }
     }
@@ -153,12 +162,14 @@ public class ForgotPassword extends AppCompatActivity implements VerificationLis
         if (!otp.isEmpty()) {
 
             if (mVerification != null) {
-                Toast.makeText(ForgotPassword.this, "Verification in progress!", Toast.LENGTH_SHORT).show();
+                Snackbar snackbar = Snackbar.make(parentview,"Verification in progress",Snackbar.LENGTH_SHORT);
+                snackbar.show();
                 mVerification.verify(otp);
 
             }
             else {
-                Toast.makeText(ForgotPassword.this, "Please Enter Otp!", Toast.LENGTH_SHORT).show();
+                Snackbar snackbar = Snackbar.make(parentview,"Enter OTP",Snackbar.LENGTH_SHORT);
+                snackbar.show();
             }
         }
 
@@ -173,14 +184,17 @@ public class ForgotPassword extends AppCompatActivity implements VerificationLis
             @Override
             public void onTick(long millisUntilFinished) {
                 if(!InternetConnectionClass.isConnected(getApplicationContext())){
-                    Toast.makeText(getApplicationContext(),"Connect to internet!",Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(parentview,"Connect to Internet!",Snackbar.LENGTH_SHORT);
+                    snackbar.show();
                     return;
                 }
 
             }
 
             public void onFinish(){
-                Toast.makeText(getApplicationContext(),"Wrong number or poor connection with server!",Toast.LENGTH_LONG).show();
+
+                Snackbar snackbar = Snackbar.make(parentview,"Wrong number or poor connection with server!",Snackbar.LENGTH_SHORT);
+                snackbar.show();
             }
         }.start();
     }
@@ -189,13 +203,16 @@ public class ForgotPassword extends AppCompatActivity implements VerificationLis
     public void onInitiationFailed(Exception exception) {
         Log.e("ForgotPassword otp::", "Verification initialization failed: " + exception.getMessage());
         //  countDownTimer.cancel();
-        Toast.makeText(getApplicationContext(),"Verification initialization failed! Please Try Again Later!",Toast.LENGTH_LONG).show();
+
+        Snackbar snackbar = Snackbar.make(parentview,"Verification initialization failed! Please try again later!",Snackbar.LENGTH_SHORT);
+        snackbar.show();
     }
 
     @Override
     public void onVerified(String response) {
         Log.d("Forgot password OTp::", "Verified!\n" + response);
-        Toast.makeText(getApplicationContext(),"Verified",Toast.LENGTH_LONG).show();
+        Snackbar snackbar = Snackbar.make(parentview,"Verified",Snackbar.LENGTH_SHORT);
+        snackbar.show();
         relativeLayoutMobInput.setVisibility(View.GONE);
         countDownTimer.cancel();
         relativeLayoutOtp.setVisibility(View.GONE);
@@ -206,7 +223,8 @@ public class ForgotPassword extends AppCompatActivity implements VerificationLis
     public void onVerificationFailed(Exception exception) {
         Log.e("ForgotPassword otp::", "Verification failed: " + exception.getMessage());
         countDownTimer.cancel();
-        Toast.makeText(getApplicationContext(),"Verification failed!",Toast.LENGTH_LONG).show();
+        Snackbar snackbar = Snackbar.make(parentview,"Verification failed",Snackbar.LENGTH_SHORT);
+        snackbar.show();
     }
     public void submitPassword(View v){
         password=pass_et.getText().toString().trim();
@@ -215,11 +233,14 @@ public class ForgotPassword extends AppCompatActivity implements VerificationLis
          register(phoneNo,md5(password));
         }
             else {
-            Toast.makeText(ForgotPassword.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+
+            Snackbar snackbar = Snackbar.make(parentview,"Passwords do not match!",Snackbar.LENGTH_SHORT);
+            snackbar.show();
         }
         }
         else {
-            Toast.makeText(ForgotPassword.this, "Please fill values in password field", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(parentview,"Please fill all values!",Snackbar.LENGTH_SHORT);
+            snackbar.show();
         }
     }
     private void register(String mobile, String password) {

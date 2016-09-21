@@ -181,7 +181,7 @@ public class SignIn extends AppCompatActivity {
                     editor.putString("device_id",device_id);
                     editor.apply();
                 }
-                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
             }
 
 
