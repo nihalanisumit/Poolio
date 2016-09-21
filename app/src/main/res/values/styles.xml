@@ -64,10 +64,5 @@
         <item name="fab_colorRipple">#D99200</item>
     </style>
 
-    <style name="ToolBarStyle" parent="Theme.AppCompat">
-        <item name="android:textColorPrimary">#3F51B5</item>
-        <item name="android:textColorSecondary">#3F51B5</item>
-        <item name="actionMenuTextColor">#3F51B5</item>
 
-    </style>
 </resources>

@@ -10,7 +10,7 @@
             android:checked="true"/>
         <item
             android:id="@+id/rate_card"
-            android:icon="@android:drawable/ic_menu_search"
+            android:icon="@drawable/calculator"
             android:title="Rate Calculator"
             android:checked="true"/>
         <item
@@ -27,7 +27,7 @@
         <item
             android:id="@+id/nav_messages"
             android:title="Messages"
-            android:icon="@android:drawable/ic_dialog_email"
+            android:icon="@drawable/message"
             android:checked="false"/>
 
 
@@ -51,6 +51,7 @@
 
             <item android:id="@+id/nav_feedback"
                 android:title="Feedback"
+                android:icon="@drawable/comment_text"
                 android:checked="false"
 
                 />
