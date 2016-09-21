@@ -38,7 +38,7 @@ public class available_rides extends AppCompatActivity {
     public final String FIND_URL="http://www.poolio.in/pooqwerty123lio/find.php";//Sumit's pc
     int refreshing=0;
     AVLoadingIndicatorView  avi;
-    TextView sorryTV;
+    TextView sorryTV,infoTV;
     ImageView sorryIV;
 
     @Override
@@ -52,6 +52,7 @@ public class available_rides extends AppCompatActivity {
         final String time= intent.getStringExtra("time");
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         sorryTV=(TextView)findViewById(R.id.sorrytv);
+        infoTV=(TextView)findViewById(R.id.infotv);
         sorryIV=(ImageView)findViewById(R.id.sadimage);
        // Log.i("**PREVIOUS ACTIVITY**",pickup+" "+drop);
          avi=(AVLoadingIndicatorView)findViewById(R.id.avi);
@@ -179,6 +180,7 @@ public class available_rides extends AppCompatActivity {
                     recyclerView.setVisibility(View.GONE);
                     sorryIV.setVisibility(View.VISIBLE);
                     sorryTV.setVisibility(View.VISIBLE);
+                    infoTV.setVisibility(View.VISIBLE);
                 }
             List<Data> data = fill_with_data();
 

@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -36,6 +37,7 @@ import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.Vector;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -54,11 +56,13 @@ public class SplashScreen extends Activity {
     String mob,pass;
     Bundle temp;
     AVLoadingIndicatorView avi;
+    View parentview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         temp=savedInstanceState;
+        parentview=findViewById(R.id.avi_splash);
 
         OneSignal.startInit(this).init();
                getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -311,7 +315,8 @@ public class SplashScreen extends Activity {
             overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
         } else {
             if(!InternetConnectionClass.isConnected(getApplicationContext())){
-            Toast.makeText(SplashScreen.this, "Please connect to internet!", Toast.LENGTH_LONG).show();
+                Snackbar snackbar = Snackbar.make(parentview,"Please connect to Internet",Snackbar.LENGTH_SHORT);
+                snackbar.show();
             finish();
             return;
         }
