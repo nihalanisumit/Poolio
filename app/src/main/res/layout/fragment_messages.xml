@@ -43,7 +43,7 @@
         android:id="@+id/proud"
         android:src="@drawable/proud"
         android:scaleType="fitXY"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_above="@+id/sorrytv"
         android:layout_centerHorizontal="true"/>
 </RelativeLayout>

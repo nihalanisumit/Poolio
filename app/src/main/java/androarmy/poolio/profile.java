@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -170,7 +171,8 @@ public class profile extends android.support.v4.app.Fragment {
 
         if(email==""||v_name=="" || v_number=="" || dl=="")
         {
-            Toast.makeText(getContext(),"One or more fields are emplty",Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(getView(),"One or more fields are empty",Snackbar.LENGTH_SHORT);
+            snackbar.show();
         }
         else
         {
@@ -201,7 +203,9 @@ public class profile extends android.support.v4.app.Fragment {
                 }
                 else if("successfully added".equalsIgnoreCase(s)){
 
-                    Toast.makeText(view.getContext(),"Details successfully added",Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(getView(),"Profile updated",Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+
                     Intent in = new Intent(view.getContext(),Home.class);
                     in.putExtra("switch","ride");
                     startActivity(in);

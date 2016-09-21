@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,7 +45,7 @@ public class offer_a_ride extends Fragment {
     //public final String REGISTER_URL="http://192.168.1.101/poolio/register.php"; //Siddharth's pc
     public final String OFFER_URL="http://www.poolio.in/pooqwerty123lio/offer.php";// Sumit's pc
     String dateforsql,timeforsql;
-    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","SRM Backgate","Potheri Station","Green Pearl","Safa", "Akshaya","Airport","Central Station","Egmore Station"};//need to make it dynamic
+    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","SRM Backgate","Potheri Station/Main Campus","Green Pearl","Safa", "Akshaya","Airport","Central Station","Egmore Station"};//need to make it dynamic
     List<String> vehicleType = new ArrayList<String>(); //No need for dynamic i suppose
     //public static Spinner spinner;
     String[] vehicless={"Bike","Car","Auto","Cab"};
@@ -145,7 +146,7 @@ public class offer_a_ride extends Fragment {
         availableET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                Integer count = Integer.parseInt(availableET.getText().toString());
+                Integer count = Integer.parseInt((availableET.getText().toString().equalsIgnoreCase(""))?"0":availableET.getText().toString());
                 if(spinner.getText().toString().equalsIgnoreCase("bike"))
                 {
                     if(count>1)
@@ -158,8 +159,8 @@ public class offer_a_ride extends Fragment {
                 }
                 if(spinner.getText().toString().equalsIgnoreCase("cab"))
                 {
-                    if(count>3)
-                        availableET.setText("3");
+                    if(count>6)
+                        availableET.setText("6");
                 }
                 if(spinner.getText().toString().equalsIgnoreCase("auto"))
                 {
@@ -178,7 +179,8 @@ public class offer_a_ride extends Fragment {
             @Override
             public void onClick(View v) {
                 if(!InternetConnectionClass.isConnected(getActivity())){
-                    Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
+                    Snackbar snackbar = Snackbar.make(getView(),"Please connect to the internet!",Snackbar.LENGTH_SHORT);
+                    snackbar.show();
                     return;
                 }
                 final Calendar c = Calendar.getInstance();
@@ -234,7 +236,8 @@ public class offer_a_ride extends Fragment {
             @Override
             public void onClick(View v) {
                 if(!InternetConnectionClass.isConnected(getActivity())){
-                    Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
+                    Snackbar snackbar = Snackbar.make(getView(),"Please connect to the internet!",Snackbar.LENGTH_SHORT);
+                    snackbar.show();
                     return;
                 }
                 final Calendar c = Calendar.getInstance();
@@ -283,7 +286,8 @@ public class offer_a_ride extends Fragment {
 
     void offerRides() {
         if (!InternetConnectionClass.isConnected(getActivity())) {
-            Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
+            Snackbar snackbar = Snackbar.make(getView(),"Please connect to the internet!",Snackbar.LENGTH_SHORT);
+            snackbar.show();
             return;
         }
         msg=messagev.getText().toString();
@@ -293,7 +297,9 @@ public class offer_a_ride extends Fragment {
         destination = destinationET.getText().toString().trim();
         type = spinner.getText().toString();
         if ("".equalsIgnoreCase(dateforsql) || "".equalsIgnoreCase(timeforsql)) {
-            Toast.makeText(getActivity(), "please enter date or time", Toast.LENGTH_SHORT).show();
+
+            Snackbar snackbar = Snackbar.make(getView(),"please enter date or time",Snackbar.LENGTH_SHORT);
+            snackbar.show();
             return;
         }
         date = dateET.getText().toString();
@@ -313,7 +319,10 @@ public class offer_a_ride extends Fragment {
         //Toast.makeText(getContext(),"Mobile :"+mobile+"\n Source:"+source+"  Destination:"+destination+"\ntype:"+type
         //  +"\nSeats:"+availableSeats+"\n Amount:"+amount,Toast.LENGTH_LONG).show();
         if (!InternetConnectionClass.isConnected(getActivity())) {
-            Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
+
+            Snackbar snackbar = Snackbar.make(getView(),"Please connect to the internet!",Snackbar.LENGTH_SHORT);
+            snackbar.show();
+
             return;
         }
         SharedPreferences offerSp = getActivity().getSharedPreferences("offer", Context.MODE_PRIVATE);
@@ -326,7 +335,8 @@ public class offer_a_ride extends Fragment {
         editor.putString("availableseats", availableSeats + "");
         editor.apply();
         if ((!"auto".equalsIgnoreCase(type) || !"cab".equalsIgnoreCase(type)) && (("".equalsIgnoreCase(vname) || "".equalsIgnoreCase(vnumber))||"".equalsIgnoreCase(source)||"".equalsIgnoreCase(destination)||"".equalsIgnoreCase(date)||"".equalsIgnoreCase(time))) {
-            Toast.makeText(getView().getContext(), "Please fill all values", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(getView(),"Please fill all values",Snackbar.LENGTH_SHORT);
+            snackbar.show();
         }
           else {
             offer(mobile, source, destination, type, date, time, vname, vnumber, availableSeats, chargeable, amount,msg);
@@ -359,7 +369,7 @@ public class offer_a_ride extends Fragment {
                     Intent myIntent = new Intent(getContext(), Confirmation.class);//Need to make an activity saying your ride has been offered succesfully and will be displayed soon
                     startActivity(myIntent);
                     //getActivity().overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
-                    Toast.makeText(getContext(),"Ride offered",Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getContext(),"Ride offered",Toast.LENGTH_SHORT).show();
                 }
 
                 Toast.makeText(getContext(),s,Toast.LENGTH_LONG).show();

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -54,7 +55,8 @@ public class myRides extends android.support.v4.app.Fragment {
         mobile = mSharedPreferences.getString("mobile", "null");
         //Toast.makeText(getContext(),mobile,Toast.LENGTH_LONG).show();
         if(!InternetConnectionClass.isConnected(getActivity())){
-            Toast.makeText(getActivity(), "Please connect to the internet!", Toast.LENGTH_LONG).show();
+            Snackbar snackbar = Snackbar.make(getView(),"Please connect to the internet!",Snackbar.LENGTH_SHORT);
+            snackbar.show();
         }
 
         avi=(AVLoadingIndicatorView) view.findViewById(R.id.avi_myrides2);
@@ -141,6 +143,7 @@ public class myRides extends android.support.v4.app.Fragment {
                     recyclerView.setVisibility(View.GONE);
                     sorryIV.setVisibility(View.VISIBLE);
                     sorryTV.setVisibility(View.VISIBLE);
+
                 }
                 List<Data> data = fill_with_data();
 

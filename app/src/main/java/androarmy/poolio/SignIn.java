@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -36,10 +37,12 @@ public class SignIn extends AppCompatActivity {
     SharedPreferences mSharedPreferences;
     private String password = null;
     AVLoadingIndicatorView avi;
+    View parentview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        parentview=findViewById(R.id.avi_signin);
         goToSignUp = (TextView)findViewById(R.id.link_signup);
         forgotPass=(TextView)findViewById(R.id.forgotPassword);
         skipbtn=(Button)findViewById(R.id.skip_but);
@@ -102,7 +105,8 @@ public class SignIn extends AppCompatActivity {
         pass=input_pass.getText().toString().trim();
         password=md5(pass);
         if("".equalsIgnoreCase(mob) || "".equalsIgnoreCase(pass)){
-            Toast.makeText(getApplicationContext(),"One or more fields are empty!",Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(parentview,"One or more fields are empty.",Snackbar.LENGTH_SHORT);
+            snackbar.show();
             return;
         }
         userLogin(mob, password);
@@ -181,7 +185,7 @@ public class SignIn extends AppCompatActivity {
                     editor.putString("device_id",device_id);
                     editor.apply();
                 }
-                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
             }
 
 

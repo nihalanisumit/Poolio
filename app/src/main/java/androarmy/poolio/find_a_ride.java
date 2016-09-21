@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -31,7 +33,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 public class find_a_ride extends Fragment {
-    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","SRM Backgate","Potheri Station","Green Pearl","Safa", "Akshaya","Airport","Central Station","Egmore Station"};//need to make it dynamic
+    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","SRM Backgate","Potheri Station/Main Campus","Green Pearl","Safa", "Akshaya","Airport","Central Station","Egmore Station"};//need to make it dynamic
     AutoCompleteTextView actv,actv2;
     EditText dateET, timeET;
     Button b;
@@ -39,6 +41,7 @@ public class find_a_ride extends Fragment {
     String dateforsql;
     private ImageView dateIv, timeIV;
     private int mYear, mMonth, mDay, mHour, mMinute;
+    CoordinatorLayout mCoordinatorLayout;
 
 
     @Nullable
@@ -76,7 +79,9 @@ public class find_a_ride extends Fragment {
                 time= timeET.getText().toString();
                 if(pickup.equals("")||drop.equals("")||date.equals("")||time.equals(""))
                 {
-                    Toast.makeText(getContext(),"Please enter all values",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(),"Please enter all values",Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(getView(),"Please fill all values",Snackbar.LENGTH_SHORT);
+                    snackbar.show();
                 }
                 else
                 {

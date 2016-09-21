@@ -126,7 +126,28 @@ public class Data {
 
         this.message = message;
         this.mobile_book = mobile_book;
-        this.timestamp = timestamp;
+        StringTokenizer strToken=new StringTokenizer(timestamp," ");
+        String date1=strToken.nextToken();
+        Log.d("date:",date1);
+        String time1=strToken.nextToken();
+        Log.d("time:",time1);
+        final String oldDateFormat2="yyyy-MM-dd";
+        final String newDateFormat2="EEE, d MMM yyyy";
+        SimpleDateFormat sdf2=new SimpleDateFormat(oldDateFormat2);
+        try {
+            Date d2 = sdf2.parse(date1);
+//            Log.d("date timestamp::",d2.toString());
+            SimpleDateFormat sdf_output=new SimpleDateFormat(newDateFormat2);
+            date1=sdf_output.format(d2);
+        }
+        catch(ParseException e){
+            Log.d("Date conversion error",e.getMessage());
+        }
+        this.timestamp=date1+" "+time1;
+        Log.d("timestamp",timestamp);
+        if(timestamp == "" || timestamp == " " || timestamp == null){
+            this.timestamp = "Cant be displayed";
+        }
 
     }
 
