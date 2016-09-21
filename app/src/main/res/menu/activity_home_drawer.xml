@@ -5,7 +5,7 @@
         android:id="@+id/nvtop">
         <item
             android:id="@+id/nav_find"
-            android:icon="@android:drawable/ic_menu_search"
+            android:icon="@drawable/magnify"
             android:title="Rides"
             android:checked="true"/>
         <item
@@ -15,12 +15,12 @@
             android:checked="true"/>
         <item
             android:id="@+id/nav_myrides"
-            android:icon="@android:drawable/ic_menu_mylocation"
+            android:icon="@drawable/motorbike"
             android:title="My Rides"
             android:checked="false"/>
         <item
             android:id="@+id/nav_profile"
-            android:icon="@android:drawable/ic_menu_info_details"
+            android:icon="@drawable/face_profile"
             android:title="My profile"
             android:checked="false"/>
 
@@ -39,7 +39,7 @@
 
             <item
                 android:id="@+id/nav_share"
-                android:icon="@android:drawable/ic_menu_share"
+                android:icon="@drawable/share_variant"
                 android:title="Share"
                 android:checked="false"/>
             <item
