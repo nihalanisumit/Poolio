@@ -240,7 +240,9 @@ public class Home extends AppCompatActivity
     public void signout(){
         SharedPreferences session= getSharedPreferences("session",MODE_PRIVATE);
         session.edit().clear().commit();
-        Intent in= new Intent(this,MainActivity.class);
+        SharedPreferences userdetails = getSharedPreferences("UserDetails",MODE_PRIVATE);
+        userdetails.edit().clear().commit();
+        Intent in= new Intent(this,SignIn.class);
         startActivity(in);
         overridePendingTransition(R.anim.previous_slide_in, R.anim.previous_slide_out);
     }

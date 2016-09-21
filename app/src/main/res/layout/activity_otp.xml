@@ -35,16 +35,10 @@
 
 
         <!-- Send OTP Button -->
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="skip"
-            android:id="@+id/skip_button"
-            android:layout_gravity="right"/>
 
-        <android.support.v7.widget.AppCompatButton
+        <Button
             android:id="@+id/btn_sendotp"
-            android:layout_width="match_parent"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
@@ -79,7 +73,7 @@
 
 
             <!-- Send OTP Button -->
-            <android.support.v7.widget.AppCompatButton
+            <Button
                 android:id="@+id/btn_verify"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

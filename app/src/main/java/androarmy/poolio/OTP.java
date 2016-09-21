@@ -26,7 +26,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 public class OTP extends AppCompatActivity implements VerificationListener {
-    Button button_sendOTP,verify_btn,skip;
+    Button button_sendOTP,verify_btn;
     EditText mphone,verify_text;
     String phoneNo;
     LinearLayout otp_layout;
@@ -47,15 +47,7 @@ public class OTP extends AppCompatActivity implements VerificationListener {
         otp_layout=(LinearLayout)findViewById(R.id.linear_otp);
         verify_text=(EditText)findViewById(R.id.input_otp);
         verify_btn=(Button)findViewById(R.id.btn_verify);
-        skip=(Button)findViewById(R.id.skip_button);
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(getApplicationContext(),SignUp.class);
-                myIntent.putExtra("mobile", "1234567890");
-                startActivity(myIntent);
-            }
-        });
+
 
 //hello
         button_sendOTP.setOnClickListener(new View.OnClickListener() {
