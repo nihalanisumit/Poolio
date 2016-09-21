@@ -29,7 +29,7 @@ import java.util.HashMap;
 
 public class SignIn extends AppCompatActivity {
     TextView goToSignUp,forgotPass;
-    Button btn_signin, skipbtn;
+    Button btn_signin;
     public final String SIGNIN_URL="http://www.poolio.in/pooqwerty123lio/signin.php";//Sumit's pc
     public final String DEVICE_URL="http://www.poolio.in/pooqwerty123lio/deviceregister.php";// Sumit's pc
     EditText input_mob,input_pass;
@@ -45,7 +45,7 @@ public class SignIn extends AppCompatActivity {
         parentview=findViewById(R.id.avi_signin);
         goToSignUp = (TextView)findViewById(R.id.link_signup);
         forgotPass=(TextView)findViewById(R.id.forgotPassword);
-        skipbtn=(Button)findViewById(R.id.skip_but);
+
         input_mob=(EditText)findViewById(R.id.input_number);
         input_pass=(EditText)findViewById(R.id.input_password);
         avi=(AVLoadingIndicatorView)findViewById(R.id.avi_signin);
@@ -59,14 +59,7 @@ public class SignIn extends AppCompatActivity {
             }
         });
 
-        skipbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SignIn.this,Home.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
-            }
-        });
+
         goToSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
