@@ -52,7 +52,7 @@ public class RateCalculator extends Fragment {
                 if ("".equals(source))
                     return;
                 Log.d("rate:",""+getRate(source, destination));
-                rateTV.setText(getRate(source,destination));
+                rateTV.setText("₹"+getRate(source,destination));
 
             }
         });
@@ -64,7 +64,7 @@ public class RateCalculator extends Fragment {
                 if ("".equals(destination))
                     return;
                 Log.d("rate:",getRate(source, destination));
-                rateTV.setText(getRate(source,destination));
+                rateTV.setText("₹"+getRate(source,destination));
             }
         });
 
