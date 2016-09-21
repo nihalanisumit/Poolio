@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF5252</color>
     <color name="primary_text">#fff</color>
-    <color name="secondary_text">#727272</color>
+    <color name="secondary_text">#fff</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
     <color name="background_material_light">#ffffff</color>
@@ -13,7 +13,7 @@
     <color name="white">#FFF</color>
     <color name="black_overlay">#66000000</color>
     <color name="windowBackground">#FFFFFF</color>
-    <color name="navigationBarColor">#000000</color>
+    <color name="navigationBarColor">#fff</color>
 
     <!-- Screens background color-->
     <color name="bg_screen1">#f64c73</color>
