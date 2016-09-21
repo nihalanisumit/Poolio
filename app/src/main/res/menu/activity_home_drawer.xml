@@ -9,6 +9,11 @@
             android:title="Rides"
             android:checked="true"/>
         <item
+            android:id="@+id/rate_card"
+            android:icon="@android:drawable/ic_menu_search"
+            android:title="Rate Calculator"
+            android:checked="true"/>
+        <item
             android:id="@+id/nav_myrides"
             android:icon="@android:drawable/ic_menu_mylocation"
             android:title="My Rides"

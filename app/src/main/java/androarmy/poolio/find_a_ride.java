@@ -33,7 +33,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 public class find_a_ride extends Fragment {
-    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","SRM Backgate","Potheri Station","Green Pearl","Safa", "Akshaya","Airport","Central Station","Egmore Station"};//need to make it dynamic
+    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","SRM Backgate","Potheri Station/Main Campus","Green Pearl","Safa", "Akshaya","Airport","Central Station","Egmore Station"};//need to make it dynamic
     AutoCompleteTextView actv,actv2;
     EditText dateET, timeET;
     Button b;
