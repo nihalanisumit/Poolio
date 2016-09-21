@@ -50,8 +50,9 @@ public class Home extends AppCompatActivity
     Fragment fragment = null;
     Class fragmentClass = null;
     String lon,lat;
+    int j=0;
     com.github.clans.fab.FloatingActionMenu fab;
-    public int[][] rate[][];
+    public String[][] rate;
 //    com.github.clans.fab.FloatingActionButton fab2;
     public final String PROFILE_URL ="http://www.poolio.in/pooqwerty123lio/profile.php";
     public final String RATE_URL ="http://www.poolio.in/pooqwerty123lio/rate_fetch.php";//Sumit's pc
@@ -64,7 +65,7 @@ public class Home extends AppCompatActivity
         fab.setVisibility(View.VISIBLE);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        rate[12][12]=new int[12][12];
+
         Intent intent=getIntent();
         mobile =intent.getStringExtra("mobile");
         password= intent.getStringExtra("pass");
@@ -330,26 +331,35 @@ public class Home extends AppCompatActivity
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     JSONArray result = jsonObject.getJSONArray("result");
-                    JSONObject c = result.getJSONObject(0);
-
-                    places=c.getString("places");
-                    estancia=c.getString("estancia");
-                    abode=c.getString("abode");
-                    archgate=c.getString("archgate");
-                    backgate=c.getString("backgate");
-                    maincampus=c.getString("maincampus/station");
-                    greenpearl=c.getString("greenpearl");
-                    safaa=c.getString("safaa");
-                    akshaya=c.getString("akshaya");
-                    egmorestation=c.getString("egmorestation");
-                    centralstation=c.getString("centralstation");
-                    airport=c.getString("airport");
+                    rate= new String[result.length()][result.length()+1];
+                    Log.d("result.length()",""+result.length());
+                  for(int i=0;i<result.length();i++) {
+                      j=0;
+                      JSONObject c = result.getJSONObject(i);
+                      rate[i][j++]=c.getString("places");
+                      rate[i][j++] = c.getString("estancia");
+                      rate[i][j++] = c.getString("abode");
+                      rate[i][j++] = c.getString("archgate");
+                      rate[i][j++] = c.getString("backgate");
+                      rate[i][j++] = c.getString("maincampus/station");
+                      rate[i][j++] = c.getString("greenpearl");
+                      rate[i][j++] = c.getString("safaa");
+                      rate[i][j++] = c.getString("akshaya");
+                      rate[i][j++] = c.getString("airport");
+                      rate[i][j++] = c.getString("egmorestation");
+                      rate[i][j++] = c.getString("centralstation");
+                      Log.d("j=",""+j);
+                  }
                 }
                 catch (JSONException e) {
                     e.printStackTrace();
                 }
-                 Log.d("places:",""+places);
-            }
+                RateCalculator.rateChart=rate;
+//                for(int i=0;i<rate.length;i++)
+//                    for(int j=0;j<rate[i].length;j++){
+//                        Log.d("rate"+i+"*"+j,rate[i][j]);
+//                    }
+        }
 
             @Override
             protected String doInBackground(String... params) {
