@@ -44,7 +44,7 @@ public class offer_a_ride extends Fragment {
     //public final String REGISTER_URL="http://192.168.1.101/poolio/register.php"; //Siddharth's pc
     public final String OFFER_URL="http://www.poolio.in/pooqwerty123lio/offer.php";// Sumit's pc
     String dateforsql,timeforsql;
-    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","SRM Backgate","Potheri Station","Green Pearl","Safa", "Akshaya","Airport","Central Station","Egmore Station"};//need to make it dynamic
+    String[] locations ={"SRM Arch Gate","Abode Valley","Estancia","SRM Backgate","Potheri Station/Main Campus","Green Pearl","Safa", "Akshaya","Airport","Central Station","Egmore Station"};//need to make it dynamic
     List<String> vehicleType = new ArrayList<String>(); //No need for dynamic i suppose
     //public static Spinner spinner;
     String[] vehicless={"Bike","Car","Auto","Cab"};
@@ -145,7 +145,7 @@ public class offer_a_ride extends Fragment {
         availableET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                Integer count = Integer.parseInt(availableET.getText().toString());
+                Integer count = Integer.parseInt((availableET.getText().toString().equalsIgnoreCase(""))?"0":availableET.getText().toString());
                 if(spinner.getText().toString().equalsIgnoreCase("bike"))
                 {
                     if(count>1)
@@ -158,8 +158,8 @@ public class offer_a_ride extends Fragment {
                 }
                 if(spinner.getText().toString().equalsIgnoreCase("cab"))
                 {
-                    if(count>3)
-                        availableET.setText("3");
+                    if(count>6)
+                        availableET.setText("6");
                 }
                 if(spinner.getText().toString().equalsIgnoreCase("auto"))
                 {

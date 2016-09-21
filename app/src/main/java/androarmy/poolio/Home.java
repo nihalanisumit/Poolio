@@ -44,6 +44,7 @@ public class Home extends AppCompatActivity
     String password;
     String mobile;
     String first_name,last_name,gender,email,vehicle_name,vehicle_number,driving_license;
+    String places,estancia,abode,archgate,maincampus,safaa,akshaya,airport,centralstation,egmorestation,backgate,greenpearl;
     SharedPreferences mSharedPreferences;
     TextView usernameheaderTV;
     TextView emailheaderTV;
@@ -52,7 +53,8 @@ public class Home extends AppCompatActivity
     String lon,lat;
     com.github.clans.fab.FloatingActionMenu fab;
 //    com.github.clans.fab.FloatingActionButton fab2;
-    public final String PROFILE_URL ="http://www.poolio.in/pooqwerty123lio/profile.php";//Sumit's pc
+    public final String PROFILE_URL ="http://www.poolio.in/pooqwerty123lio/profile.php";
+    public final String RATE_URL ="http://www.poolio.in/pooqwerty123lio/rate_fetch.php";//Sumit's pc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +70,7 @@ public class Home extends AppCompatActivity
         SharedPreferences mSharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         String mob = mSharedPreferences.getString("mobile", "null");
         fetchDetails(mob);
+        fetchRates();
         SharedPreferences session = getSharedPreferences("session", MODE_PRIVATE);
         SharedPreferences.Editor editor=session.edit();
         editor.putString("mobile", mobile);
@@ -193,9 +196,10 @@ public class Home extends AppCompatActivity
                 fragmentClass = Messages.class;
                 toolbar.setTitle("Messages");
                 break;
-
-
-
+            case R.id.rate_card:
+                fragmentClass=RateCalculator.class;
+                toolbar.setTitle("Rate Calculator");
+                break;
             case R.id.nav_share:
                 ShareIt();
                 break;
@@ -305,6 +309,54 @@ public class Home extends AppCompatActivity
         }
         fetchDetailsClass fdc = new fetchDetailsClass();
         fdc.execute(mobile);
+    }
+    private void fetchRates(){
+        class fetchRatesClass extends AsyncTask<String,Void,String> {
+            //ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                //  loading = ProgressDialog.show(getApplicationContext(),"Profile","Please wait while we connect to our server",true,true);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                Log.d("rates:",s);
+                //loading.dismiss();
+//                try {
+//                    JSONObject jsonObject = new JSONObject(s);
+//                    JSONArray result = jsonObject.getJSONArray("result");
+//                    JSONObject c = result.getJSONObject(0);
+//
+//                    places=c.getString("places");
+//                    estancia=c.getString("estancia");
+//                    abode=c.getString("abode");
+//                    archgate=c.getString("archgate");
+//                    backgate=c.getString("backgate");
+//                    maincampus=c.getString("maincampus/station");
+//                    greenpearl=c.getString("greenpearl");
+//                    safaa=c.getString("safaa");
+//                    akshaya=c.getString("akshaya");
+//                    egmorestation=c.getString("egmorestation");
+//                    centralstation=c.getString("centralstation");
+//                    airport=c.getString("airport");
+//                }
+//                catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                RegisterUserClass ruc = new RegisterUserClass();
+                String result = ruc.sendPostRequestWithoutparams(RATE_URL);
+                return result;
+            }
+        }
+        fetchRatesClass frc = new fetchRatesClass();
+        frc.execute();
     }
     public void cancel(View v) {
         fab.setVisibility(View.GONE);
