@@ -129,56 +129,56 @@ public class MainActivity extends AppCompatActivity {
 
     public void shareYourLocation(View v) {
 
-        final LocationManager locationManager = (LocationManager) getApplicationContext()
-                .getSystemService(LOCATION_SERVICE);
-        String provider;
-        provider = locationManager.getBestProvider(new Criteria(), false);
-        Location location = locationManager.getLastKnownLocation(provider);
-        if (location != null) {
-            Log.i("location::", "achieved");
-        } else {
-            Log.i("location::", " not achieved");
-        }
-        LocationListener ll = new LocationListener() {
-
-            @Override
-            public void onLocationChanged(Location location) {
-                lon = String.valueOf(location.getLongitude());
-                lat = String.valueOf(location.getLatitude());
-
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Snackbar.make(parentView,"Please give permissions",Snackbar.LENGTH_SHORT).show();
-            return;
-        }
-        locationManager.requestLocationUpdates(provider, 1000, 5, ll);
-        if("".equalsIgnoreCase(lon)||"".equalsIgnoreCase("len")){
-            Log.d("either lat or long","::are null");
-            return;
-        }
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-        sharingIntent.setType("text/plain");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "poolio");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "i am in DANGER. Please locate me at :" +
-                " lon="+lon+" lat="+lat);
-        locationManager.removeUpdates(ll);
-        startActivity(Intent.createChooser(sharingIntent, "Share via"));
+//        final LocationManager locationManager = (LocationManager) getApplicationContext()
+//                .getSystemService(LOCATION_SERVICE);
+//        String provider;
+//        provider = locationManager.getBestProvider(new Criteria(), false);
+//        Location location = locationManager.getLastKnownLocation(provider);
+//        if (location != null) {
+//            Log.i("location::", "achieved");
+//        } else {
+//            Log.i("location::", " not achieved");
+//        }
+//        LocationListener ll = new LocationListener() {
+//
+//            @Override
+//            public void onLocationChanged(Location location) {
+//                lon = String.valueOf(location.getLongitude());
+//                lat = String.valueOf(location.getLatitude());
+//
+//            }
+//
+//            @Override
+//            public void onStatusChanged(String provider, int status, Bundle extras) {
+//
+//            }
+//
+//            @Override
+//            public void onProviderEnabled(String provider) {
+//
+//            }
+//
+//            @Override
+//            public void onProviderDisabled(String provider) {
+//
+//            }
+//        };
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            Snackbar.make(parentView,"Please give permissions",Snackbar.LENGTH_SHORT).show();
+//            return;
+//        }
+//        locationManager.requestLocationUpdates(provider, 1000, 5, ll);
+//        if("".equalsIgnoreCase(lon)||"".equalsIgnoreCase("len")){
+//            Log.d("either lat or long","::are null");
+//            return;
+//        }
+//        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+//        sharingIntent.setType("text/plain");
+//        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "poolio");
+//        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "i am in DANGER. Please locate me at :" +
+//                " lon="+lon+" lat="+lat);
+//        locationManager.removeUpdates(ll);
+//        startActivity(Intent.createChooser(sharingIntent, "Share via"));
 
     }
 
