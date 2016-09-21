@@ -50,7 +50,7 @@
             android:id="@+id/ratetv"
             android:layout_marginTop="40dp"
             android:textSize="20dp"
-            android:text="nothing"/>
+            android:text="Please enter source and destination"/>
 
 
     </RelativeLayout>

@@ -332,7 +332,7 @@ public class Home extends AppCompatActivity
                     JSONObject jsonObject = new JSONObject(s);
                     JSONArray result = jsonObject.getJSONArray("result");
                     rate= new String[result.length()][result.length()+1];
-                    Log.d("result.length()",""+result.length());
+                  //  Log.d("result.length()",""+result.length());
                   for(int i=0;i<result.length();i++) {
                       j=0;
                       JSONObject c = result.getJSONObject(i);
@@ -348,7 +348,7 @@ public class Home extends AppCompatActivity
                       rate[i][j++] = c.getString("airport");
                       rate[i][j++] = c.getString("egmorestation");
                       rate[i][j++] = c.getString("centralstation");
-                      Log.d("j=",""+j);
+                     // Log.d("j=",""+j);
                   }
                 }
                 catch (JSONException e) {
