@@ -21,7 +21,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/location"/>
+            android:src="@drawable/map_marker"/>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/flag"/>
+            android:src="@drawable/flag_variant"/>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/calend"/>
+            android:src="@drawable/calendar_text"/>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/time"
+            android:src="@drawable/av_timer"
             android:id="@+id/img_time"/>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
