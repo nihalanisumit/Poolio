@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -61,6 +62,7 @@ public class OTP extends AppCompatActivity implements VerificationListener {
             @Override
             public void onClick(View v) {
                 if(!InternetConnectionClass.isConnected(getApplicationContext())){
+
                     Toast.makeText(OTP.this, "Please connect to the internet!", Toast.LENGTH_LONG).show();
                     return;
                 }

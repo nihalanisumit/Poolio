@@ -29,17 +29,6 @@
     app:indicatorName="BallSpinFadeLoaderIndicator"
     app:indicatorColor="@color/bg_screen3"
     />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sorry, no rides are available on this route.\n "
-        android:visibility="gone"
-        android:textSize="16dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:id="@+id/sorrytv"/>
-
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -49,6 +38,32 @@
         android:visibility="gone"
         android:layout_above="@+id/sorrytv"
         android:layout_centerHorizontal="true"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sorry, no rides are available on this route.\n "
+        android:visibility="gone"
+        android:textSize="18dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/sorrytv"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textAlignment="center"
+        android:text="How about booking an auto or cab and offering it on our app?"
+        android:visibility="gone"
+        android:textSize="18dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/sorrytv"
+        android:id="@+id/infotv"/>
+
+
+
 
 
 </RelativeLayout>

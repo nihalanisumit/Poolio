@@ -143,6 +143,7 @@ public class myRides extends android.support.v4.app.Fragment {
                     recyclerView.setVisibility(View.GONE);
                     sorryIV.setVisibility(View.VISIBLE);
                     sorryTV.setVisibility(View.VISIBLE);
+
                 }
                 List<Data> data = fill_with_data();
 

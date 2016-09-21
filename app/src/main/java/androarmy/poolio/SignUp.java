@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -29,19 +30,22 @@ public class SignUp extends AppCompatActivity {
     EditText fnameet,lnameet,emailet,passwordet;
     Switch genderSwitch;
     AVLoadingIndicatorView avi;
+    View parentview;
     //public final String REGISTER_URL="http://192.168.1.6/poolio/register.php"; //Siddharth's pc
     public final String REGISTER_URL="http://www.poolio.in/pooqwerty123lio/register.php";// Sumit's pc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        parentview=findViewById(R.id.avi_signup);
         goToSignUp = (TextView)findViewById(R.id.link_login);
         avi=(AVLoadingIndicatorView)findViewById(R.id.avi_signup);
         goToSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!InternetConnectionClass.isConnected(getApplicationContext())){
-                    Toast.makeText(SignUp.this, "Please connect to the internet!", Toast.LENGTH_LONG).show();
+                    Snackbar snackbar = Snackbar.make(parentview,"Please connect to the internet",Snackbar.LENGTH_SHORT);
+                    snackbar.show();
                     return;
                 }
                 Intent intent = new Intent(SignUp.this, SignIn.class);
@@ -82,14 +86,16 @@ public class SignUp extends AppCompatActivity {
         String toast_string="";
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         if(!InternetConnectionClass.isConnected(getApplicationContext())){
-            Toast.makeText(SignUp.this, "Please connect to the internet!", Toast.LENGTH_LONG).show();
+            Snackbar snackbar = Snackbar.make(parentview,"Please connect to the internet",Snackbar.LENGTH_SHORT);
+            snackbar.show();
             return;
         }
         Intent in = getIntent();
         password=passwordet.getText().toString().trim();
         gender=genderSwitch.getText().toString().trim();
         if("".equalsIgnoreCase(password)){
-            Toast.makeText(getApplicationContext(),"Please enter password!",Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(parentview,"Please enter password",Snackbar.LENGTH_SHORT);
+            snackbar.show();
             return;
         }
         password_encrypt= md5(password.toString());
@@ -104,35 +110,41 @@ public class SignUp extends AppCompatActivity {
             //address = addresset.getText().toString().trim();
             email = emailet.getText().toString().trim();
             if("".equalsIgnoreCase(fname)||"".equalsIgnoreCase(lname)||"".equalsIgnoreCase(email)){
-                Toast.makeText(getApplicationContext(),"one or more fields are empty.",Toast.LENGTH_SHORT).show();
+                Snackbar snackbar = Snackbar.make(parentview,"One or more fields are empty!",Snackbar.LENGTH_SHORT);
+                snackbar.show();
                 return;
             }
             if(!InternetConnectionClass.isConnected(getApplicationContext())){
                 toast_string="Please connect to the internet!";
-                Toast.makeText(SignUp.this,toast_string , Toast.LENGTH_LONG).show();
+                Snackbar snackbar = Snackbar.make(parentview,toast_string,Snackbar.LENGTH_SHORT);
+                snackbar.show();
                 return;
             }
             //Log.i("Values",fname+" "+lname+" "+password_encrypt+" "+email+" "+mobile+" "+gender);
             if("".equals(fname) || fname.length()<3)
             {
                 toast_string="first name should be minimum 3 char";
-                Toast.makeText(SignUp.this,toast_string , Toast.LENGTH_SHORT).show();
+                Snackbar snackbar = Snackbar.make(parentview,toast_string,Snackbar.LENGTH_SHORT);
+                snackbar.show();
             }
             else if("".equals(lname) || lname.length()<3)
             {
                 toast_string="Last name should be minimum 3 char";
-                Toast.makeText(SignUp.this,toast_string , Toast.LENGTH_SHORT).show();
+                Snackbar snackbar = Snackbar.make(parentview,toast_string,Snackbar.LENGTH_SHORT);
+                snackbar.show();
 
             }
             else if(password.length()<=8)
             {
                 toast_string="password should be minimum 8 characters";
-                Toast.makeText(SignUp.this,toast_string , Toast.LENGTH_SHORT).show();
+                Snackbar snackbar = Snackbar.make(parentview,toast_string,Snackbar.LENGTH_SHORT);
+                snackbar.show();
             }
             else if (email.matches(emailPattern) && email.length() > 0)
             {
                 toast_string="Invalid email address";
-                Toast.makeText(SignUp.this,toast_string , Toast.LENGTH_SHORT).show();
+                Snackbar snackbar = Snackbar.make(parentview,toast_string,Snackbar.LENGTH_SHORT);
+                snackbar.show();
             }
             else
             {
@@ -144,7 +156,8 @@ public class SignUp extends AppCompatActivity {
 
         }
         else {
-            Toast.makeText(getApplicationContext(), "Passwords do not match!", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(parentview,"Passwords do not match!",Snackbar.LENGTH_SHORT);
+            snackbar.show();
             return;
         }
     }
