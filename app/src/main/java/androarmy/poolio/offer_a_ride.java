@@ -302,7 +302,7 @@ public class offer_a_ride extends Fragment {
             snackbar.show();
             return;
         }
-        date = dateET.getText().toString();
+        date = dateforsql;
         time=timeET.getText().toString();
         time = timeforsql;
         vname = vnameET.getText().toString();
@@ -339,6 +339,7 @@ public class offer_a_ride extends Fragment {
             snackbar.show();
         }
           else {
+            //Log.d("**offer**",mobile+" "+source+" "+destination+" "+type+" "+date+" "+time+" "+vname+" "+vnumber+" "+availableSeats+" "+chargeable+" "+amount+" "+msg);
             offer(mobile, source, destination, type, date, time, vname, vnumber, availableSeats, chargeable, amount,msg);
         }
     }
@@ -399,6 +400,7 @@ public class offer_a_ride extends Fragment {
             }
         }
         OfferTheRide otr = new OfferTheRide();
+        //Log.d("**offer**",mobile+" "+source+" "+destination+" "+type+" "+date+" "+time+" "+vname+" "+vnumber+" "+availableSeats+" "+chargeable+" "+amount+" "+msg);
         otr.execute(mobile,source,destination,type,date,time,vname,vnumber,Integer.toString(availableSeats),Integer.toString(chargeable),Integer.toString(amount),msg);
     }
 

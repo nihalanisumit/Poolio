@@ -17,10 +17,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/second"
-        android:layout_marginTop="277dp"
+        android:layout_marginTop="180dp"
         android:text="You have succesfully offered a ride."
         android:textSize="20dp"
         android:textColor="@color/black"
+        android:layout_centerVertical="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"/>
     <TextView
@@ -29,7 +30,8 @@
         android:id="@+id/third"
         android:layout_below="@+id/second"
         android:layout_marginTop="25dp"
-        android:text="Wait for the notification or go to message section."
+        android:textAlignment="center"
+        android:text="Wait for the notification or go to messages section."
         android:textSize="16dp"
         android:layout_centerHorizontal="true"/>
 
