@@ -103,7 +103,7 @@ public class Home extends AppCompatActivity
         {
             if(text.equalsIgnoreCase("aride"))//intent coming after adding vehicle number, vehile name and DL from profile.java
             {
-                fragmentClass=profile.class;
+                fragmentClass=TabFragment.class;
                 try {
 
                     fragment = (Fragment) fragmentClass.newInstance();
