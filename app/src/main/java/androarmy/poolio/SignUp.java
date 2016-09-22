@@ -140,7 +140,7 @@ public class SignUp extends AppCompatActivity {
                 Snackbar snackbar = Snackbar.make(parentview,toast_string,Snackbar.LENGTH_SHORT);
                 snackbar.show();
             }
-            else if (email.matches(emailPattern) && email.length() > 0)
+            else if (!email.matches(emailPattern) && email.length() > 0)
             {
                 toast_string="Invalid email address";
                 Snackbar snackbar = Snackbar.make(parentview,toast_string,Snackbar.LENGTH_SHORT);
