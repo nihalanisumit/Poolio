@@ -285,6 +285,11 @@ public class offer_a_ride extends Fragment {
         offer_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                if(drop.equalsIgnoreCase(pickup)){
+//                    Snackbar snackbar = Snackbar.make(getView(),"drop and pickup locations should be different.",Snackbar.LENGTH_SHORT);
+//                    snackbar.show();
+//                    return;
+//                }
                 offerRides();
 
             }
@@ -307,10 +312,16 @@ public class offer_a_ride extends Fragment {
         mobile = pref.getString("mobile", null);
         source = sourceET.getText().toString().trim();
         destination = destinationET.getText().toString().trim();
+
         type = spinner.getText().toString();
         if ("".equalsIgnoreCase(dateforsql) || "".equalsIgnoreCase(timeforsql)) {
 
             Snackbar snackbar = Snackbar.make(getView(),"please enter date or time",Snackbar.LENGTH_SHORT);
+            snackbar.show();
+            return;
+        }
+        if(source.equalsIgnoreCase(destination)){
+            Snackbar snackbar = Snackbar.make(getView(),"drop and pickup locations should be different.",Snackbar.LENGTH_SHORT);
             snackbar.show();
             return;
         }

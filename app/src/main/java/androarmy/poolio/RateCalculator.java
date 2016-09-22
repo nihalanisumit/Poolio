@@ -3,6 +3,7 @@ package androarmy.poolio;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,6 +50,11 @@ public class RateCalculator extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 source = sourceTV.getText().toString();
                 destination = destnationTV.getText().toString();
+                if(source.equalsIgnoreCase(destination)){
+                    Snackbar snackbar = Snackbar.make(getView(),"drop and pickup locations should be different.",Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+                    return;
+                }
                 if ("".equals(source))
                     return;
                 Log.d("rate:",""+getRate(source, destination));
@@ -61,6 +67,11 @@ public class RateCalculator extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 source = sourceTV.getText().toString();
                 destination = destnationTV.getText().toString();
+                if(source.equalsIgnoreCase(destination)){
+                    Snackbar snackbar = Snackbar.make(getView(),"drop and pickup locations should be different.",Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+                    return;
+                }
                 if ("".equals(destination))
                     return;
                 Log.d("rate:",getRate(source, destination));

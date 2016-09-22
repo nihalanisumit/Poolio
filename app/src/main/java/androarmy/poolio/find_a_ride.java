@@ -77,6 +77,11 @@ public class find_a_ride extends Fragment {
                 drop= actv2.getText().toString();
                 date= dateET.getText().toString();
                 time= timeET.getText().toString();
+                if(drop.equalsIgnoreCase(pickup)){
+                    Snackbar snackbar = Snackbar.make(getView(),"drop and pickup locations should be different.",Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+                    return;
+                }
                 if(pickup.equals("")||drop.equals("")||date.equals("")||time.equals(""))
                 {
                     //Toast.makeText(getContext(),"Please enter all values",Toast.LENGTH_SHORT).show();
@@ -93,8 +98,8 @@ public class find_a_ride extends Fragment {
                     startActivity(in);
                 }
 
-            }
-        });
+
+        }});
 
         dateIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +131,7 @@ public class find_a_ride extends Fragment {
             }
 
         });
+
         timeIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
