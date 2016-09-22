@@ -37,7 +37,7 @@ public class myRides extends android.support.v4.app.Fragment {
     String mobile;
     String [] id,source, destination, type, date, time, vehicle_name,vehicle_number, seats,timestamp,status;
     RecyclerView recyclerView;
-    AVLoadingIndicatorView avi;
+    public static AVLoadingIndicatorView avi;
     int refreshing=0;
     WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
     TextView sorryTV;

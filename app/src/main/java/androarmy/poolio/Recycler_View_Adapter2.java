@@ -217,17 +217,19 @@ public class Recycler_View_Adapter2 extends RecyclerView.Adapter<Recycler_View_A
         void changeStatus(final String status, final String r_id)
         {
             class ChangeStatusClass extends AsyncTask<String,Void,String> {
-                ProgressDialog loading;
+//                ProgressDialog loading;
                 @Override
                 protected void onPreExecute() {
                     super.onPreExecute();
-                    loading = ProgressDialog.show(context,"Working","Please wait while we connect to server",true,true);
+                    myRides.avi.show();
+//                    loading = ProgressDialog.show(context,"Working","Please wait while we connect to server",true,true);
                 }
 
                 @Override
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
-                    loading.dismiss();
+//                    loading.dismiss();
+                  //  myRides.avi.hide();
                     if("done".equalsIgnoreCase(s))
                     {
                         button_cancel.setVisibility(View.GONE);
