@@ -12,7 +12,7 @@ android {
         }
     }
     defaultConfig {
-        applicationId "androarmy.poolio"
+        applicationId "com.travelwithpoolio"
         manifestPlaceholders = [manifestApplicationId          : "${applicationId}",
                                 onesignal_app_id               : "961a3324-e58e-44f5-a6b4-d524c7363c6f",
                                 onesignal_google_project_number: "391190193606"]

@@ -11,6 +11,6 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_details_ride"
-    tools:context="androarmy.poolio.details_ride">
+    tools:context="com.travelwithpoolio.details_ride">
 
 </RelativeLayout>
