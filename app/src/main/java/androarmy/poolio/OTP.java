@@ -62,6 +62,7 @@ public class OTP extends AppCompatActivity implements VerificationListener {
             }
         });
         Log.i("Secret key:", getSecretKey());
+        //Toast.makeText(OTP.this, getSecretKey(), Toast.LENGTH_LONG).show();
         otp_layout.setVisibility(View.INVISIBLE);
     }
     private String getSecretKey() {
