@@ -68,7 +68,7 @@ public class RateCalculator extends Fragment {
                 source = sourceTV.getText().toString();
                 destination = destnationTV.getText().toString();
                 if(source.equalsIgnoreCase(destination)){
-                    Snackbar snackbar = Snackbar.make(getView(),"drop and pickup locations should be different.",Snackbar.LENGTH_SHORT);
+                    Snackbar snackbar = Snackbar.make(getView(),"source and destination locations should be different.",Snackbar.LENGTH_SHORT);
                     snackbar.show();
                     return;
                 }
