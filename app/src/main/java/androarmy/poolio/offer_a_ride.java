@@ -109,6 +109,17 @@ public class offer_a_ride extends Fragment {
         vnumberET.setText(offerSp.getString("vnumber",""));
         availableET.setText(offerSp.getString("availableseats",""));
         spinner.setText(offerSp.getString("type",""));
+        if("auto".equalsIgnoreCase(spinner.getText().toString()))
+        {
+            vnameET.setVisibility(View.GONE);
+            vnumberET.setVisibility(View.GONE);
+        }
+        if("cab".equalsIgnoreCase(spinner.getText().toString()))
+        {
+            vnameET.setHint("Cab company");
+            vnumberET.setVisibility(View.GONE);
+        }
+
 
 
         spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -125,6 +136,7 @@ public class offer_a_ride extends Fragment {
                         availableET.setText("2");
                     if(spinner.getText().toString().equalsIgnoreCase("cab"))
                         vnameET.setVisibility(View.VISIBLE);
+
                         vnumberET.setVisibility(View.GONE);
                         availableET.setText("3");
 
@@ -334,14 +346,42 @@ public class offer_a_ride extends Fragment {
         editor.putString("vnumber", vnumber);
         editor.putString("availableseats", availableSeats + "");
         editor.apply();
-        if ((!"auto".equalsIgnoreCase(type) || !"cab".equalsIgnoreCase(type)) && (("".equalsIgnoreCase(vname) || "".equalsIgnoreCase(vnumber))||"".equalsIgnoreCase(source)||"".equalsIgnoreCase(destination)||"".equalsIgnoreCase(date)||"".equalsIgnoreCase(time))) {
+//        if (("bike".equalsIgnoreCase(type) || "car".equalsIgnoreCase(type)) && (( "".equalsIgnoreCase(vname) ||"".equalsIgnoreCase(vnumber))||"".equalsIgnoreCase(source)||"".equalsIgnoreCase(destination)||"".equalsIgnoreCase(dateET.getText().toString())||"".equalsIgnoreCase(timeET.getText().toString())))
+//        {
+//            Snackbar snackbar = Snackbar.make(getView(),"Please fill all values",Snackbar.LENGTH_SHORT);
+//            snackbar.show();
+//        }
+//        else if("auto".equalsIgnoreCase(type)) && (( "".equalsIgnoreCase(source)||"".equalsIgnoreCase(destination)||"".equalsIgnoreCase(dateET.getText().toString())||"".equalsIgnoreCase(timeET.getText().toString())))
+//        {
+//            Snackbar snackbar = Snackbar.make(getView(),"Please fill all values",Snackbar.LENGTH_SHORT);
+//            snackbar.show();
+//        }
+//        else
+//        {
+//            //Log.d("**offer**",mobile+" "+source+" "+destination+" "+type+" "+date+" "+time+" "+vname+" "+vnumber+" "+availableSeats+" "+chargeable+" "+amount+" "+msg);
+//            offer(mobile, source, destination, type, date, time, vname, vnumber, availableSeats, chargeable, amount,msg);
+//        }
+        if(("bike".equalsIgnoreCase(type) || "car".equalsIgnoreCase(type)) && ( "".equalsIgnoreCase(vname) ||"".equalsIgnoreCase(vnumber)||"".equalsIgnoreCase(source)||"".equalsIgnoreCase(destination)||"".equalsIgnoreCase(dateET.getText().toString())||"".equalsIgnoreCase(timeET.getText().toString())))
+        {
+            Snackbar snackbar = Snackbar.make(getView(),"Please fill all values",Snackbar.LENGTH_SHORT);
+            snackbar.show();
+
+        }
+        else if(("auto".equalsIgnoreCase(type)) && ( "".equalsIgnoreCase(source)||"".equalsIgnoreCase(destination)||"".equalsIgnoreCase(dateET.getText().toString())||"".equalsIgnoreCase(timeET.getText().toString())))
+        {
             Snackbar snackbar = Snackbar.make(getView(),"Please fill all values",Snackbar.LENGTH_SHORT);
             snackbar.show();
         }
-          else {
-            //Log.d("**offer**",mobile+" "+source+" "+destination+" "+type+" "+date+" "+time+" "+vname+" "+vnumber+" "+availableSeats+" "+chargeable+" "+amount+" "+msg);
+        else if(("cab".equalsIgnoreCase(type)) && ( "".equalsIgnoreCase(vname)||"".equalsIgnoreCase(source)||"".equalsIgnoreCase(destination)||"".equalsIgnoreCase(dateET.getText().toString())||"".equalsIgnoreCase(timeET.getText().toString())))
+        {
+            Snackbar snackbar = Snackbar.make(getView(),"Please fill all values",Snackbar.LENGTH_SHORT);
+            snackbar.show();
+        }
+        else
+        {
             offer(mobile, source, destination, type, date, time, vname, vnumber, availableSeats, chargeable, amount,msg);
         }
+
     }
 
     //11 parameters
@@ -372,8 +412,10 @@ public class offer_a_ride extends Fragment {
                     //getActivity().overridePendingTransition(R.anim.next_slide_in, R.anim.next_slide_out);
                    // Toast.makeText(getContext(),"Ride offered",Toast.LENGTH_SHORT).show();
                 }
+                else
+                    Toast.makeText(getContext(),s,Toast.LENGTH_LONG).show();
 
-                Toast.makeText(getContext(),s,Toast.LENGTH_LONG).show();
+
 
 
             }

@@ -185,19 +185,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp">
                 <EditText android:id="@+id/passengers"
-                    android:layout_width="130dp"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                           android:maxLength="1"
                     android:hint="Available Seats" />
 
             </android.support.design.widget.TextInputLayout>
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/info"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="90dp"/>
 
 
         </LinearLayout>
